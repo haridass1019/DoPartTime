@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './../../../../../firbaseconfig';
 import '../../../../../globals.css';
+import Image from 'next/image';
 
 export default function DetailsPage({params}:any) {
   const router:any = useRouter();
@@ -49,7 +50,7 @@ export default function DetailsPage({params}:any) {
         <div className="body">
           <div className="job-wrpper" >
             <div className="job-header">
-              <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
+            <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/>
               <div>                
               <p>{details.title}</p>
               <span>{details.gender}</span>
@@ -57,15 +58,15 @@ export default function DetailsPage({params}:any) {
             </div>
 
             <div className="job-body">
-            <img src="/icon/map-pin.svg" className="h-4"/>
+            <Image src="/icon/map-pin.svg" width={16} height={16} alt="map"/>
               <span> {details.location}</span>
             </div>
             <div className="job-body">
-            <img src="/icon/clock.svg" className="h-4"/>
+            <Image src="/icon/clock.svg" width={16} height={16} alt="clock"/>
               <span>4:00pm - 7:00pm Mon - Fri</span>
             </div>
             <div className="job-body">
-            <img src="/icon/wallet.svg" className="h-4"/>
+            <Image src="/icon/wallet.svg" width={16} height={16} alt="wallet"/>
               <span>₹ {details.start_salary} - {details.end_salary} per month</span>
             </div>
             <div className="postby">

@@ -6,6 +6,7 @@ import { db } from './../../../firbaseconfig';
 import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 // import '../../globals.css';
+import Image from 'next/image';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/react';
 
 async function fetchDataFromFirestore() {
@@ -40,7 +41,7 @@ export default function Dashboard() {
             <article className="overflow-hidden rounded-lg shadow-lg">              
                             <header className="flex items-center justify-between leading-none p-2 md:p-4">
                     <a className="flex items-center no-underline text-black" >
-                        <img alt="Placeholder" className="block rounded-full" src="https://picsum.photos/32/32/?random" />
+                    <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/>
                        
                        <div>
                        <p className="ml-2 text-sm">Stock checking - Part time Job Stock checking - Part time Job  Part time Job Stock checking </p>

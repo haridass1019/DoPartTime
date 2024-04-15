@@ -7,7 +7,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import './globals.css';
 import Link from 'next/link';
-import Image from 'next/image'
+import Image from 'next/image';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/react';
 
 async function fetchDataFromFirestore() {
@@ -46,7 +46,7 @@ export default function Dashboard() {
           <div className="job-wrpper"  key={message.id}>
              <Link href={`Pages/Dashboard/Home/Home-details/${message.id}`}>
             <div className="job-header">
-              <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
+            <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/>
               <div>                
               <p>{message.title}</p>
               <span>Redditch Accessories</span>
@@ -54,15 +54,15 @@ export default function Dashboard() {
             </div>
           
             <div className="job-body">
-            <img src="/icon/map-pin.svg" className="h-4"/>
+            <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo"/>
               <span> {message.location}</span>
             </div>
             <div className="job-body">
-            <img src="/icon/clock.svg" className="h-4"/>
+            <Image src="/icon/clock.svg" width={16} height={16} alt="Logo"/>
               <span>4:00pm - 7:00pm Mon - Fri</span>
             </div>
             <div className="job-body">
-            <img src="/icon/wallet.svg" className="h-4"/>
+            <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo"/>
               <span>₹ {message.start_salary} - {message.end_salary} per month</span>
             </div>
             <div className="postby">
