@@ -132,7 +132,7 @@ export default function DetailsPage({ params }: any) {
              <div className="job-body-des">          
                <span> Job Description</span>
                <div className="job-body">  
-               <span>{details.working_days}</span>
+               <span>{details.description}</span>
                </div>
              </div>
            </div>
