@@ -68,8 +68,8 @@ export default function DetailsPage({ params }: any) {
   {
     "@context" : "https://schema.org/",
     "@type" : "JobPosting",
-    "title" : details.title,
-    "description" : details.description,
+    "title" : "${details.title}",
+    "description" : "${details.description}",
     "identifier": {
       "@type": "PropertyValue",
       "name": "Google",
