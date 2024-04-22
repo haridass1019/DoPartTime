@@ -116,10 +116,10 @@ export default function Dashboard() {
 
 
   const handleSearch = () => {
-    if (!searchQuery) {
-      alert('Please enter a search query.');
-      return;
-    }
+    // if (!searchQuery) {
+    //   alert('Please enter a search query.');
+    //   return;
+    // }
 
     const queryParams = new URLSearchParams();
     queryParams.set('search', searchQuery);
@@ -130,7 +130,7 @@ export default function Dashboard() {
     const queryString = queryParams.toString();
   
     if (queryString) {
-      router.push(`/Pages?${queryString}`);
+      router.push(`/Pages/Filter?${queryString}`);
     } else {
       router.push('/Pages/Filter');
     }

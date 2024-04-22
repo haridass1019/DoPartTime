@@ -21,6 +21,7 @@ export default function DetailsPage({ params }: any) {
   const router: any = useRouter();
   //   const {id} = router.query;
   const [details, setDetails] = useState<any>(null);
+ 
 
   useEffect(() => {
     async function fetchDetails() {
@@ -29,6 +30,7 @@ export default function DetailsPage({ params }: any) {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setDetails(docSnap.data());
+       
       } else {
         console.log('No such document!');
       }

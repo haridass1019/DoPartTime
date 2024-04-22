@@ -171,3 +171,58 @@ padding-left: 10px;
   color: #fff;
   font-weight: 600;
 }
+
+.header.wrapper{
+  padding: 10px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+}
+.header.wrapper button{
+  background: blue;
+    color: #ffff;
+    font-size: 12px;
+    padding: 9px 15px;
+    border-radius: 50px;
+}
+.header.wrapper input{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 10px;
+  min-width: 40%;
+}
+.header.wrapper select{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 10px;
+  min-width: 40%;
+}
+.Fillter{
+  width: 100%;
+}
+.Fillter-wrapper{
+  width: 100%;
+  display: flex;
+  padding: 0 50px;
+}
+.Fillter-left{
+  width: 25%;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  height: 700px;
+  margin-right: 20px;
+}
+.Fillter-right{
+  width: 75%;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  height: 700px;
+}
+.heading h3{
+  padding:5px 15px;
+}
+
