@@ -1,7 +1,8 @@
 
-
+// client side api fetching start 
 
 "use client"
+// "use server"
 import { db } from './firbaseconfig';
 import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
@@ -160,7 +161,11 @@ export default function Dashboard() {
 
 
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <h1>Firebase Data</h1>
+      <h1>Firebase Data</h1>  
+      
+      <h1><Link href="/Pages/Profile">Profile</Link></h1>
+
+      {/* <h1><Link href="/Pages/Profile/Profile_details/123">Profile details</Link></h1> */}
 
 
 
@@ -229,15 +234,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="container my-12 mx-auto px-4 md:px-12">
-        <div className="flex flex-wrap -mx-1 lg:-mx-4">
-
-
-
-
-        </div>
-      </div>
-
+     
 
 
 
@@ -247,3 +244,120 @@ export default function Dashboard() {
     </main>
   );
 }
+
+
+// client side api fetching end 
+
+
+// Server side api fetching start 
+
+// import { db } from './firbaseconfig';
+// import { collection, getDocs } from 'firebase/firestore';
+// import React, { useEffect, useState } from 'react';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import { useRouter } from 'next/navigation';
+// const getData = async () => {
+//   try {
+//     const querySnapshot = await getDocs(collection(db, "jobs"));
+//     const data:any = [];
+//     querySnapshot.forEach((doc) => {
+//       data.push({ id: doc.id, ...doc.data() });
+//     });
+//     return data;
+//   } catch (error:any) {
+//     throw new Error("Failed to fetch data from Firestore: " + error.message);
+//   }
+// }
+// function formatTimeRange(start_time:any, end_time:any) {
+//   if (!start_time || !start_time.seconds || !end_time || !end_time.seconds) {
+//     return "Time not mentioned";
+//   }
+//   const options:any = { hour: 'numeric', minute: 'numeric', hour12: true };
+//   const startDate = new Date(start_time.seconds * 1000);
+//   const endDate = new Date(end_time.seconds * 1000);
+
+//   const formattedStartTime = startDate.toLocaleTimeString('en-US', options);
+//   const formattedEndTime = endDate.toLocaleTimeString('en-US', options);
+
+//   return `${formattedStartTime} - ${formattedEndTime}`;
+// }
+
+// function formatPostedTime(publish_time:any) {
+//   const timestamp = publish_time;
+//   const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
+//   const date = new Date(milliseconds);
+//   const postDate = new Date(date);
+//   const currentDate = new Date();
+//   const timeDifference = currentDate.getTime() - postDate.getTime();
+//   const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+//   if (daysDifference === 0) {
+//     return "Posted today";
+//   } else if (daysDifference === 1) {
+//     return "Posted 1 day ago";
+//   } else {
+//     return `Posted ${daysDifference} days ago`;
+//   }
+// }
+// const dashboard:any = async () => {
+//   try {
+//     const apiData = await getData();
+//     return (
+//       <>
+//        <h1>Firebase Data</h1>
+//       <h1><Link href="/Pages/Profile">Profile</Link></h1>
+//         <div>
+//           {apiData.map((item:any, index:any) => (
+//             <div key={index}>
+//               <div className="job-wrpper" key={item.id}>
+//               <div className="job-wrpper" key={item.id}>
+//              <Link href={`Pages/Jobs/Job-details/${item.id}`}>
+//                 <div className="job-header">
+//                   {item.image ? (
+//                     <Image src={item.image} width={32} height={32} alt="Company" />
+//                   ) : (
+//                     <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+//                    )}
+//                    <div>
+//                     <p>{item.title}</p>
+//                     <span>{item.title}</span>
+//                    </div>
+//                  </div>
+//                 <div className="job-body">
+//                    <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
+//                    <span> {item.location}</span>
+//                 </div>
+//                <div className="job-body">
+//                   <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
+//                    <span>{formatTimeRange(item.start_time, item.end_time)}  {item.working_days}</span>
+//                  </div>
+//                  <div className="job-body">
+//                   <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
+//                    <span>₹ {item.start_salary} - {item.end_salary} per month</span>
+//                  </div>
+//                  <div className="postby">
+//                    <span>{formatPostedTime(item.publish_time)}</span>
+//                  </div>
+//               </Link>
+//              </div>
+//             </div>
+//             </div>
+//           ))}
+//         </div>
+//       </>
+//     );
+//   } catch (error:any) {
+//     console.error(error); 
+//     return (
+//       <>
+//         <h2>Profile</h2>
+//         <div>Error fetching data: {error.message}</div>
+//       </>
+//     );
+//   }
+// }
+
+// export default dashboard;
+
+
+// Server side api fetching end 
