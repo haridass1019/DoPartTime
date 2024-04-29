@@ -377,7 +377,7 @@ const Jobdetailspage = async ({ params }: any) => {
     return (
       <>
       
-        <h2>Job details</h2>
+        <h2 className="text-center p-10">Job details</h2>
         <div>
           <div key={jobData.id}>
           <div className="flex min-h-screen flex-col items-center justify-between">
