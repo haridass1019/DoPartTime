@@ -317,45 +317,65 @@ import { db } from './../../../../firbaseconfig';
 import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata, ResolvingMetadata } from 'next'
+import Head from 'next/head';
+import Script from 'next/script'
 
+
+
+function formatPostedTime(publish_time: any) {
+  const timestamp = publish_time;
+  const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
+  const date = new Date(milliseconds);
+  const postDate = new Date(date);
+  const currentDate = new Date();
+  const timeDifference = currentDate.getTime() - postDate.getTime();
+  const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+  if (daysDifference === 0) {
+    return "Posted today";
+  } else if (daysDifference === 1) {
+    return "Posted 1 day ago";
+  } else {
+    return `Posted ${daysDifference} days ago`;
+  }
+}
 const Jobdetailspage = async ({ params }: any) => {
+
   const getData = async () => {
     if (!params.slug) return;
-  
     try {
       const docRef = doc(db, 'jobs', params.slug);
       const docSnap = await getDoc(docRef);
-    
       if (docSnap.exists()) {
         const jobData = docSnap.data();
         console.log("job data", jobData);
-        
+
+
+
         // Fetching company details
         const companyId = jobData.company.id;
         console.log("company ID:", companyId);
-        
         const companyDocRef = doc(db, 'company', companyId);
         const companyDocSnap = await getDoc(companyDocRef);
-    
+
         if (companyDocSnap.exists()) {
           const companyData = companyDocSnap.data();
           console.log("company details:", companyData);
 
-            // Fetching category details
-        const categoryIds = jobData.category.map((categoryRef: any) => categoryRef.id);
-        const categoryDetailsPromises = categoryIds.map(async (categoryId: string) => {
-          const categoryDocRef = doc(db, 'category', categoryId); 
-          const categoryDocSnap = await getDoc(categoryDocRef);
-          if (categoryDocSnap.exists()) {
-            return categoryDocSnap.data();
-          } else {
-            console.log(`Category details not found for ID: ${categoryId}`);
-            return null;
-          }
-        });
-        const categoryDetails = await Promise.all(categoryDetailsPromises);
-        console.log("category details:", categoryDetails);
-          
+          const categoryIds = jobData.category.map((categoryRef: any) => categoryRef.id);
+          const categoryDetailsPromises = categoryIds.map(async (categoryId: string) => {
+            const categoryDocRef = doc(db, 'category', categoryId);
+            const categoryDocSnap = await getDoc(categoryDocRef);
+            if (categoryDocSnap.exists()) {
+              return categoryDocSnap.data();
+            } else {
+              console.log(`Category details not found for ID: ${categoryId}`);
+              return null;
+            }
+          });
+          const categoryDetails = await Promise.all(categoryDetailsPromises);
+          console.log("category details:", categoryDetails);
+
           // Return both job and company data
           return { jobData, companyData, categoryDetails };
         } else {
@@ -366,165 +386,191 @@ const Jobdetailspage = async ({ params }: any) => {
         console.log('Job details not found!');
         throw new Error('Job details not found');
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.error('Error fetching details:', error);
       throw new Error('Error fetching details: ' + error.message);
     }
   };
 
   try {
-    const { jobData, companyData,categoryDetails }:any = await getData();
+    const { jobData, companyData, categoryDetails }: any = await getData();
+
+
+    const schemaData = {
+      "@context": "http://schema.org",
+      "@type": "JobPosting",
+      "title": jobData.title,
+      "description": jobData.description,
+      "datePosted": formatPostedTime(jobData.publish_time),
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1600 Amphitheatre Pkwy",
+          "addressLocality": "Mountain View",
+          "addressRegion": jobData.location,
+          "postalCode": "94043",
+          "addressCountry": "IN"
+        }
+      },
+    }
+
     return (
-      <>
-      
+      <>   
+        <Script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
         <h2 className="text-center p-10">Job details</h2>
         <div>
           <div key={jobData.id}>
-          <div className="flex min-h-screen flex-col items-center justify-between">
-          <div className="wrapper">
- 
-          <div className="body">
-            <div className="job-wrpper details" >
-              <div className="job-header">
-               {/* <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/> */}
-              {/* <Image src={details.image} width={32} height={32} alt='Company' /> */}
-               {jobData.image ? (
-         <Image src={jobData.image} width={32} height={32} alt="Company" />
-       ) : (
-         <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
-       )}
-               <div>
-                 <p>{jobData.title}</p>
-                 {/* <Link href={`Pages/Company/${companyDetails.id}`}><span>{companyDetails.name}</span></Link>  */}
+            <div className="flex min-h-screen flex-col items-center justify-between">
+              <div className="wrapper">
+
+                <div className="body">
+                  <div className="job-wrpper details" >
+                    <div className="job-header">
+                      {/* <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/> */}
+                      {/* <Image src={details.image} width={32} height={32} alt='Company' /> */}
+                      {jobData.image ? (
+                        <Image src={jobData.image} width={32} height={32} alt="Company" />
+                      ) : (
+                        <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+                      )}
+                      <div>
+                        <p>{jobData.title}</p>
+                        {/* <Link href={`Pages/Company/${companyDetails.id}`}><span>{companyDetails.name}</span></Link>  */}
 
 
 
-                 <Link href={`/Pages/Company/${jobData.company.id}`}>{companyData.name}</Link>
+                        <Link href={`/Pages/Company/${jobData.company.id}`}>{companyData.name}</Link>
 
-                 {/* <span onClick={home}>haridass</span> */}
+                        {/* <span onClick={home}>haridass</span> */}
 
-               </div>
-             </div>
- 
-             <div className="singleline">
-               <div className="job-body">
-                 <Image src="/icon/building-2.svg" width={16} height={16} alt="map" />
-                 <span> {companyData.name}</span>
-               </div>
-               <div className="job-body">
-                 <Image src="/icon/map-pin.svg" width={16} height={16} alt="map" />
-                 <span> {companyData.location}</span>
-               </div>
-             </div>
- 
-           </div>
-           <div className="job-card">
-           <div className="job-wrppernew" >
-           <div className="job-header">           
-           <Image src="/icon/briefcase-business-gray.svg" width={16} height={16} alt="Logo"/>
-               <div>  
-               <span>Job type</span>
-               <p>Parttime</p>
-               </div>
-             </div>
-           </div>
- 
-           <div className="job-wrppernew" >
-           <div className="job-header">           
-           <Image src="/icon/wallet-gray.svg" width={16} height={16} alt="Logo"/>
-               <div>  
-               <span>Salary (monthly)</span>
-               <p>₹ {jobData.start_salary} - {jobData.end_salary}</p>
-               </div>
-             </div>
-           </div>
- 
-           <div className="job-wrppernew" >
-           <div className="job-header">           
-           <Image src="/icon/arrows-up-from-line-gray.svg" width={16} height={16} alt="Logo"/>
-               <div>  
-               <span>Age Limit</span>
-               <p>{jobData.start_age} to {jobData.end_age}</p>
-               </div>
-             </div>
-           </div>
- 
-           <div className="job-wrppernew" >
-           <div className="job-header">           
-           <Image src="/icon/clock-5-gray.svg" width={16} height={16} alt="Logo"/>
-               <div>  
-               <span>Timing</span>
-               <p>{jobData.working_days}</p>
-               </div>
-             </div>
-           </div>
-           </div>
- 
- 
-           <div className="job-wrpper Requirementscard" >
-            
-                <div className="job-body-des">          
-                <span> Requirements</span>
-              </div>
-             
-               
-              <div className="job-body tag pb-4">  
-              {categoryDetails.map((category: any) => ( 
-                   <div  key={category.id}>
-                   <span>{category.name}</span>
-                   </div>
-                
-               ))}
-              </div>
-               
- 
-              <div className="job-body-des">          
-                <span> Job Description</span>
-                <div className="job-body">  
-                <span>{jobData.description}</span>
+                      </div>
+                    </div>
+
+                    <div className="singleline">
+                      <div className="job-body">
+                        <Image src="/icon/building-2.svg" width={16} height={16} alt="map" />
+                        <span> {companyData.name}</span>
+                      </div>
+                      <div className="job-body">
+                        <Image src="/icon/map-pin.svg" width={16} height={16} alt="map" />
+                        <span> {companyData.location}</span>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div className="job-card">
+                    <div className="job-wrppernew" >
+                      <div className="job-header">
+                        <Image src="/icon/briefcase-business-gray.svg" width={16} height={16} alt="Logo" />
+                        <div>
+                          <span>Job type</span>
+                          <p>Parttime</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="job-wrppernew" >
+                      <div className="job-header">
+                        <Image src="/icon/wallet-gray.svg" width={16} height={16} alt="Logo" />
+                        <div>
+                          <span>Salary (monthly)</span>
+                          <p>₹ {jobData.start_salary} - {jobData.end_salary}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="job-wrppernew" >
+                      <div className="job-header">
+                        <Image src="/icon/arrows-up-from-line-gray.svg" width={16} height={16} alt="Logo" />
+                        <div>
+                          <span>Age Limit</span>
+                          <p>{jobData.start_age} to {jobData.end_age}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="job-wrppernew" >
+                      <div className="job-header">
+                        <Image src="/icon/clock-5-gray.svg" width={16} height={16} alt="Logo" />
+                        <div>
+                          <span>Timing</span>
+                          <p>{jobData.working_days}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div className="job-wrpper Requirementscard" >
+
+                    <div className="job-body-des">
+                      <span> Requirements</span>
+                    </div>
+
+
+                    <div className="job-body tag pb-4">
+                      {categoryDetails.map((category: any) => (
+                        <div key={category.id}>
+                          <span>{category.name}</span>
+                        </div>
+
+                      ))}
+                    </div>
+
+
+                    <div className="job-body-des">
+                      <span> Job Description</span>
+                      <div className="job-body">
+                        <span>{jobData.description}</span>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div className="job-wrpper Requirementscard" >
+
+                    <div className="job-body-des pb-4">
+                      <span> About Company</span>
+                      <div className="job-body">
+                        <span>{companyData.description}</span>
+                      </div>
+                    </div>
+
+                    <div className="job-body-des">
+                      <span> About Company</span>
+                      <div className="job-body">
+                        <span>Lorem ipsum dolor sit amet consectetur. Ante risus dignissim sed id lectus pulvinar tortor. Ultrices ultrices phasellus luctus ut pretium urna ultrices. Metus quam amet suspendisse lobortis odio. Faucibus Read more...</span>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div className="btn">
+                  <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/applyJob?slug=Software-developer-tier-1`}>
+                    <button>Apply Now</button>
+                  </Link>
+                  </div>
+
+
+
                 </div>
               </div>
+
+
+
             </div>
- 
- 
- 
- 
-            <div className="job-wrpper Requirementscard" >
-            
-              <div className="job-body-des pb-4">          
-                <span> About Company</span>
-                <div className="job-body">  
-                <span>{companyData.description}</span>
-                </div>
-              </div>
- 
-              <div className="job-body-des">          
-                <span> About Company</span>
-                <div className="job-body">  
-                <span>Lorem ipsum dolor sit amet consectetur. Ante risus dignissim sed id lectus pulvinar tortor. Ultrices ultrices phasellus luctus ut pretium urna ultrices. Metus quam amet suspendisse lobortis odio. Faucibus Read more...</span>
-                </div>
-              </div>
-            </div>
- 
- 
-            <div className="btn">
-             <button>Apply Now</button>
-            </div>
- 
-           
- 
-         </div>
-       </div>
-     
-     
-       
-     </div>
 
           </div>
         </div>
       </>
     );
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error);
     return (
       <>
@@ -534,5 +580,4 @@ const Jobdetailspage = async ({ params }: any) => {
     );
   }
 };
-
 export default Jobdetailspage;

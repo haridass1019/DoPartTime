@@ -111,10 +111,43 @@
 
 
 import { db } from './../../../firbaseconfig';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import Link from 'next/link';
 import Image from 'next/image';
 
+function formatTimeRange(start_time: any, end_time: any) {
+  if (!start_time || !start_time.seconds || !end_time || !end_time.seconds) {
+    return " time not mention";
+  }
+  const options: any = { hour: 'numeric', minute: 'numeric', hour12: true };
+  const startDate = new Date(start_time.seconds * 1000);
+  const endDate = new Date(end_time.seconds * 1000);
+
+  const formattedStartTime = startDate.toLocaleTimeString('en-US', options);
+  const formattedEndTime = endDate.toLocaleTimeString('en-US', options);
+
+  return `${formattedStartTime} - ${formattedEndTime}`;
+}
+
+
+
+
+function formatPostedTime(publish_time: any) {
+  const timestamp = publish_time;
+  const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
+  const date = new Date(milliseconds);
+  const postDate = new Date(date);
+  const currentDate = new Date();
+  const timeDifference = currentDate.getTime() - postDate.getTime();
+  const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+  if (daysDifference === 0) {
+    return "Posted today";
+  } else if (daysDifference === 1) {
+    return "Posted 1 day ago";
+  } else {
+    return `Posted ${daysDifference} days ago`;
+  }
+}
 const company = async ({ params }: any) => {
   const getData = async () => {
     try {
@@ -132,6 +165,29 @@ const company = async ({ params }: any) => {
 
   try {
     const apiData:any = await getData();
+    console.log("Company ID:", apiData.id);
+    const companyRef = doc(db, 'company', apiData.id);
+
+    const jobsQuery = query(
+      collection(db, "jobs"),
+      where("company", "==", companyRef )
+    );
+    const jobSnapshot = await getDocs(jobsQuery);
+    console.log("Number of job listings:", jobSnapshot.size);
+    const jobList:any = [];
+
+    // jobSnapshot.forEach(doc => {
+    //     jobList.push({ id: doc.id, ...doc.data() });
+    //   });
+    
+    const jobdetails:any =  jobSnapshot.docs.forEach(doc=>
+      // doc.data()
+      jobList.push({ id: doc.id, ...doc.data() })
+    )
+
+  
+
+    
     return (
       <>
         <h2  className="text-center p-10">Company</h2>
@@ -142,7 +198,7 @@ const company = async ({ params }: any) => {
      <div className="wrapper">
 
      <div className="body">
-
+      {/* <h1>{apiData.id}</h1> */}
        <div className="job-wrpper details" >
              <div className="job-header">
                 {apiData.logo ? (
@@ -198,11 +254,69 @@ const company = async ({ params }: any) => {
           </div>
 
      </div>
+     <div className="job-listings">
+              {/* <h3>Job Listings</h3> */}
+              <h2  className="text-center p-10">Job Listings</h2>
+              {/* <ul> */}
+            {/* <h1> hai {jobdetails}</h1> */}
+            {/* <h1>hai {JSON.stringify(jobList)}</h1> */}
+               
+                {jobList.map((job:any) => (
+
+                  // <li key={job.id}>
+                  //   <Link href={`Pages/Jobs/Job-details/${job.id}`}>                   
+                  //     <span>{job.title}</span>
+                  //   </Link>
+                  // </li>
+                  <div className="job-wrpper" key={job.id}>
+                    {/* <Link href={`/Pages/Company/${jobData.company.id}`}>{companyData.name}</Link> */}
+                  <Link href={`/Pages/Jobs/Job-details/${job.id}`}>
+                    <div className="job-header">
+                      {/* <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/> */}
+                      {/* <Image src={message.image} width={32} height={32} alt="Logo"/> */}
+                      {job.image ? (
+                        <Image src={job.image} width={32} height={32} alt="Company" />
+                      ) : (
+                        <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+                      )}
+                      <div>
+                        <p>{job.title}</p>
+                        <span>{job.title}</span>
+                      </div>
+                    </div>
+    
+                    <div className="job-body">
+                      <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
+                      <span> {job.location}</span>
+                    </div>
+                    <div className="job-body">
+                      <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
+    
+                      <span>{formatTimeRange(job.start_time, job.end_time)}  {job.working_days}</span>
+    
+                    </div>
+                    <div className="job-body">
+                      <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
+                      <span>₹ {job.start_salary} - {job.end_salary} per month</span>
+                    </div>
+                    <div className="postby">
+                      <span>{formatPostedTime(job.publish_time)}</span>
+                    </div>
+                  </Link>
+                </div>
+                ))}
+              {/* </ul> */}
+            
+            </div>
      </div>
 
+
+ 
 
      </div>
           </div>
+
+
         </div>
       </>
     );

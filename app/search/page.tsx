@@ -1,5 +1,5 @@
 "use client"
-import { db } from './../../firbaseconfig';
+import { db } from './../firbaseconfig';
 import { getDocs, collection, query, orderBy, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -47,7 +47,8 @@ function formatPostedTime(publish_time: any) {
     }
 }
 export default function Details(parames: any) {
-    console.log(parames.searchParams.search);
+    // console.log(parames.searchParams.search);
+    // console.log(parames);
     const router: any = useRouter();
     const [userData, setUserData] = useState([]);
     const [userDatafilter, setuserDatafilter] = useState([]);
@@ -62,7 +63,7 @@ export default function Details(parames: any) {
     const [totalPages, setTotalPages] = useState<number>(0);
 
     const fetchTotalPages = () => {
-        const totalPages = 5; // For example
+        const totalPages = 5; 
         setTotalPages(totalPages);
     };
 
@@ -115,13 +116,13 @@ export default function Details(parames: any) {
         return data.slice(start, end);
     }
 
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-    };
+    // const nextPage = () => {
+    //     setCurrentPage(currentPage + 1);
+    // };
 
-    const prevPage = () => {
-        setCurrentPage(currentPage - 1);
-    };
+    // const prevPage = () => {
+    //     setCurrentPage(currentPage - 1);
+    // };
 
     const filteredData = userData.filter((job: any) => {
         const companyMatches = job.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -182,7 +183,7 @@ export default function Details(parames: any) {
         let queryString = "".toString();
         queryString = queryString + "location=" + location;
         queryString = queryString + "&job_type=" + job_type;
-        router.push(`/Pages/Filter?${queryString}`);
+        router.push(`/search?${queryString}`);
 
     };
     const handleSearch = async () => {
@@ -207,9 +208,11 @@ export default function Details(parames: any) {
             queryParams.set('location', selectedLocation);
         }
         const queryString = queryParams.toString();
-        router.push(`/Pages/Filter?${queryString}`);
+        router.push(`/search?${queryString}`);
     };
 
+
+  
 
 
     return (
@@ -294,7 +297,7 @@ export default function Details(parames: any) {
                             {filteredData.map((message: any) => (
                                 // {userDataFilter.map((message: any) => (
                                 <div className="job-wrpper" key={message.id}>
-                                    <Link href={`Jobs/Job-details/${message.id}`}>
+                                    <Link href={`/Pages/Jobs/Job-details/${message.id}`}>
                                         <div className="job-header">
                                             {message.image ? (
                                                 <Image src={message.image} width={32} height={32} alt="Company" />
