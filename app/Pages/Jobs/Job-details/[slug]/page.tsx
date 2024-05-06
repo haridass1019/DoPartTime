@@ -421,6 +421,11 @@ const Jobdetailspage = async ({ params }: any) => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         /> */}
+        <Script
+  id="schema-data-script"
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+/>
         <h2 className="text-center p-10">Job details</h2>
         <div>
           <div key={jobData.id}>
