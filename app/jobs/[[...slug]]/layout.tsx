@@ -7,13 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 
-export default function DashboardLayout({
-  children,
-  parames,
-}: {
-  children: any;
-  parames: any;
-}) {
+export default function DashboardLayout({children}:any) {
   const router: any = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
