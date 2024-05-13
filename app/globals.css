@@ -75,12 +75,12 @@ body {
 padding-left: 10px;
 }
 .job-header div p{
-  color: #000;
-  font-weight: 600;
+  color: #191C1B;
+  font-weight: 700;
   font-size: 12px;
 }
 .job-header div span{
-  color: #4A5568;
+  color: #73777F;
   font-weight: 400;
   font-size: 12px;
 }
@@ -88,12 +88,13 @@ padding-left: 10px;
   display: flex;
   align-items: center;
   padding-top: 10px;
+  padding-right: 24px;
 }
 .job-body span{
-  padding-left: 10px;
-  color: #000000;
+  padding-left: 4px;
+  color: #43474E;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
 }
 .job-body-des{
   padding-left: 10px;
@@ -106,6 +107,7 @@ padding-left: 10px;
   color: #4A5568;
   font-weight: 400;
   font-size: 12px;
+  text-align: end;
 }
 .job-wrpper{
   margin: 10px 0;
@@ -265,5 +267,117 @@ body{
   border: 1px solid #000;
 }
 .centerpage{
-  margin: 10px 20px;
+  margin: 24px 34px;
+}
+/* job list card css start*/
+.job-list-wrpper-title{
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.job-list-wrpper{
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  min-height: 450px;
+}
+.job-list-card{
+  border: 1px solid #EFF1EF;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.sidebar{
+  height: 100vh;
+  width: 320px;
+  position: sticky;
+  top: 0;
+  background: #fff;
+}
+.page-wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+.mobile-menu{
+  display: none;
+}
+.mb-close-btn{
+  display: none;
+}
+.job-count-heading{
+    color: #436278;
+    font-weight: 600;
+    font-size: 16px;
+}
+.job-location-heading{
+  color: #000000;
+  font-weight: 600;
+  font-size: 22px;
+  padding-right: 8px;
+}
+@media (max-width: 768px) {
+  .sidebar{
+    display: none;
+  }
+  .centerpage {
+    margin: 24px 18px;
+  }
+  .job-list-wrpper {
+    padding: 12px;
+  }
+  .postby {
+    text-align: start;
+  }
+  .sidebar.active{
+    display: block;
+    z-index: 99999;
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+  }
+  .mobile-menu{
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    justify-content: end;
+    width: 100%;
+    height: 44px;
+    background-color: #2523CA;
+  }
+  main{
+    margin-top: 44px;
+  }
+  .mb-close-btn{
+    display: block;
+  }
+  .mobile-menu-btn{
+    margin-right: 20px;
+  }
+  .mobile-close-btn-card{
+    display: flex;
+    justify-content: space-between;
+  }
+  .job-count-heading{
+    font-size: 12px;
+  }
+  .job-location-heading{
+    font-size: 16px;
+  }
+  .job-heading-card{
+    margin-bottom: 16px;
+  }
+  .global-search-bar{
+    padding: 10px 10px 10px 40px;
+  }
+  .job-card{
+    flex-direction: column;
+  }
+  .job-card .job-wrppernew{
+    margin-bottom: 10px;
+  }
+  .job-wrpper.details{
+    margin-top: 1rem;
+  }
 }
