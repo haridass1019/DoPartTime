@@ -79,10 +79,10 @@ export default function Sidebar() {
                 <div className="flex-grow">
                     {/* <div>User</div> */}
                 </div>
-                <Link href="/" className="mb-1 flex py-4">
+                {/* <Link href="/" className="mb-1 flex py-4">
                     <Image src="/icon/logout-ic.svg" className='' width={24} height={24} alt="Logo" />
                     <span className='mx-2'>Logout</span>
-                </Link>
+                </Link> */}
             </div>
         </div></>
     );
