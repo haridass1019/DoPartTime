@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={`${inter.className} page-wrapper`}>
       {/* <div className="sidebar flex"> */}
       
-          <Sidebar />
+          {/* <Sidebar /> */}
         {/* </div> */}
 
         <main className="flex-1 overflow-y-auto" style={{ backgroundColor: '#F2F2F4' }}>
