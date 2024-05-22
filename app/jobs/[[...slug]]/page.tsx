@@ -355,7 +355,7 @@ const dashboard: any = async (params: any) => {
                       Previous
                     </Link> */}
                     {Array.from({ length: apiData.length / pagination_size }, (_, index) => (
-                      <Link className="pagination"
+                      <Link key={index} className="pagination"
                         href={{
                           pathname: '/jobs',
                           query: {
