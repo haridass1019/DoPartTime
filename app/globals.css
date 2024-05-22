@@ -18,12 +18,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -33,139 +30,162 @@ body {
 }
 
 .custom-table {
-  border-collapse: collapse; 
+  border-collapse: collapse;
   width: 100%;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   border-radius: 10px;
 }
 
-.custom-table-header{
-  background-color: #000; 
-  color: #fff; 
+.custom-table-header {
+  background-color: #000;
+  color: #fff;
   font-weight: bold;
 }
 
 .custom-table-row:nth-child(even) {
-  background-color: #f2f2f2; 
+  background-color: #f2f2f2;
 }
 
 .custom-table-cell {
-  border: 1px solid #000; 
-  padding: 8px; 
+  border: 1px solid #000;
+  padding: 8px;
 }
 
-.wrapper{
+.wrapper {
   width: 90%;
 }
-.body{
+
+.body {
   width: 100%;
   margin: 0 10px;
 }
-.job-wrpper{
+
+.job-wrpper {
   background-color: #fff;
   border-radius: 10px;
   min-width: 100%;
   padding: 10px;
 }
-.job-header{
+
+.job-header {
   display: flex;
   align-items: center;
 }
-.job-header div{
-padding-left: 10px;
+
+.job-header div {
+  padding-left: 10px;
 }
-.job-header div p{
+
+.job-header div p {
   color: #191C1B;
   font-weight: 700;
   font-size: 12px;
 }
-.job-header div span{
+
+.job-header div span {
   color: #73777F;
   font-weight: 400;
   font-size: 12px;
 }
-.job-body{
+
+.job-body {
   display: flex;
   align-items: center;
   padding-top: 10px;
   padding-right: 24px;
 }
-.job-body span{
+
+.job-body span {
   padding-left: 4px;
   color: #43474E;
   font-weight: 400;
   font-size: 14px;
 }
-.job-body-des{
+
+.job-body-des {
   padding-left: 10px;
   color: #000000;
   font-weight: 600;
   font-size: 14px;
 }
-.postby{
+
+.postby {
   padding-top: 10px;
   color: #4A5568;
   font-weight: 400;
   font-size: 12px;
   text-align: end;
 }
-.job-wrpper{
+
+.job-wrpper {
   margin: 10px 0;
 }
-.job-wrpper.details{
+
+.job-wrpper.details {
   margin-top: 2rem;
 }
-.details .singleline{
+
+.details .singleline {
   display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-.details .job-header{
+.details .job-header {
   display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
 }
-.details .job-header img{
+
+.details .job-header img {
   width: 48px;
 }
 
-.details .job-header div{ padding: unset;}
-.job-card{
+.details .job-header div {
+  padding: unset;
+}
+
+.job-card {
   display: flex;
   justify-content: space-between;
 }
-.job-card .job-wrppernew{
+
+.job-card .job-wrppernew {
   background-color: #fff;
   border-radius: 10px;
   padding: 10px;
   width: 100%;
   margin-right: 10px;
 }
+
 .job-card .job-wrppernew:last-child {
   margin-right: 0;
 }
-.Requirementscard .job-body.tag{
+
+.Requirementscard .job-body.tag {
   margin-bottom: 15px;
 }
-.Requirementscard .job-body.tag span{
+
+.Requirementscard .job-body.tag span {
   background-color: #F7FAFC;
   border-radius: 20px;
   padding: 10px;
   margin-right: 10px;
 }
-.Requirementscard .job-body span{
+
+.Requirementscard .job-body span {
   padding-left: unset;
 }
-.btn{
+
+.btn {
   text-align: center;
- margin: 1rem;
+  margin: 1rem;
 
 }
 
-.btn button{
+.btn button {
   background-color: #2D9BD8;
   padding: 5px 24px;
   border-radius: 6px;
@@ -174,47 +194,54 @@ padding-left: 10px;
   font-weight: 600;
 }
 
-.header.wrapper{
+.header.wrapper {
   padding: 10px;
-    background: #fff;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 
 }
-.header.wrapper button{
+
+.header.wrapper button {
   background: blue;
-    color: #ffff;
-    font-size: 12px;
-    padding: 9px 15px;
-    border-radius: 50px;
+  color: #ffff;
+  font-size: 12px;
+  padding: 9px 15px;
+  border-radius: 50px;
 }
-.header.wrapper input{
+
+.header.wrapper input {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 0 10px;
   min-width: 40%;
 }
-.header.wrapper select{
+
+.header.wrapper select {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 0 10px;
   min-width: 40%;
 }
-body{
+
+body {
   height: 100%;
 }
-.Fillter{
+
+.Fillter {
   width: 100%;
   height: 100%;
 }
-.Fillter-wrapper{
+
+.Fillter-wrapper {
   width: 100%;
   display: flex;
   padding: 0 50px;
   height: 100%;
 }
-.Fillter-left{
+
+.Fillter-left {
   width: 25%;
   background: #fff;
   border-radius: 10px;
@@ -223,37 +250,43 @@ body{
   height: 100%;
   margin-right: 20px;
 }
-.Fillter-right{
+
+.Fillter-right {
   width: 75%;
   background: #fff;
   border-radius: 10px;
   border: 1px solid #ddd;
   height: 700px;
 }
-.heading h3{
-  padding:5px 15px;
+
+.heading h3 {
+  padding: 5px 15px;
 }
-.job-body.new{
+
+.job-body.new {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.headingdetails{
+
+.headingdetails {
   padding: 10px;
   text-align: center;
-    padding-top: 40px;
+  padding-top: 40px;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: #fff;
   }
+
   body {
     color: #000;
     background: #fff;
   }
 }
-.pagination button{
+
+.pagination button {
   background-color: #000;
   padding: 5px 10px;
   margin: 0 5px;
@@ -261,82 +294,98 @@ body{
   border-radius: 10px;
 }
 
-.pagination .selected{
+.pagination .selected {
   background-color: #fff;
   color: #000;
   border: 1px solid #000;
 }
-.centerpage{
+
+.centerpage {
   margin: 24px 34px;
 }
+
 /* job list card css start*/
-.job-list-wrpper-title{
+.job-list-wrpper-title {
   color: #000000;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 16px;
 }
-.job-list-wrpper{
+
+.job-list-wrpper {
   background-color: #ffffff;
   border-radius: 8px;
   padding: 24px;
   min-height: 450px;
 }
-.job-list-card{
+
+.job-list-card {
   border: 1px solid #EFF1EF;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
 }
-.sidebar{
+
+.sidebar {
   height: 100vh;
   width: 320px;
   position: sticky;
   top: 0;
   background: #fff;
 }
-.page-wrapper{
+
+.page-wrapper {
   display: flex;
   justify-content: space-between;
 }
-.mobile-menu{
+
+.mobile-menu {
   display: none;
 }
-.mb-close-btn{
+
+.mb-close-btn {
   display: none;
 }
-.job-count-heading{
-    color: #436278;
-    font-weight: 600;
-    font-size: 16px;
+
+.job-count-heading {
+  color: #436278;
+  font-weight: 600;
+  font-size: 16px;
 }
-.job-location-heading{
+
+.job-location-heading {
   color: #000000;
   font-weight: 600;
   font-size: 22px;
   padding-right: 8px;
 }
+
 @media (max-width: 768px) {
-  .sidebar{
+  .sidebar {
     display: none;
   }
+
   .centerpage {
     margin: 24px 18px;
   }
+
   .job-list-wrpper {
     padding: 12px;
   }
+
   .postby {
     text-align: start;
   }
-  .sidebar.active{
+
+  .sidebar.active {
     display: block;
     z-index: 99999;
     position: absolute;
     background-color: #fff;
     width: 100%;
   }
-  .mobile-menu{
+
+  .mobile-menu {
     display: flex;
     position: absolute;
     top: 0;
@@ -346,38 +395,65 @@ body{
     height: 44px;
     background-color: #2523CA;
   }
-  main{
+
+  main {
     margin-top: 44px;
   }
-  .mb-close-btn{
+
+  .mb-close-btn {
     display: block;
   }
-  .mobile-menu-btn{
+
+  .mobile-menu-btn {
     margin-right: 20px;
   }
-  .mobile-close-btn-card{
+
+  .mobile-close-btn-card {
     display: flex;
     justify-content: space-between;
   }
-  .job-count-heading{
+
+  .job-count-heading {
     font-size: 12px;
   }
-  .job-location-heading{
+
+  .job-location-heading {
     font-size: 16px;
   }
-  .job-heading-card{
+
+  .job-heading-card {
     margin-bottom: 16px;
   }
-  .global-search-bar{
+
+  .global-search-bar {
     padding: 10px 10px 10px 40px;
   }
-  .job-card{
+
+  .job-card {
     flex-direction: column;
   }
-  .job-card .job-wrppernew{
+
+  .job-card .job-wrppernew {
     margin-bottom: 10px;
   }
-  .job-wrpper.details{
+
+  .job-wrpper.details {
     margin-top: 1rem;
   }
+}
+
+.tag-list {
+  display: flex;
+}
+
+.tag-values {
+  margin: 0px 10px;
+}
+
+.pagination {
+  background: black;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0px 10px;
 }

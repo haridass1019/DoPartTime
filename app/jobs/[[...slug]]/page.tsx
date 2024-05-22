@@ -3,7 +3,7 @@ import { collection, getDoc, getDocs, limit, query, where } from "firebase/fires
 import Image from "next/image";
 import Link from "next/link";
 
-const getData = async (location: any, area: any, tag: any) => {
+const getData = async (location: any, area: any, tag: any, company: any, job_type: any, start: number, end: number) => {
   try {
 
     // const querySnapshot = await getDocs(collection(db, "jobs"));
@@ -32,16 +32,33 @@ const getData = async (location: any, area: any, tag: any) => {
     const querySnapshot = await getDocs(postsRef);
 
     // console.log(querySnapshot.size)
-    if (tag) {
 
-    }
     const promises = querySnapshot.docs.map(async (doc) => {
+      let data: any;
       const tagset = await getdocgettagid(doc.data().tag);
+
       if (tag && tagset.includes(tagid)) {
-        return { id: doc.id, ...doc.data() };
-      } else if (!tag) {
-        return { id: doc.id, ...doc.data() };
+        data = { id: doc.id, ...doc.data() };
       }
+
+      else if (company) {
+        const companyvalue = await getdoccompany(doc.data().company, company);
+        if (companyvalue) {
+          data = { id: doc.id, ...doc.data() };
+        }
+      }
+      else if (!tag && job_type.length <= 0) {
+        data = { id: doc.id, ...doc.data() };
+      }
+
+      if (job_type) {
+        const filtervalue = job_type;
+        if (await containsAny(filtervalue, tagset)) {
+          data = { id: doc.id, ...doc.data() };
+        }
+
+      }
+      return data
     });
 
     const dataArray = await Promise.all(promises);
@@ -55,6 +72,21 @@ const getData = async (location: any, area: any, tag: any) => {
     throw new Error("Failed to fetch data from Firestore: " + error.message);
   }
 };
+async function containsAny(source: any, target: any) {
+  var result = source.filter(function (item: any) { return target.indexOf(item) > -1 });
+  return (result.length >= 1) ? true : false;
+}
+
+
+async function getdoccompany(company: any, companyvalue: any) {
+  let value = false;
+  const docSnapshot = await getDoc(company);
+
+  if (docSnapshot.exists() && docSnapshot.id === companyvalue) {
+    value = true;
+  }
+  return value;
+}
 async function getdocgettagid(tag: any) {
   const documentValues = [];
   for (const docRef of tag) {
@@ -79,10 +111,23 @@ async function getdocgettagid(tag: any) {
 async function getdocidtag(tag: any) {
   const postsQuery1 = query(collection(db, "master_tag"), where('name', '==', tag), limit(1));
   const querySnapshot1 = await getDocs(postsQuery1);
+  console.log(querySnapshot1);
   if (querySnapshot1.size >= 1) {
     const document = querySnapshot1.docs[0];
     return document.id;
   }
+}
+async function getdocidtagfilter(tag: any) {
+  let values = [];
+  for (let index = 0; index < tag.length; index++) {
+    const postsQuery1 = query(collection(db, "master_tag"), where('name', '==', tag[index]), limit(1));
+    const querySnapshot1 = await getDocs(postsQuery1);
+    if (querySnapshot1.size >= 1) {
+      const document = querySnapshot1.docs[0];
+      values.push(document.id);
+    }
+  }
+  return values;
 }
 function formatTimeRange(start_time: any, end_time: any) {
   if (!start_time || !start_time.seconds || !end_time || !end_time.seconds) {
@@ -127,14 +172,19 @@ const dashboard: any = async (params: any) => {
     let location = '';
     let area = '';
     let tagvalue = '';
+    let company = '';
+    let pagination_size = 2;
+    let start = 0;
+    let end = pagination_size;
+    const job_type: any = [];
     // console.log((params.params.slug[0] != "tag"));
-    if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag") {
+    if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
       location = params.params.slug[0];
     }
-    if (params.params.slug && params.params.slug[1] && params.params.slug[0] != "tag") {
+    if (params.params.slug && params.params.slug[1] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
       area = params.params.slug[1];
     }
-    if (params.params.slug && params.params.slug[0] && params.params.slug[0] == "tag") {
+    if (params.params.slug && params.params.slug[0] && params.params.slug[0] == "tag" && params.params.slug[0] != "company") {
       if (params.params.slug && params.params.slug[2]) {
         location = params.params.slug[2];
       }
@@ -143,8 +193,42 @@ const dashboard: any = async (params: any) => {
       }
       tagvalue = params.params.slug[1];
     }
-    let apiData = await getData(location, area, tagvalue);
-    if (params.searchParams.title || params.searchParams.location || params.searchParams.job_type || params.searchParams.salary) {
+    if (params.params.slug && params.params.slug[0] == "company") {
+      company = params.params.slug[1];
+    }
+    if (params.searchParams.location) {
+      location = params.searchParams.location;
+    }
+    if (params.searchParams.area) {
+      area = params.searchParams.area;
+    }
+    if (params.searchParams.company) {
+      company = params.searchParams.company;
+    }
+    if (params.searchParams.tag) {
+
+      job_type.push([params.searchParams.tag]);
+    }
+    if (params.searchParams.jobs_type) {
+
+      job_type.push(params.searchParams.jobs_type.split(','));
+    }
+    if (params.searchParams.jobs_days) {
+      job_type.push(params.searchParams.jobs_days.split(','));
+    }
+    if (params.searchParams.jobs_time_period) {
+      job_type.push(params.searchParams.jobs_time_period.split(','));
+    }
+    if (params.searchParams.start) {
+      start = params.searchParams.start;
+    }
+    if (params.searchParams.end) {
+      end = params.searchParams.end;
+    }
+    let apiData = await getData(location, area, tagvalue, company, (job_type && job_type[0] && job_type[0].length >= 1) ? job_type[0] : job_type, start, end);
+    if (params.searchParams.title) {
+      console.log('-------');
+      console.log(apiData);
       apiData = apiData.filter((item: any) => {
         // for (var key in params.searchParams) {
         //   console.log("testing",key)
@@ -153,10 +237,11 @@ const dashboard: any = async (params: any) => {
         //   else return false
         // }
         const keys = Object.keys(params.searchParams);
-        for (let i = 0; i < keys.length; i++) {
+        for (let i = 0; i < 1; i++) {
           const key = keys[i];
           const searchValue = params.searchParams[key]?.toLowerCase();
-          if (searchValue && item[key]?.toLowerCase().includes(searchValue)) {
+          console.log(searchValue);
+          if (searchValue && item[key]?.toLowerCase().includes(searchValue) || item['description'].toLowerCase().includes(searchValue) || item['location'].toLowerCase().includes(searchValue)) {
             continue;
           } else { return false; }
         }
@@ -168,6 +253,8 @@ const dashboard: any = async (params: any) => {
       // console.log("result",result)
 
     }
+
+    let values_filter = apiData.slice(start, end);
 
 
     return (
@@ -182,7 +269,7 @@ const dashboard: any = async (params: any) => {
               <div className="Fillter-right">
 
                 <div className="body">
-                  {apiData.map((message: any, index: any) => (
+                  {values_filter.map((message: any, index: any) => (
 
                     <div className="job-wrpper" key={index.id}>
 
@@ -250,9 +337,57 @@ const dashboard: any = async (params: any) => {
                       </Link>
                     </div>
                   ))}
+                  <div className="paggination-head">
+                    {/* <Link className="pagination"
+                      style={{
+                        pointerEvents: (start == 0) ? "none" : "auto",
+                      }}
+                      href={{
+                        pathname: '/jobs',
+                        query: {
+                          ...params.searchParams,
+                          start: start - 3,
+                          end: end - 3,
 
+                        }
+                      }}
+                    >
+                      Previous
+                    </Link> */}
+                    {Array.from({ length: apiData.length / pagination_size }, (_, index) => (
+                      <Link className="pagination"
+                        href={{
+                          pathname: '/jobs',
+                          query: {
+                            ...params.searchParams,
+                            start: (index == 0) ? 0 : index + 2,
+                            end: (index == 0) ? 2 : index + 4,
+
+                          }
+                        }}
+                      >
+                        {index + 1}
+                      </Link>
+
+                    ))}
+                  </div>
+                  {/* <Link className="pagination"
+                    href={{
+                      pathname: '/jobs',
+                      query: {
+                        ...params.searchParams,
+                        start: start + 2,
+                        end: start + 4,
+
+                      }
+                    }}
+                  >
+                    Next
+                  </Link> */}
                 </div>
+
               </div>
+
             </div>
           </div>
         </div>
