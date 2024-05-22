@@ -53,6 +53,7 @@ const getData = async (location: any, area: any, tag: any, company: any, job_typ
 
       if (job_type) {
         const filtervalue = job_type;
+
         if (await containsAny(filtervalue, tagset)) {
           data = { id: doc.id, ...doc.data() };
         }
@@ -176,7 +177,7 @@ const dashboard: any = async (params: any) => {
     let pagination_size = 2;
     let start = 0;
     let end = pagination_size;
-    const job_type: any = [];
+    const job_type = [];
     // console.log((params.params.slug[0] != "tag"));
     if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
       location = params.params.slug[0];
@@ -210,14 +211,25 @@ const dashboard: any = async (params: any) => {
       job_type.push([params.searchParams.tag]);
     }
     if (params.searchParams.jobs_type) {
+      let values1 = params.searchParams.jobs_type.split(',');
+      for (let index = 0; index < values1.length; index++) {
+        job_type.push(values1[index]);
+      }
 
-      job_type.push(params.searchParams.jobs_type.split(','));
     }
     if (params.searchParams.jobs_days) {
-      job_type.push(params.searchParams.jobs_days.split(','));
+      let values2 = params.searchParams.jobs_days.split(',');
+      for (let index = 0; index < values2.length; index++) {
+        job_type.push(values2[index]);
+      }
+
     }
     if (params.searchParams.jobs_time_period) {
-      job_type.push(params.searchParams.jobs_time_period.split(','));
+      let values3 = params.searchParams.jobs_time_period.split(',');
+      for (let index = 0; index < values3.length; index++) {
+        job_type.push(values3[index]);
+      }
+
     }
     if (params.searchParams.start) {
       start = params.searchParams.start;
@@ -225,7 +237,8 @@ const dashboard: any = async (params: any) => {
     if (params.searchParams.end) {
       end = params.searchParams.end;
     }
-    let apiData = await getData(location, area, tagvalue, company, (job_type && job_type[0] && job_type[0].length >= 1) ? job_type[0] : job_type, start, end);
+
+    let apiData = await getData(location, area, tagvalue, company, (job_type && job_type.length >= 1) ? job_type : job_type, start, end);
     if (params.searchParams.title) {
       console.log('-------');
       console.log(apiData);

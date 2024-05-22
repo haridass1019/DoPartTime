@@ -313,28 +313,27 @@ export default function DashboardLayout({ children }: any) {
     }
   }, [query]);
   const getareaandcity = async (key: any) => {
-    const response = await fetch(
-      `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=${key}&language=en&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc&type=locality`
-    );
+    if (key) {
+      const response = await fetch(
+        `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=${key}&language=en&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc&type=locality`
+      );
 
-    const data = await response.json();
+      const data = await response.json();
 
-    const city = data.result.address_components.filter((item: any) => {
-      if (item.types.includes("locality")) {
-        console.log(item);
-        setSelectedLocation(item.long_name);
-      }
-    });
-    const area = data.result.address_components.filter((item: any) => {
-      if (item.types.includes("sublocality_level_1")) {
-        console.log(item);
-        setselectedArea(item.long_name);
-      } 
-      // else {
-      //   setselectedArea('');
-      // }
-    });
+      const city = data.result.address_components.filter((item: any) => {
+        if (item.types.includes("locality")) {
+          console.log(item);
+          setSelectedLocation(item.long_name);
+        }
+      });
+      const area = data.result.address_components.filter((item: any) => {
+        if (item.types.includes("sublocality_level_1")) {
+          console.log(item);
+          setselectedArea(item.long_name);
+        }
 
+      });
+    }
   }
   const defalut = { jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods };
   return (
@@ -357,6 +356,7 @@ export default function DashboardLayout({ children }: any) {
               placeholder="Type to search location..."
               onInputChange={(value) => fetchSuggestions(value)}
               onSelectionChange={(key) => getareaandcity(key)}
+              onReset={() => { setselectedArea(""); setSelectedLocation(""); }}
             >
               {(suggestions: any) => (
                 <AutocompleteItem key={suggestions.value} className="capitalize">
