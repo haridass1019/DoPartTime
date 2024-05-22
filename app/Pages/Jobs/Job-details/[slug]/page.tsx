@@ -10,17 +10,17 @@
 //  import Head from 'next/head';
 //  import React from 'react';
 // //  import { Link } from 'react-router-dom';
- 
- 
- 
+
+
+
 // //  const page = ({params}:any) =>{
 // //   const {id} = params;
 // //  }
 
 
 
- 
- 
+
+
 //  export default function DetailsPagenew({ params }: any) {
 //   const {id} = params;
 //    console.log("details",params)
@@ -34,14 +34,14 @@
 //    var comdeta :any;
 
 
- 
+
 //   //  const home = () =>{
 //   //   alert("hai");
 //   //   router.push(`/Pages/Company/${details.company}`);
 //   // }
 
 //   // console.log("testing",details.company.id)
- 
+
 //    useEffect(() => {
 //      async function fetchDetails() {
 //        if (!params.slug) return;
@@ -51,12 +51,12 @@
 //          const jobData = docSnap.data();
 //          console.log("jobdara",jobData)
 //          setDetails(jobData);
-         
+
 //          // Company details start
 //          const companyId = jobData.company.id;
 //          comdeta = jobData.company.id;
 
-          
+
 
 //          console.log("companydetails",companyId);
 //          const companyDocRef = doc(db, 'company', companyId);
@@ -69,7 +69,7 @@
 //            console.log('Company details not found!');
 //          }
 //           // Company details End
- 
+
 //            // categoryDetails details start
 //            const categoryIds = jobData.category.map((categoryRef:any) => categoryRef.id);
 //           const categoryDetailsPromises = categoryIds.map(async (categoryId: string) => {
@@ -84,26 +84,26 @@
 //          });
 //          const categoryDetails = await Promise.all(categoryDetailsPromises);
 //          setCategories(categoryDetails.filter(Boolean));
- 
+
 //          // categoryDetails details end
- 
+
 //        } else {
 //          console.log('No such document!');
 //        }
 //      }
 //      fetchDetails();
 //    }, [params.slug]);
- 
+
 //    if (!details || !companyDetails) {
 //      return <div>Loading...</div>;
 //    }
- 
- 
-   
-   
- 
+
+
+
+
+
 //    return (
- 
+
 //      <>
 
 //      {/* <Head>
@@ -149,10 +149,10 @@
 
 
 
- 
+
 //      <div className="flex min-h-screen flex-col items-center justify-between">
 //        <div className="wrapper">
- 
+
 //          <div className="body">
 //            <div className="job-wrpper details" >
 //              <div className="job-header">
@@ -175,7 +175,7 @@
 
 //                </div>
 //              </div>
- 
+
 //              <div className="singleline">
 //                <div className="job-body">
 //                  <Image src="/icon/building-2.svg" width={16} height={16} alt="map" />
@@ -186,7 +186,7 @@
 //                  <span> {companyDetails.location}</span>
 //                </div>
 //              </div>
- 
+
 //            </div>
 //            <div className="job-card">
 //            <div className="job-wrppernew" >
@@ -198,7 +198,7 @@
 //                </div>
 //              </div>
 //            </div>
- 
+
 //            <div className="job-wrppernew" >
 //            <div className="job-header">           
 //            <Image src="/icon/wallet-gray.svg" width={16} height={16} alt="Logo"/>
@@ -208,7 +208,7 @@
 //                </div>
 //              </div>
 //            </div>
- 
+
 //            <div className="job-wrppernew" >
 //            <div className="job-header">           
 //            <Image src="/icon/arrows-up-from-line-gray.svg" width={16} height={16} alt="Logo"/>
@@ -218,7 +218,7 @@
 //                </div>
 //              </div>
 //            </div>
- 
+
 //            <div className="job-wrppernew" >
 //            <div className="job-header">           
 //            <Image src="/icon/clock-5-gray.svg" width={16} height={16} alt="Logo"/>
@@ -229,10 +229,10 @@
 //              </div>
 //            </div>
 //            </div>
- 
- 
+
+
 //            <div className="job-wrpper Requirementscard" >
-            
+
 //                 <div className="job-body-des">          
 //                 <span> Requirements</span>
 //               </div>
@@ -244,17 +244,17 @@
 //                    </li>
 //                  ))}
 //                </ul> */}
-               
+
 //               <div className="job-body tag pb-4">  
 //               {categories.map((category: any) => ( 
 //                    <div  key={category.id}>
 //                    <span>{category.name}</span>
 //                    </div>
-                
+
 //                ))}
 //               </div>
-               
- 
+
+
 //               <div className="job-body-des">          
 //                 <span> Job Description</span>
 //                 <div className="job-body">  
@@ -262,19 +262,19 @@
 //                 </div>
 //               </div>
 //             </div>
- 
- 
- 
- 
+
+
+
+
 //             <div className="job-wrpper Requirementscard" >
-            
+
 //               <div className="job-body-des pb-4">          
 //                 <span> About Company</span>
 //                 <div className="job-body">  
 //                 <span>{companyDetails.description}</span>
 //                 </div>
 //               </div>
- 
+
 //               <div className="job-body-des">          
 //                 <span> About Company</span>
 //                 <div className="job-body">  
@@ -282,19 +282,19 @@
 //                 </div>
 //               </div>
 //             </div>
- 
- 
+
+
 //             <div className="btn">
 //              <button>Apply Now</button>
 //             </div>
- 
-           
- 
+
+
+
 //          </div>
 //        </div>
-     
-     
-       
+
+
+
 //      </div>
 
 
@@ -302,10 +302,10 @@
 //      </>
 //    );
 //  }
- 
- 
- 
- 
+
+
+
+
 
 
 
@@ -350,7 +350,8 @@ const Jobdetailspage = async ({ params }: any) => {
         const jobData = docSnap.data();
         console.log("job data", jobData);
 
-
+        // fetching tag
+        const taglist = await getdocgettagid(docSnap.data().tag);;
 
         // Fetching company details
         const companyId = jobData.company.id;
@@ -377,7 +378,7 @@ const Jobdetailspage = async ({ params }: any) => {
           console.log("category details:", categoryDetails);
 
           // Return both job and company data
-          return { jobData, companyData, categoryDetails };
+          return { jobData, companyData, categoryDetails, taglist };
         } else {
           console.log('Company details not found!');
           throw new Error('Company details not found');
@@ -391,9 +392,29 @@ const Jobdetailspage = async ({ params }: any) => {
       throw new Error('Error fetching details: ' + error.message);
     }
   };
+  async function getdocgettagid(tag: any) {
+    const documentValues = [];
+    for (const docRef of tag) {
+      try {
 
+        const docSnapshot = await getDoc(docRef);
+
+
+        if (docSnapshot.exists()) {
+
+          documentValues.push(docRef.id);
+        } else {
+          console.log(`Document does not exist for reference: ${docRef.id}`);
+        }
+      } catch (error) {
+        console.error(`Error fetching document: ${docRef.id}`, error);
+      }
+    }
+
+    return documentValues;
+  }
   try {
-    const { jobData, companyData, categoryDetails }: any = await getData();
+    const { jobData, companyData, categoryDetails, taglist }: any = await getData();
 
 
     const schemaData = {
@@ -416,52 +437,23 @@ const Jobdetailspage = async ({ params }: any) => {
     }
 
     return (
-      <>   
+      <>
         {/* <Script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         /> */}
         <Script
-  id="schema-data-script"
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-/>
-        {/* <h2 className="text-center p-10">Job details</h2> */}
-        <div className='centerpage'>
-        <div className="flex flex-col flex-1 justify-between md:flex-row ms:flex-col mb-6">
-            <div className="job-heading-card">
-              <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
-              <div><span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color:"#2523CA", fontWeight:500, fontSize:"16px", textDecorationLine:"underline"}} href="#">Change</Link></div>
-            </div>
-            <div className="w-full md:w-[370px]">
-              
-              <form className="max-w-md mx-auto">   
-                  <div className="relative">
-                      <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                       <Image src="/icon/ion_search.svg" width={24} height={24} alt="Search" />
-                      </div>
-                      <input type="search" id="default-search" className="global-search-bar block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by locality, job type, company" required />
-                      {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
-                  </div>
-              </form>
-
-              {/* <form action="/search/">
-                <input
-                  type="text"
-                  name='search'
-                  placeholder="Search"
-                />
-                <button type='submit'>Search</button>
-
-               </form> */}
-            </div>
-          </div>
+          id="schema-data-script"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+        <h2 className="text-center p-10">Job details</h2>
         <div>
           <div key={jobData.id}>
             <div className="flex min-h-screen flex-col items-center justify-between">
-              <div className="wrappers">
+              <div className="wrapper">
 
-                <div className="bodys">
+                <div className="body">
                   <div className="job-wrpper details" >
                     <div className="job-header">
                       {/* <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/> */}
@@ -584,11 +576,26 @@ const Jobdetailspage = async ({ params }: any) => {
                     </div>
                   </div>
 
+                  <div className="tag-list">
+
+                    {taglist.map((list: any) => (
+                      <div className="tag-values" key={list}>
+
+                        <Link href={{
+                          pathname: '../../../jobs/tag/' + list,
+
+                        }}>
+                          <button>{list}</button>
+                        </Link>
+                      </div>
+
+                    ))}
+                  </div>
 
                   <div className="btn">
-                  <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/applyJob?slug=Software-developer-tier-1`}>
-                    <button>Apply Now</button>
-                  </Link>
+                    <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/applyJob?slug=Software-developer-tier-1`}>
+                      <button>Apply Now</button>
+                    </Link>
                   </div>
 
 
@@ -601,8 +608,7 @@ const Jobdetailspage = async ({ params }: any) => {
             </div>
 
           </div>
-          </div>
-          </div>
+        </div >
       </>
     );
   } catch (error: any) {
