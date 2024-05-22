@@ -329,9 +329,10 @@ export default function DashboardLayout({ children }: any) {
       if (item.types.includes("sublocality_level_1")) {
         console.log(item);
         setselectedArea(item.long_name);
-      } else {
-        setselectedArea('');
-      }
+      } 
+      // else {
+      //   setselectedArea('');
+      // }
     });
 
   }
