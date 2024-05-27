@@ -1,9 +1,9 @@
 import { db } from "../../firbaseconfig";
-import { collection, getDoc, getDocs, limit, query, where } from "firebase/firestore";
+import { collection, endAt, getDoc, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
-
-const getData = async (location: any, area: any, tag: any, company: any, job_type: any, start: number, end: number) => {
+let pagination_size = 2;
+const getData = async (location: any, area: any, tag: any, company: any, job_type: any, page: any) => {
   try {
 
     // const querySnapshot = await getDocs(collection(db, "jobs"));
@@ -14,6 +14,7 @@ const getData = async (location: any, area: any, tag: any, company: any, job_typ
     // return data;
 
     const queryConstraints = [];
+    let getpagelastid: any;
     let tagid: any;
     if (location) {
       queryConstraints.push(where('location', '==', location));
@@ -27,6 +28,12 @@ const getData = async (location: any, area: any, tag: any, company: any, job_typ
 
       // queryConstraints.push(where('tag', 'in', [tagid]));
     }
+    // if (page) {
+    //   getpagelastid = await getlastid(page, location, area, tag);
+    // }
+    // queryConstraints.push(orderBy('publish_time', 'asc'));
+    // queryConstraints.push(startAfter(getpagelastid));
+    // queryConstraints.push(limit(page * pagination_size));
     // console.log(queryConstraints)
     const postsRef = query(collection(db, "jobs"), ...queryConstraints);
     const querySnapshot = await getDocs(postsRef);
@@ -41,7 +48,7 @@ const getData = async (location: any, area: any, tag: any, company: any, job_typ
         data = { id: doc.id, ...doc.data() };
       }
 
-      else if (company) {
+      else if (company && job_type.length <= 0) {
         const companyvalue = await getdoccompany(doc.data().company, company);
         if (companyvalue) {
           data = { id: doc.id, ...doc.data() };
@@ -51,13 +58,26 @@ const getData = async (location: any, area: any, tag: any, company: any, job_typ
         data = { id: doc.id, ...doc.data() };
       }
 
-      if (job_type) {
+      if (job_type && !company) {
         const filtervalue = job_type;
-
+        console.log('-------');
+        console.log(filtervalue);
+        console.log(tagset);
+        console.log('-------');
         if (await containsAny(filtervalue, tagset)) {
           data = { id: doc.id, ...doc.data() };
         }
-
+      }
+      if (job_type && company) {
+        const companyvalue = await getdoccompany(doc.data().company, company);
+        const filtervalue = job_type;
+        console.log('-------');
+        console.log(filtervalue);
+        console.log(tagset);
+        console.log('-------');
+        if (await containsAny(filtervalue, tagset) && companyvalue) {
+          data = { id: doc.id, ...doc.data() };
+        }
       }
       return data
     });
@@ -78,7 +98,24 @@ async function containsAny(source: any, target: any) {
   return (result.length >= 1) ? true : false;
 }
 
+async function getlastid(page: any, location: any, area: any, tag: any) {
+  const queryConstraints = [];
+  let getpagelastid: any;
+  let tagid: any;
+  if (location) {
+    queryConstraints.push(where('location', '==', location));
+  }
+  if (area) {
+    queryConstraints.push(where('area', '==', area));
+  }
+  queryConstraints.push(orderBy('publish_time', 'asc'));
+  queryConstraints.push(limit(page * pagination_size))
 
+  const postsRef = query(collection(db, "jobs"), ...queryConstraints);
+  const querySnapshot = await getDocs(postsRef);
+  const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+  return lastVisible;
+}
 async function getdoccompany(company: any, companyvalue: any) {
   let value = false;
   const docSnapshot = await getDoc(company);
@@ -176,7 +213,9 @@ const dashboard: any = async (params: any) => {
     let company = '';
     let pagination_size = 2;
     let start = 0;
-    let end = pagination_size;
+    let end = 0;
+    let page = 1;
+
     const job_type = [];
     // console.log((params.params.slug[0] != "tag"));
     if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
@@ -206,9 +245,12 @@ const dashboard: any = async (params: any) => {
     if (params.searchParams.company) {
       company = params.searchParams.company;
     }
+    if (params.params.slug && params.params.slug[0] && params.params.slug[0] == "tag") {
+      tagvalue = params.params.slug[1];
+    }
     if (params.searchParams.tag) {
 
-      job_type.push([params.searchParams.tag]);
+      job_type.push(params.searchParams.tag);
     }
     if (params.searchParams.jobs_type) {
       let values1 = params.searchParams.jobs_type.split(',');
@@ -216,6 +258,9 @@ const dashboard: any = async (params: any) => {
         job_type.push(values1[index]);
       }
 
+    }
+    if (params.searchParams.page) {
+      page = params.searchParams.page;
     }
     if (params.searchParams.jobs_days) {
       let values2 = params.searchParams.jobs_days.split(',');
@@ -231,14 +276,14 @@ const dashboard: any = async (params: any) => {
       }
 
     }
-    if (params.searchParams.start) {
-      start = params.searchParams.start;
-    }
-    if (params.searchParams.end) {
-      end = params.searchParams.end;
-    }
+    // if (params.searchParams.start) {
+    //   start = params.searchParams.start;
+    // }
+    // if (params.searchParams.end) {
+    //   end = params.searchParams.end;
+    // }
 
-    let apiData = await getData(location, area, tagvalue, company, (job_type && job_type.length >= 1) ? job_type : job_type, start, end);
+    let apiData = await getData(location, area, tagvalue, company, (job_type && job_type.length >= 1) ? job_type : job_type, page);
     if (params.searchParams.title) {
       console.log('-------');
       console.log(apiData);
@@ -267,9 +312,9 @@ const dashboard: any = async (params: any) => {
 
     }
 
+    start = (page == 1) ? 0 : (page - 1) * pagination_size;
+    end = (page == 1) ? pagination_size : start + pagination_size;
     let values_filter = apiData.slice(start, end);
-
-
     return (
       <>
         <div className="h-full">
@@ -368,19 +413,21 @@ const dashboard: any = async (params: any) => {
                       Previous
                     </Link> */}
                     {Array.from({ length: apiData.length / pagination_size }, (_, index) => (
-                      <Link key={index} className="pagination"
-                        href={{
-                          pathname: '/jobs',
-                          query: {
-                            ...params.searchParams,
-                            start: (index == 0) ? 0 : index + 2,
-                            end: (index == 0) ? 2 : index + 4,
 
-                          }
-                        }}
-                      >
-                        {index + 1}
-                      </Link>
+                      (apiData.length) > pagination_size && (
+                        <Link key={index} className="pagination"
+                          href={{
+                            pathname: '/jobs',
+                            query: {
+                              ...params.searchParams,
+                              page: index + 1,
+                            }
+                          }}
+                        >
+                          {index + 1}
+                        </Link>
+                      )
+
 
                     ))}
                   </div>

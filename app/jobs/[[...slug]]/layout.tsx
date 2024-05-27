@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
 
 
@@ -83,9 +83,9 @@ export default function DashboardLayout({ children }: any) {
   // Type start
   const jobTypes = [
     // { label: "All", value: "" },
-    { label: "Employer location", value: "Employer-location" },
-    { label: "Field work", value: "Field-work" },
-    { label: "Work from home", value: "Work-from-home" },
+    { label: "Employer location", value: "employer-location" },
+    { label: "Field work", value: "field-work" },
+    { label: "Work from home", value: "work-from-home" },
   ];
   const handleJobTypeChange = (jobType: string) => {
     let updatedSelectedJobs: string[] = [];
@@ -113,9 +113,9 @@ export default function DashboardLayout({ children }: any) {
 
   const daysOfWeek = [
     // { label: "All", value: "" },
-    { label: "Weekday", value: "Weekday" },
-    { label: "Weekend", value: "Weekend" },
-    { label: "All days", value: "All-days" },
+    { label: "Weekday", value: "weekday" },
+    { label: "Weekend", value: "weekend" },
+    { label: "All days", value: "all-days" },
   ];
 
   const handleDayChange = (day: string) => {
@@ -140,12 +140,12 @@ export default function DashboardLayout({ children }: any) {
 
   const timePeriods = [
     // { label: "All", value: "" },
-    { label: "Morning", value: "Morning" },
-    { label: "Afternoon", value: "Afternoon" },
-    { label: "Evening", value: "Evening" },
-    { label: "Night", value: "Night" },
-    { label: "Full day", value: "Full-day" },
-    { label: "Flexible", value: "Flexible" },
+    { label: "Morning", value: "morning" },
+    { label: "Afternoon", value: "afternoon" },
+    { label: "Evening", value: "evening" },
+    { label: "Night", value: "night" },
+    { label: "Full day", value: "full-day" },
+    { label: "Flexible", value: "flexible" },
   ];
 
 
@@ -278,7 +278,29 @@ export default function DashboardLayout({ children }: any) {
   const [key, setKeylocation] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const paths = usePathname();
+  const pathNames = paths.split('/').filter((path) => path);
+  const pathItems = pathNames
+    .map((path, i) => ({
+      // Optionally you can capitalize the first letter here
+      name: path,
+      path: pathNames.slice(0, i + 1).join('/'),
+    }));
+  if (params.location) {
+    pathItems.push({
+      // Optionally you can capitalize the first letter here
+      name: params.location,
+      path: pathNames.slice(0, 1) + params.location,
+    })
 
+  }
+  if (params.area) {
+    pathItems.push({
+      // Optionally you can capitalize the first letter here
+      name: params.area,
+      path: '/' + params.area,
+    })
+  }
   const fetchSuggestions = async (input: any) => {
     if (input.length === 0) {
       setSuggestions([]);
@@ -504,7 +526,14 @@ export default function DashboardLayout({ children }: any) {
               </div> */}
             </div>
             <div className="Fillter-right">
-              {/* <div ><h1>Top</h1></div> */}
+              <div ><Breadcrumbs>
+                <BreadcrumbItem key={1} href="/">Home</BreadcrumbItem>
+                {pathItems.map((item) => (
+                  <BreadcrumbItem key={item.path} href={`/${item.path}`}>
+                    {item.name}
+                  </BreadcrumbItem>
+                ))}
+              </Breadcrumbs></div>
               <div className="body">{children}</div>
               {/* <div ><h1>bottom</h1></div> */}
             </div>
@@ -512,7 +541,7 @@ export default function DashboardLayout({ children }: any) {
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
 
