@@ -513,3 +513,16 @@ body {
 .categories-card-row{
   margin-top: 8px;
 }
+.nav-menu-card{
+  margin: 0 !important;
+  box-shadow: 0px 2px 4px 0px #0000001F;
+  height: 40px;
+  border-radius: 24px;
+  padding: 4px;
+}
+.nav-menu-card__row{
+  height: 33px;
+  width: 100%;
+  background-color: #DEE0FF;
+  border-radius: 16px;
+}

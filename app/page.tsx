@@ -487,7 +487,7 @@ const dashboard: any = async () => {
         </div>
         <div className='my-5'>         
           <div className="job-list-wrpper">
-            <h1 className='job-list-wrpper-title'>New & Popular jobs</h1>
+            <h1 className='job-list-wrpper-title'>Explore jobs</h1>
             {apiData.map((item: any, index: any) => (
               <div key={index}>
                 <div className="" key={item.id}>
@@ -530,6 +530,12 @@ const dashboard: any = async () => {
               </div>
             ))}
           </div>
+        </div>
+        <div className="my-5 ps-2 pe-2 py-2 flex justify-between items-center bg-white rounded-lg">
+          <div className="text-sm">
+            <span className='font-semibold'>Want to talk to someone?</span><span> Our customer support is here to help you. Monday to Friday 10:00am to 6:00pm</span>
+          </div>
+          <Link href="#" className='flex' style={{ backgroundColor:"#DEE0FF", padding:"7px 20px", borderRadius:"08px", fontSize:"16px", fontWeight:500 }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
         </div>
       </>
     );

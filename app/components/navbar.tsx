@@ -28,24 +28,29 @@ export default function Navbar() {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex items-center space-x-4">
-                      <span className="text-black  rounded-md px-3 py-2 text-sm font-medium">I am looking for</span>
-                      <div className="flex items-center">
-                                            
+                      <span className="text-black  rounded-md px-3 py-2 text-sm font-semibold">I am looking for</span>
+                      <div className="nav-menu-card flex items-center">
+                      <div className="nav-menu-card__row flex items-center">             
                         {menuItems.map((item) => {
                             
                             const isActive = pathname === item.href;
                             const backgroundColor = isActive ? "#2523CA" : "#DEE0FF";
                             const textColor = isActive ? "#FFFFFF" : "#2523CA";
-                            const fontWeight = isActive ? "500" : "400";
-
+                            const fontWeight = isActive ? "500" : "500";
+                            const boxShadow = isActive ? "0px 0px 2px 0px #2523CA8C" : "none";
+                            
                             return (
-                                <div className="mx-1" key={item.href}>
-                                    <Link style={{ backgroundColor, padding:"8px 24px" }} href={item.href} className="rounded-lg">
+
+                                
+                                <div className="" key={item.href}>
+                                    <Link style={{ backgroundColor, padding:"7px 24px", borderRadius:"16px", boxShadow }} href={item.href} className="rounded-lg">
                                         <span style={{ color: textColor, fontWeight, fontSize:"12px" }} className="">{item.label}</span>                                        
                                     </Link>
                                 </div>
                             );
                         })}
+                        </div>
+                                        
                                             
                       </div>
                     </div>
