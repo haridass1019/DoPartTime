@@ -464,51 +464,72 @@ const dashboard: any = async () => {
           </div>
           </div>
         </div>
+        <div className="job-categories my-4">
+          <h2 className="categories-title">Categories</h2>
+          <div className="flex justify-between categories-card-row">
+            <div className="categories-card">
+               <div className="categories-card__title">Delivery Jobs</div>
+               <div className="categories-card__value">1000+ Job openings</div>
+            </div>
+            <div className="categories-card">
+               <div className="categories-card__title">Construction worker</div>
+               <div className="categories-card__value">1500+ Job openings</div>
+            </div>
+            <div className="categories-card">
+               <div className="categories-card__title">Content writer</div>
+               <div className="categories-card__value">2000+ Job openings</div>
+            </div>
+            <div className="categories-card">
+               <div className="categories-card__title">Tailoring or Handicrafts</div>
+               <div className="categories-card__value">1000 Job openings</div>
+            </div>
+          </div>
+        </div>
         <div className='my-5'>         
-        <div className="job-list-wrpper">
-          <h1 className='job-list-wrpper-title'>New & Popular jobs</h1>
-          {apiData.map((item: any, index: any) => (
-            <div key={index}>
-              <div className="" key={item.id}>
-                <div className="job-list-card" key={item.id}>
-                  <Link href={`Pages/Jobs/Job-details/${item.id}`}>
-                    <div className="job-header">
-                      {item.image ? (
-                        <Image src={item.image} width={32} height={32} alt="Company" />
-                      ) : (
-                        <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
-                      )}
-                      <div>
-                        <p>{item.title}</p>
-                        <span>{item.title}</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
-                      <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
-                        <div className="hidden md:block w-10"></div>
-                        <div className="job-body">
-                          <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
-                          <span> {item.location}</span>
-                        </div>  
-                        <div className="job-body">
-                          <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
-                          <span>{formatTimeRange(item.start_time, item.end_time)}  {item.working_days}</span>
+          <div className="job-list-wrpper">
+            <h1 className='job-list-wrpper-title'>New & Popular jobs</h1>
+            {apiData.map((item: any, index: any) => (
+              <div key={index}>
+                <div className="" key={item.id}>
+                  <div className="job-list-card" key={item.id}>
+                    <Link href={`Pages/Jobs/Job-details/${item.id}`}>
+                      <div className="job-header">
+                        {item.image ? (
+                          <Image src={item.image} width={32} height={32} alt="Company" />
+                        ) : (
+                          <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+                        )}
+                        <div>
+                          <p>{item.title}</p>
+                          <span>{item.title}</span>
                         </div>
-                        <div className="job-body">
-                          <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
-                          <span>₹ {item.start_salary} - {item.end_salary} per month</span>
-                       </div>                          
                       </div>
-                      <div className="postby">
-                        <span>{formatPostedTime(item.publish_time)}</span>
-                      </div>
-                    </div>                    
-                  </Link>
+                      <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
+                        <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
+                          <div className="hidden md:block w-10"></div>
+                          <div className="job-body">
+                            <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
+                            <span> {item.location}</span>
+                          </div>  
+                          <div className="job-body">
+                            <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
+                            <span>{formatTimeRange(item.start_time, item.end_time)}  {item.working_days}</span>
+                          </div>
+                          <div className="job-body">
+                            <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
+                            <span>₹ {item.start_salary} - {item.end_salary} per month</span>
+                        </div>                          
+                        </div>
+                        <div className="postby">
+                          <span>{formatPostedTime(item.publish_time)}</span>
+                        </div>
+                      </div>                    
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
         </div>
       </>
     );
