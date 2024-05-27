@@ -431,21 +431,23 @@ const dashboard: any = async () => {
     const apiData = await getData();
     return (
       <>  
-        <div className='centerpage'>
-          <div className="flex flex-col flex-1 justify-between md:flex-row ms:flex-col mb-6">
+        <div className="jobsearch-wrapper">
+          <div className="jobsearch-bg-widget">
             <div className="job-heading-card">
               <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
-              <div><span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color:"#2523CA", fontWeight:500, fontSize:"16px", textDecorationLine:"underline"}} href="#">Change</Link></div>
+              <div className="text-center"><span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color:"#fff", fontWeight:500, fontSize:"14px", textDecorationLine:"underline"}} href="#">Change</Link></div>
             </div>
+            <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
+            
             <div className="w-full md:w-[370px]">
               
               <form className="max-w-md mx-auto" action="/search/">   
-                  <div className="relative">
-                      <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <div className="relative">                      
+                      <input type="search" id="default-search" className="global-search-bar block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" style={{ fontSize:"12px" }} placeholder="Search by locality, job type, company" required />
+                      {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
+                      <div className="absolute inset-y-0 end-0 flex items-center pe-2  pointer-events-none">
                        <Image src="/icon/ion_search.svg" width={24} height={24} alt="Search" />
                       </div>
-                      <input type="search" id="default-search" className="global-search-bar block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by locality, job type, company" required />
-                      {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
                   </div>
               </form>
 
@@ -460,6 +462,9 @@ const dashboard: any = async () => {
                </form> */}
             </div>
           </div>
+          </div>
+        </div>
+        <div className='my-5'>         
         <div className="job-list-wrpper">
           <h1 className='job-list-wrpper-title'>New & Popular jobs</h1>
           {apiData.map((item: any, index: any) => (

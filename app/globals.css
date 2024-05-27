@@ -335,8 +335,8 @@ body {
 }
 
 .page-wrapper {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
 }
 
 .mobile-menu {
@@ -348,13 +348,14 @@ body {
 }
 
 .job-count-heading {
-  color: #436278;
+  color: #fff;
   font-weight: 600;
   font-size: 16px;
+  text-align: center;
 }
 
 .job-location-heading {
-  color: #000000;
+  color: #fff;
   font-weight: 600;
   font-size: 22px;
   padding-right: 8px;
@@ -456,4 +457,30 @@ body {
   padding-left: 10px;
   padding-right: 10px;
   margin: 0px 10px;
+}
+.jobsearch-bg-widget{
+  width: 100%;
+  height: 186px;
+  background-image: url(../public/jobsearch-bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* display: flex;
+  justify-content: center; */
+  padding: 25px 0;
+}
+@media (min-width: 1024px) {
+  .homepage-wrapper {
+    margin: 32px 158px !important;
+  }
+  .navbar-wrapper {
+    margin: 0 158px !important; 
+  }
+}
+@media (min-width: 640px) {
+  .homepage-wrapper {
+      margin: 16px 50px;
+  }
+  .navbar-wrapper {
+      margin: 16px 50px;
+  }
 }
