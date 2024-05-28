@@ -468,12 +468,34 @@ body {
   justify-content: center; */
   padding: 25px 0;
 }
+
+/* Media query for laptop screens (1024px and up) */
+
 @media (min-width: 1024px) {
   .homepage-wrapper {
-    margin: 32px 158px !important;
+    /* margin: 32px 158px !important; */
+    max-width: 962px !important;
+    margin: 32px auto !important;
   }
   .navbar-wrapper {
-    margin: 0 158px !important; 
+    /* margin: 0 158px !important;  */
+    max-width: 962px !important;
+    margin: auto !important;
+  }
+}
+
+/* Media query for desktop screens (1370px and up) */
+
+@media (min-width: 1370px) {
+  .homepage-wrapper {
+    /* margin: 32px 158px !important; */
+    max-width: 1300px !important;
+    margin: 32px auto !important;
+  }
+  .navbar-wrapper {
+    /* margin: 0 158px !important;  */
+    max-width: 1300px !important;
+    margin: auto !important;
   }
 }
 @media (min-width: 640px) {
