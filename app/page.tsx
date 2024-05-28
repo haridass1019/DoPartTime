@@ -535,7 +535,7 @@ const dashboard: any = async () => {
           <div className="text-sm">
             <span className='font-semibold'>Want to talk to someone?</span><span> Our customer support is here to help you. Monday to Friday 10:00am to 6:00pm</span>
           </div>
-          <Link href="#" className='flex' style={{ backgroundColor:"#DEE0FF", padding:"7px 20px", borderRadius:"08px", fontSize:"16px", fontWeight:500 }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
+          <Link href="#" className='flex items-center' style={{ backgroundColor:"#DEE0FF", padding:"6px 20px", borderRadius:"08px", fontSize:"16px", fontWeight:500 }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
         </div>
       </>
     );
