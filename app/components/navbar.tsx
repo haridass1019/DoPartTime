@@ -16,7 +16,7 @@ export default function Navbar() {
     return (
         <>
         <header>
-          <div className="h-[36px]" style={{ backgroundColor: "#DEE0FF", textAlign: 'center', fontSize: "11px", fontWeight: 600, padding: "10px 0" }}>🎉 10,000+ people have successfully got part time jobs with DoPartTime  🎉</div>
+          <div className="h-[36px]" style={{ backgroundColor: "#DEE0FF", textAlign: 'center', fontSize: "11px", color:"black",fontWeight: 600, padding: "10px 0" }}>🎉 10,000+ people have successfully got part time jobs with DoPartTime  🎉</div>
           <nav className="bg-white">
             <div className="navbar-wrapper">
               <div className="relative flex h-16 items-center justify-between">
@@ -43,7 +43,7 @@ export default function Navbar() {
 
                                 
                                 <div className="" key={item.href}>
-                                    <Link style={{ backgroundColor, padding:"7px 24px", borderRadius:"16px", boxShadow }} href={item.href} className="rounded-lg">
+                                    <Link style={{ backgroundColor, padding:"6px 24px", borderRadius:"16px", boxShadow }} href={item.href} className="rounded-lg">
                                         <span style={{ color: textColor, fontWeight, fontSize:"12px" }} className="">{item.label}</span>                                        
                                     </Link>
                                 </div>
