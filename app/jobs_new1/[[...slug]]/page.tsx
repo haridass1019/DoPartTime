@@ -170,7 +170,7 @@ const dashboard: any = async (params: any) => {
     //   end = params.searchParams.end;
     // }
     let lastid = await getData(page, false, true, "", "", "", "");
-    let apiData = await getData(page, false, false, lastid, tiltle, location, area);
+    let apiData: any = await getData(page, false, false, lastid, tiltle, location, area);
     let apiDatacount: any = await getData(page, true, false, "", tiltle, location, area);
     return (
       <>
