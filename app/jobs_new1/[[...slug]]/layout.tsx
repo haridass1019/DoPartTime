@@ -243,7 +243,7 @@ export default function DashboardLayout({ children }: any) {
       queryParams.set("jobs_time_period", data.jobs_time_period);
     }
     const queryString = queryParams.toString();
-    router.push(`/jobs?${queryString}`);
+    router.push(`/jobs_new1?${queryString}`);
   };
   const [selectedHomeCityOption, setSelectedHomeCityOption] = useState(null);
   const loadHomeCityOptions = async (inputValue: any, callback: (arg0: any[]) => void) => {
@@ -255,7 +255,7 @@ export default function DashboardLayout({ children }: any) {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
         }
-        const response = await fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inputValue}&types=(cities)&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
+        const response = await fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inputValue}&types=%28cities%29&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
 
         );
 
@@ -280,19 +280,12 @@ export default function DashboardLayout({ children }: any) {
   const [loading, setLoading] = useState(false);
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path) => path);
-  const pathItems = [];
-  for (let i = 0; i < pathNames.length; i++) {
-    const path = pathNames[i];
-    if (path !== "company" && path !== "tag") {
-      const newPathItem = {
-        // Optionally you can capitalize the first letter here
-        name: path,
-        path: pathNames.slice(0, i + 1).join('/'),
-      };
-      pathItems.push(newPathItem);
-    }
-
-  }
+  const pathItems = pathNames
+    .map((path, i) => ({
+      // Optionally you can capitalize the first letter here
+      name: path,
+      path: pathNames.slice(0, i + 1).join('/'),
+    }));
   if (params.location) {
     pathItems.push({
       // Optionally you can capitalize the first letter here
@@ -318,7 +311,7 @@ export default function DashboardLayout({ children }: any) {
 
     try {
       const response = await fetch(
-        `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=(cities)&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
+        `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
       );
 
       const data = await response.json();
@@ -356,7 +349,7 @@ export default function DashboardLayout({ children }: any) {
         }
       });
       const area = data.result.address_components.filter((item: any) => {
-        if (item.types.includes("sublocality_level_1") || item.types.includes("administrative_area_level_4")) {
+        if (item.types.includes("sublocality_level_1")) {
           console.log(item);
           setselectedArea(item.long_name);
         }

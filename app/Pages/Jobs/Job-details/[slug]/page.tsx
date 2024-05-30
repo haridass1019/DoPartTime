@@ -423,15 +423,20 @@ const Jobdetailspage = async ({ params }: any) => {
       "title": jobData.title,
       "description": jobData.description,
       "datePosted": formatPostedTime(jobData.publish_time),
+      "employmentType": "PART_TIME",
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": companyData.name
+      },
       "jobLocation": {
         "@type": "Place",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "1600 Amphitheatre Pkwy",
-          "addressLocality": "Mountain View",
-          "addressRegion": jobData.location,
-          "postalCode": "94043",
-          "addressCountry": "IN"
+          "streetAddress": jobData.area + ',',
+          "addressLocality": jobData.location + ',',
+          "addressRegion": jobData.state + ',',
+          "addressCountry": jobData.country
+
         }
       },
     }
@@ -593,7 +598,7 @@ const Jobdetailspage = async ({ params }: any) => {
                   </div>
 
                   <div className="btn">
-                    <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/applyJob?slug=Software-developer-tier-1`}>
+                    <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/job/${params.slug}`}>
                       <button>Apply Now</button>
                     </Link>
                   </div>
