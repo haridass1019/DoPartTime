@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} page-wrapper`}>
         <div className="navbar">
-          <Navbar/>
+          <Navbar />
         </div>
         <main className="flex-1 overflow-y-auto" style={{ backgroundColor: '#F2F2F4' }}>
           <div className="homepage-wrapper">

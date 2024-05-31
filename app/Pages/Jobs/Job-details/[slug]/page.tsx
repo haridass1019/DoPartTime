@@ -320,6 +320,7 @@ import Image from 'next/image';
 import type { Metadata, ResolvingMetadata } from 'next'
 import Head from 'next/head';
 import Script from 'next/script'
+import { Breadcrumbs, BreadcrumbItem } from '@nextui-org/react';
 
 
 
@@ -415,8 +416,22 @@ const Jobdetailspage = async ({ params }: any) => {
   }
   try {
     const { jobData, companyData, categoryDetails, taglist }: any = await getData();
-
-
+    let jsonItems: any = [];
+    let valueset = 1;
+    for (let index = 1; index <= 5; index++) {
+      if (jobData.location != jobData.area || index != 4) {
+        jsonItems.push({
+          "@type": "ListItem",
+          "name": (index == 1) ? 'Home' : (index == 2) ? 'Jobs' : (index == 3) ? jobData.location : (index == 4) ? jobData.area : jobData.tiltle,
+          "position": valueset,
+          "item": {
+            "@type": "Thing",
+            "@id": (index == 1) ? 'https://do-part-time.vercel.app/' : (index == 2) ? 'https://do-part-time.vercel.app/' + 'Jobs' : (index == 3) ? 'https://do-part-time.vercel.app/jobs/' + jobData.location : (index == 4) ? 'https://do-part-time.vercel.app/jobs/' + jobData.location + "/" + jobData.area : 'https://do-part-time.vercel.app/Pages/Jobs/Job-details/' + params.slug,
+          },
+        },);
+        valueset++;
+      }
+    }
     const schemaData = {
       "@context": "http://schema.org",
       "@type": "JobPosting",
@@ -440,7 +455,11 @@ const Jobdetailspage = async ({ params }: any) => {
         }
       },
     }
-
+    const schemabreadcrumb = {
+      "@context": "http://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [jsonItems],
+    }
     return (
       <>
         {/* <Script
@@ -452,13 +471,27 @@ const Jobdetailspage = async ({ params }: any) => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
+        <Script
+          id="schema-data-script1"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemabreadcrumb) }}
+        />
+
         <h2 className="text-center p-10">Job details</h2>
+        <Breadcrumbs>
+          <BreadcrumbItem>Home</BreadcrumbItem>
+          <BreadcrumbItem>Music</BreadcrumbItem>
+          <BreadcrumbItem>Artist</BreadcrumbItem>
+          <BreadcrumbItem>Album</BreadcrumbItem>
+          <BreadcrumbItem>Song</BreadcrumbItem>
+        </Breadcrumbs>
         <div>
           <div key={jobData.id}>
             <div className="flex min-h-screen flex-col items-center justify-between">
               <div className="wrapper">
 
                 <div className="body">
+
                   <div className="job-wrpper details" >
                     <div className="job-header">
                       {/* <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Logo"/> */}
