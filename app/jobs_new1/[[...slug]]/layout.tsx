@@ -583,8 +583,8 @@ export default function DashboardLayout({ children }: any) {
                   <button
                     key={index}
                     onClick={() => handlePageChange(index + 1)}
-                    disabled={page === index + 1}
-                    className={page === index + 1 ? 'selected' : 'pagination'}
+                    disabled={parseInt(params.page) === index + 1}
+                    className={(parseInt(params.page) === index + 1 || (!params.page && index == 0)) ? 'selected' : 'pagination'}
                   >
                     {index + 1}
                   </button>
