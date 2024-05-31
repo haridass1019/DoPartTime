@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
+import axios from "axios";
+import getData from "./getData";
 
 
 
@@ -35,8 +37,30 @@ export default function DashboardLayout({ children }: any) {
   const params = Object.fromEntries(searchParams.entries());
   const pathname = usePathname();
   const slug_value = pathname.split('/');
+  const [jobs, setJobs] = useState<[]>([]);
+  const [page, setpage] = useState(Number);
+  const [lastid, setlastid] = useState("");
   useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await getData({
+          page: parseInt(params.page),
+          count: true,
+          lastVisible: false,
+          lastid: "",
+          location: params.location,
+          area: params.area,
+        });
+        setJobs(response);
 
+      } catch (err) {
+
+
+      }
+    };
+
+    fetchJobs();
+    setpage((params.page) ? parseInt(params.page) : 1);
     if (slug_value.length >= 2 && slug_value[2] != 'tag' && slug_value[2] != 'company') {
       setSelectedLocation(slug_value[2]);
     }
@@ -214,7 +238,18 @@ export default function DashboardLayout({ children }: any) {
 
     console.log("haritype", Selectedjob)
   };
+  const handlePageChange = async (pageNumber: number) => {
+    let lastid = await getData({
+      page: pageNumber,
+      count: false,
+      lastVisible: true,
+      lastid: "",
+      location: selectedLocation,
+      area: selectedArea
+    });
 
+    handleSearch({ page: pageNumber, start: (pageNumber >= 2) ? lastid.id : null });
+  };
   const handleSearch = async (data?: any) => {
 
     const queryParams = new URLSearchParams();
@@ -233,6 +268,12 @@ export default function DashboardLayout({ children }: any) {
     if (selectedtag) {
       queryParams.set("tag", selectedtag);
     }
+    if (data?.page) {
+      queryParams.set("page", data?.page);
+    }
+    if (data?.start) {
+      queryParams.set("start", data?.start);
+    }
     if (data?.jobtype) {
       queryParams.set("jobs_type", data?.jobtype);
     }
@@ -242,6 +283,7 @@ export default function DashboardLayout({ children }: any) {
     if (data?.jobs_time_period) {
       queryParams.set("jobs_time_period", data.jobs_time_period);
     }
+
     const queryString = queryParams.toString();
     router.push(`/jobs_new1?${queryString}`);
   };
@@ -535,6 +577,21 @@ export default function DashboardLayout({ children }: any) {
                 ))}
               </Breadcrumbs></div>
               <div className="body">{children}</div>
+              {Array.from({ length: Math.ceil(jobs.length / 2) }, (_, index) => (
+
+                (jobs.length) > 2 && (
+                  <button
+                    key={index}
+                    onClick={() => handlePageChange(index + 1)}
+                    disabled={page === index + 1}
+                    className={page === index + 1 ? 'selected' : 'pagination'}
+                  >
+                    {index + 1}
+                  </button>
+                )
+
+
+              ))}
               {/* <div ><h1>bottom</h1></div> */}
             </div>
 

@@ -1,56 +1,10 @@
 import { db } from "../../firbaseconfig";
-import { collection, endAt, getDoc, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
+import { collection, doc, endAt, getDoc, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
+import getData from "./getData";
 let pagination_size = 2;
-const getData = async (page: any, count: boolean, lastVisible: boolean, lastid: any, title: any, location: any, area: any) => {
-  try {
-    const queryConstraints = [];
-    if (location) {
-      queryConstraints.push(where('location', '==', location));
 
-    }
-    if (area) {
-      queryConstraints.push(where('area', '==', area));
-    }
-    queryConstraints.push(where('title', '>=', title));
-    queryConstraints.push(where('title', '<=', title + '\uf8ff'));
-
-    if (page >= 2 && (!count || !lastVisible)) {
-      if (lastid != "") {
-        queryConstraints.push(startAfter(lastid));
-      }
-    }
-    if (!count) {
-      queryConstraints.push(limit((page >= 2) ? pagination_size * (page - 1) : pagination_size));
-    }
-
-    const postsRef = query(collection(db, "jobs"), ...queryConstraints);
-    const querySnapshot = await getDocs(postsRef);
-    if (lastVisible == true) {
-      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-      console.log("-------------");
-      console.log(querySnapshot.docs.length);
-      console.log("-------------");
-
-      return lastVisible;
-    }
-
-    const promises = querySnapshot.docs.map(async (doc) => {
-      let data: any;
-      data = { id: doc.id, ...doc.data(), };
-      return data
-    });
-
-    const dataArray = await Promise.all(promises);
-    const data = dataArray.filter(Boolean); // Remove any undefined elements
-
-    console.log(data);
-    return data;
-  } catch (error: any) {
-    throw new Error("Failed to fetch data from Firestore: " + error.message);
-  }
-};
 
 
 function formatTimeRange(start_time: any, end_time: any) {
@@ -88,7 +42,23 @@ type Props = {
     slug: string[];
   };
 };
+const getDatalastid: any = async (value: any) => {
 
+  console.log('00009988888');
+  try {
+    const documentRef = doc(db, "jobs", value); // Replace "jobs" with the name of your collection
+    const documentSnapshot = await getDoc(documentRef);
+    console.log('000000000000000000');
+    console.log(documentSnapshot.id);
+    console.log('000000000000000000');
+    return documentSnapshot;
+  } catch (e) {
+    console.log('00009988888');
+    console.log(e);
+  }
+
+
+};
 const dashboard: any = async (params: any) => {
   try {
     // console.log("params", params.searchParams);
@@ -163,15 +133,45 @@ const dashboard: any = async (params: any) => {
       }
 
     }
-    if (params.searchParams.tiltle) {
-      tiltle = params.searchParams.tiltle;
-    }
+
     // if (params.searchParams.end) {
     //   end = params.searchParams.end;
     // }
-    let lastid = await getData(page, false, true, "", "", "", "");
-    let apiData: any = await getData(page, false, false, lastid, tiltle, location, area);
-    let apiDatacount: any = await getData(page, true, false, "", tiltle, location, area);
+    let lastid: any;
+    if (params.searchParams.start) {
+      console.log('000000000000000000000d');
+      lastid = await getDatalastid(params.searchParams.start);
+    }
+    let lastidd: any = await getData({
+      page: page,
+      count: false,
+      lastVisible: true,
+      lastid: "",
+      location: location,
+      area: area,
+    });
+    console.log('daaataaaa1');
+    console.log(lastidd);
+    console.log('daaataaaa1');
+    console.log('daaataaaa2');
+    console.log(lastid);
+    console.log('daaataaaa2');
+    let apiData: any = await getData({
+      page: page,
+      count: false,
+      lastVisible: false,
+      lastid: (lastid) ? lastid : "",
+      location: location,
+      area: area,
+    });
+    let apiDatacount: any = await getData({
+      page: page,
+      count: true,
+      lastVisible: false,
+      lastid: "",
+      location: location,
+      area: area,
+    });
     return (
       <>
         <div className="h-full">
@@ -269,25 +269,7 @@ const dashboard: any = async (params: any) => {
                     >
                       Previous
                     </Link> */}
-                    {Array.from({ length: Math.ceil(apiDatacount.length / pagination_size) }, (_, index) => (
 
-                      (apiDatacount.length) > pagination_size && (
-                        <Link key={index} className="pagination"
-                          href={{
-                            pathname: '/jobs_new1',
-                            query: {
-                              ...params.searchParams,
-                              page: index + 1,
-
-                            }
-                          }}
-                        >
-                          {index + 1}
-                        </Link>
-                      )
-
-
-                    ))}
                   </div>
                   {/* <Link className="pagination"
                     href={{
