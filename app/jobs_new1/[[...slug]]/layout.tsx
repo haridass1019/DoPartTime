@@ -30,7 +30,7 @@ export default function DashboardLayout({ children }: any) {
   const [selectedJobs, setSelectedJobs] = useState<any[]>([]);
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedTimePeriods, setSelectedTimePeriods] = useState<string[]>([]);
-
+  const [selectedallJobsfilter, setallJobsfilter] = useState<any[]>([]);
   //  filter  side menu end
   // console.log("url",parames)
   const searchParams = useSearchParams();
@@ -42,6 +42,7 @@ export default function DashboardLayout({ children }: any) {
   const [lastid, setlastid] = useState("");
   let location1 = "";
   let area1 = "";
+  let company = "";
   let jobtype1: any = [];
   let days_week1: any = [];
   let timeperiod1: any = [];
@@ -59,9 +60,11 @@ export default function DashboardLayout({ children }: any) {
     }
     if (slug_value.length >= 3 && slug_value[2] == 'company') {
       setselectedCompany(slug_value[3]);
+      company = slug_value[3];
     }
     if (slug_value.length >= 3 && slug_value[2] == 'tag') {
       setselectedtag(slug_value[3]);
+      jobtype1.push(slug_value[3]);
     }
     if (params.title) {
       setSearchQuery(params.title);
@@ -76,22 +79,25 @@ export default function DashboardLayout({ children }: any) {
     }
     if (params.company) {
       setselectedCompany(params.company);
+      company = params.company;
     }
     if (params.tag) {
       setselectedtag(params.tag);
+      jobtype1.push(params.tag);
     }
     if (params.jobs_type) {
       const getjobtypes = params.jobs_type.split(',');
-      jobtype1 = getjobtypes;
+      jobtype1.push(getjobtypes);
       setSelectedJobs(getjobtypes);
     }
     if (params.jobs_days) {
       const getjobs_days = params.jobs_days.split(',');
-      days_week1 = getjobs_days;
+      jobtype1.push(getjobs_days);
       setSelectedDays(getjobs_days);
     }
     if (params.jobs_time_period) {
       const getjobs_time_period = params.jobs_time_period.split(',');
+      jobtype1.push(getjobs_time_period);
       timeperiod1 = getjobs_time_period;
       setSelectedTimePeriods(getjobs_time_period);
     }
@@ -104,9 +110,8 @@ export default function DashboardLayout({ children }: any) {
           lastid: "",
           location: location1,
           area: area1,
-          jobtype: jobtype1,
-          daysweek: days_week1,
-          timeperiod: timeperiod1,
+          jobfilter: jobtype1,
+          company: company
         });
         setJobs(response);
 
@@ -256,6 +261,8 @@ export default function DashboardLayout({ children }: any) {
     console.log("haritype", Selectedjob)
   };
   const handlePageChange = async (pageNumber: number) => {
+
+    const mergedArray = [...selectedJobs, ...selectedDays, ...selectedTimePeriods];
     let lastid = await getData({
       page: pageNumber,
       count: false,
@@ -263,9 +270,9 @@ export default function DashboardLayout({ children }: any) {
       lastid: "",
       location: selectedLocation,
       area: selectedArea,
-      jobtype: selectedJobs,
-      daysweek: selectedDays,
-      timeperiod: selectedTimePeriods
+      jobfilter: mergedArray,
+      company: selectedCompany
+
     });
 
     handleSearch({ page: pageNumber, start: (pageNumber >= 2) ? lastid.id : null });

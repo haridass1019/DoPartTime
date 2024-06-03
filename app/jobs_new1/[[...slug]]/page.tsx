@@ -85,18 +85,12 @@ type Props = {
   };
 };
 const getDatalastid: any = async (value: any) => {
-
-  console.log('00009988888');
   try {
     const documentRef = doc(db, "jobs", value); // Replace "jobs" with the name of your collection
     const documentSnapshot = await getDoc(documentRef);
-    console.log('000000000000000000');
-    console.log(documentSnapshot.id);
-    console.log('000000000000000000');
     return documentSnapshot;
   } catch (e) {
-    console.log('00009988888');
-    console.log(e);
+
   }
 
 
@@ -150,6 +144,7 @@ const dashboard: any = async (params: any) => {
         area = params.params.slug[3];
       }
       tagvalue = params.params.slug[1];
+      job_type.push(tagvalue);
     }
     if (params.params.slug && params.params.slug[0] == "company") {
       company = params.params.slug[1];
@@ -165,6 +160,7 @@ const dashboard: any = async (params: any) => {
     }
     if (params.params.slug && params.params.slug[0] && params.params.slug[0] == "tag") {
       tagvalue = params.params.slug[1];
+      job_type.push(tagvalue);
     }
     if (params.searchParams.tag) {
 
@@ -185,7 +181,7 @@ const dashboard: any = async (params: any) => {
       let values2 = params.searchParams.jobs_days.split(',');
       for (let index = 0; index < values2.length; index++) {
         var letvalue = await gettagids(values2[index]);
-        days_week.push(letvalue);
+        job_type.push(letvalue);
       }
 
     }
@@ -193,7 +189,7 @@ const dashboard: any = async (params: any) => {
       let values3 = params.searchParams.jobs_time_period.split(',');
       for (let index = 0; index < values3.length; index++) {
         var letvalue = await gettagids(values3[index]);
-        time_period.push(letvalue);
+        job_type.push(letvalue);
       }
 
     }
@@ -216,9 +212,8 @@ const dashboard: any = async (params: any) => {
       lastid: (lastid) ? lastid : "",
       location: location,
       area: area,
-      jobtype: job_type,
-      daysweek: days_week,
-      timeperiod: time_period
+      jobfilter: job_type,
+      company: company
     });
     let apiDatacount: any = await getData({
       page: page,
@@ -227,9 +222,8 @@ const dashboard: any = async (params: any) => {
       lastid: "",
       location: location,
       area: area,
-      jobtype: job_type,
-      daysweek: days_week,
-      timeperiod: time_period
+      jobfilter: job_type,
+      company: company
     });
     return (
       <>

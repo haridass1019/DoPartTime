@@ -8,9 +8,8 @@ interface GetDataParams {
     lastid: string | null;
     location?: string;
     area?: string;
-    jobtype: any,
-    daysweek: any,
-    timeperiod: any,
+    jobfilter: any,
+    company?: string;
 }
 
 interface JobData {
@@ -20,12 +19,10 @@ interface JobData {
 
 const pagination_size = 2; // Set your pagination size
 
-const getData = async ({ page, count, lastVisible, lastid, location, area, jobtype, daysweek, timeperiod }: GetDataParams): Promise<JobData[] | any> => {
+const getData = async ({ page, count, lastVisible, lastid, location, area, jobfilter, company }: GetDataParams): Promise<JobData[] | any> => {
+
     try {
 
-        console.log("eeeeeeeeeeeeeeeeeeeeeee");
-        console.log(jobtype);
-        console.log("eeeeeeeeeeeeeeeeeeeeeee");
         const queryConstraints: QueryConstraint[] = [];
 
         if (location) {
@@ -35,8 +32,11 @@ const getData = async ({ page, count, lastVisible, lastid, location, area, jobty
         if (area) {
             queryConstraints.push(where('area', '==', area));
         }
-        if (jobtype && jobtype.length >= 1) {
-            queryConstraints.push(where('tag_store', 'array-contains-any', jobtype));
+        if (company) {
+            queryConstraints.push(where('company_tag', '==', company));
+        }
+        if (jobfilter && jobfilter.length >= 1) {
+            queryConstraints.push(where('tag_store', 'array-contains-any', jobfilter));
         }
         // if (daysweek && daysweek.length >= 1) {
         //     queryConstraints.push(where('tag_store', 'array-contains-any', daysweek));
