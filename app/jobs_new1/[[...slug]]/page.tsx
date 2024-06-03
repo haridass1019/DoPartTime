@@ -3,8 +3,50 @@ import { collection, doc, endAt, getDoc, getDocs, limit, orderBy, query, startAf
 import Image from "next/image";
 import Link from "next/link";
 import getData from "./getData";
-let pagination_size = 2;
+import Head from "next/head";
+import { Metadata } from 'next';
+import { useSearchParams } from "next/navigation";
 
+export async function generateMetadata(params: any): Promise<Metadata> {
+
+  let location = 'India';
+  let area = '';
+  let urlis = "jobs/";
+  if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
+    location = params.params.slug[0];
+    urlis = urlis + "/" + location;
+  }
+  if (params.params.slug && params.params.slug[1] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
+    area = params.params.slug[1] + ',';
+    urlis = urlis + "/" + area;
+  }
+  if (params.params.slug && params.params.slug[0] && params.params.slug[0] == "tag" && params.params.slug[0] != "company") {
+    if (params.params.slug && params.params.slug[2]) {
+      location = params.params.slug[2];
+      urlis = urlis + "/" + location;
+    }
+    if (params.params.slug && params.params.slug[3]) {
+      area = params.params.slug[3] + ',';
+      urlis = urlis + "/" + area;
+    }
+  }
+  if (params.searchParams.location) {
+    location = params.searchParams.location;
+    urlis = urlis + "/" + location;
+  }
+  if (params.searchParams.area) {
+    area = params.searchParams.area + ',';
+    urlis = urlis + "/" + area;
+  }
+  return {
+    title: `part time jobs in ${area} ${location}`,
+    description: `Part time jobs in ${area} ${location} . Search and apply for part time, weekend, evening, temporary jobs for consultants, freshers, college students, women housewives, professionals, retired.`,
+    keywords: `part time jobs in ${area} ${location}`,
+    alternates: {
+      canonical: `https://do-part-time.vercel.app/${urlis}`,
+    },
+  };
+}
 
 
 function formatTimeRange(start_time: any, end_time: any) {
@@ -59,6 +101,23 @@ const getDatalastid: any = async (value: any) => {
 
 
 };
+const gettagids: any = async (value: any) => {
+
+  try {
+    // const documentRef = doc(db, "master_tag", value);
+    // const documentSnapshot = await getDoc(documentRef);
+    const masterTagRef = doc(db, 'master_tag', value);
+    const masterTagDoc = await getDoc(masterTagRef);
+
+    // const documentRef = doc(db, "master_tag", value);
+    // const tagRef =collection('master_tag').doc('employer-location');
+    return masterTagDoc.ref.id;
+  } catch (e) {
+
+  }
+
+
+};
 const dashboard: any = async (params: any) => {
   try {
     // console.log("params", params.searchParams);
@@ -74,6 +133,8 @@ const dashboard: any = async (params: any) => {
     let page = 1;
 
     const job_type = [];
+    const days_week = [];
+    const time_period = [];
     // console.log((params.params.slug[0] != "tag"));
     if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
       location = params.params.slug[0];
@@ -112,7 +173,8 @@ const dashboard: any = async (params: any) => {
     if (params.searchParams.jobs_type) {
       let values1 = params.searchParams.jobs_type.split(',');
       for (let index = 0; index < values1.length; index++) {
-        job_type.push(values1[index]);
+        var letvalue = await gettagids(values1[index]);
+        job_type.push(letvalue);
       }
 
     }
@@ -122,14 +184,16 @@ const dashboard: any = async (params: any) => {
     if (params.searchParams.jobs_days) {
       let values2 = params.searchParams.jobs_days.split(',');
       for (let index = 0; index < values2.length; index++) {
-        job_type.push(values2[index]);
+        var letvalue = await gettagids(values2[index]);
+        days_week.push(letvalue);
       }
 
     }
     if (params.searchParams.jobs_time_period) {
       let values3 = params.searchParams.jobs_time_period.split(',');
       for (let index = 0; index < values3.length; index++) {
-        job_type.push(values3[index]);
+        var letvalue = await gettagids(values3[index]);
+        time_period.push(letvalue);
       }
 
     }
@@ -137,25 +201,14 @@ const dashboard: any = async (params: any) => {
     // if (params.searchParams.end) {
     //   end = params.searchParams.end;
     // }
+
     let lastid: any;
     if (params.searchParams.start) {
       console.log('000000000000000000000d');
       lastid = await getDatalastid(params.searchParams.start);
     }
-    let lastidd: any = await getData({
-      page: page,
-      count: false,
-      lastVisible: true,
-      lastid: "",
-      location: location,
-      area: area,
-    });
-    console.log('daaataaaa1');
-    console.log(lastidd);
-    console.log('daaataaaa1');
-    console.log('daaataaaa2');
-    console.log(lastid);
-    console.log('daaataaaa2');
+
+
     let apiData: any = await getData({
       page: page,
       count: false,
@@ -163,6 +216,9 @@ const dashboard: any = async (params: any) => {
       lastid: (lastid) ? lastid : "",
       location: location,
       area: area,
+      jobtype: job_type,
+      daysweek: days_week,
+      timeperiod: time_period
     });
     let apiDatacount: any = await getData({
       page: page,
@@ -171,9 +227,13 @@ const dashboard: any = async (params: any) => {
       lastid: "",
       location: location,
       area: area,
+      jobtype: job_type,
+      daysweek: days_week,
+      timeperiod: time_period
     });
     return (
       <>
+
         <div className="h-full">
           <div className="Fillter">
             <div className="header wrapper">
@@ -208,6 +268,11 @@ const dashboard: any = async (params: any) => {
                           <div>
                             <p>{message.title}</p>
                             <span>{message.title}</span>
+                            {message.status == 2 && (
+                              <div className="closed">
+                                Closed
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="job-body">

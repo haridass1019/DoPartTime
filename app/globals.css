@@ -561,3 +561,9 @@ body {
   background-color: #DEE0FF;
   border-radius: 16px;
 }
+
+.closed {
+  color: red;
+  border: 1px solid;
+  padding: 0px 6px;
+}

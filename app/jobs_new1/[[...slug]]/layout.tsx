@@ -40,31 +40,21 @@ export default function DashboardLayout({ children }: any) {
   const [jobs, setJobs] = useState<[]>([]);
   const [page, setpage] = useState(Number);
   const [lastid, setlastid] = useState("");
+  let location1 = "";
+  let area1 = "";
+  let jobtype1: any = [];
+  let days_week1: any = [];
+  let timeperiod1: any = [];
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await getData({
-          page: parseInt(params.page),
-          count: true,
-          lastVisible: false,
-          lastid: "",
-          location: params.location,
-          area: params.area,
-        });
-        setJobs(response);
-
-      } catch (err) {
 
 
-      }
-    };
-
-    fetchJobs();
     setpage((params.page) ? parseInt(params.page) : 1);
     if (slug_value.length >= 2 && slug_value[2] != 'tag' && slug_value[2] != 'company') {
+      location1 = slug_value[2];
       setSelectedLocation(slug_value[2]);
     }
     if (slug_value.length >= 3 && slug_value[2] != 'tag' && slug_value[2] != 'company') {
+      area1 = slug_value[3];
       setselectedArea(slug_value[3]);
     }
     if (slug_value.length >= 3 && slug_value[2] == 'company') {
@@ -77,9 +67,11 @@ export default function DashboardLayout({ children }: any) {
       setSearchQuery(params.title);
     }
     if (params.location) {
+      location1 = params.location;
       setSelectedLocation(params.location);
     }
     if (params.area) {
+      area1 = params.area;
       setselectedArea(params.area);
     }
     if (params.company) {
@@ -90,16 +82,41 @@ export default function DashboardLayout({ children }: any) {
     }
     if (params.jobs_type) {
       const getjobtypes = params.jobs_type.split(',');
+      jobtype1 = getjobtypes;
       setSelectedJobs(getjobtypes);
     }
     if (params.jobs_days) {
       const getjobs_days = params.jobs_days.split(',');
+      days_week1 = getjobs_days;
       setSelectedDays(getjobs_days);
     }
     if (params.jobs_time_period) {
       const getjobs_time_period = params.jobs_time_period.split(',');
+      timeperiod1 = getjobs_time_period;
       setSelectedTimePeriods(getjobs_time_period);
     }
+    const fetchJobs = async () => {
+      try {
+        const response = await getData({
+          page: parseInt(params.page),
+          count: true,
+          lastVisible: false,
+          lastid: "",
+          location: location1,
+          area: area1,
+          jobtype: jobtype1,
+          daysweek: days_week1,
+          timeperiod: timeperiod1,
+        });
+        setJobs(response);
+
+      } catch (err) {
+
+
+      }
+    };
+
+    fetchJobs();
   }, []);
 
   console.log(selectedLocation);
@@ -245,7 +262,10 @@ export default function DashboardLayout({ children }: any) {
       lastVisible: true,
       lastid: "",
       location: selectedLocation,
-      area: selectedArea
+      area: selectedArea,
+      jobtype: selectedJobs,
+      daysweek: selectedDays,
+      timeperiod: selectedTimePeriods
     });
 
     handleSearch({ page: pageNumber, start: (pageNumber >= 2) ? lastid.id : null });
@@ -258,6 +278,12 @@ export default function DashboardLayout({ children }: any) {
     }
     if (selectedLocation) {
       queryParams.set("location", selectedLocation);
+    }
+    if (data?.location) {
+      queryParams.set("location", data?.location);
+    }
+    if (data?.area) {
+      queryParams.set("area", data?.area);
     }
     if (selectedArea) {
       queryParams.set("area", selectedArea);
@@ -353,7 +379,7 @@ export default function DashboardLayout({ children }: any) {
 
     try {
       const response = await fetch(
-        `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
+        `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc&types=locality|sublocality&components=country:IN`
       );
 
       const data = await response.json();
@@ -388,16 +414,21 @@ export default function DashboardLayout({ children }: any) {
         if (item.types.includes("locality")) {
           console.log(item);
           setSelectedLocation(item.long_name);
+          return item.long_name;
         }
       });
       const area = data.result.address_components.filter((item: any) => {
         if (item.types.includes("sublocality_level_1")) {
           console.log(item);
           setselectedArea(item.long_name);
+          return item.long_name;
         }
 
       });
+
+      handleSearch({ location: city[0].long_name, area: (area && area[0]) ? area[0].long_name : null });
     }
+
   }
   const defalut = { jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods };
   return (
@@ -405,12 +436,12 @@ export default function DashboardLayout({ children }: any) {
       <div className="h-full">
         <div className="Fillter">
           <div className="header wrapper">
-            <input
+            {/* <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search"
-            />
+            /> */}
 
             <Autocomplete
               className="max-w-xs"
@@ -430,7 +461,7 @@ export default function DashboardLayout({ children }: any) {
             </Autocomplete>
 
 
-            <button onClick={() => handleSearch(defalut)}>Search</button>
+            {/* <button onClick={() => handleSearch(defalut)}>Search</button> */}
           </div>
           <div className="Fillter-wrapper">
             <div className="Fillter-left">

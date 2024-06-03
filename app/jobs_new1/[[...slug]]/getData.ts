@@ -1,4 +1,4 @@
-import { collection, getDocs, limit, query, QueryConstraint, startAfter, where } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query, QueryConstraint, startAfter, where } from "firebase/firestore";
 import { db } from "../../firbaseconfig"; // Adjust the path to your Firebase config
 
 interface GetDataParams {
@@ -8,6 +8,9 @@ interface GetDataParams {
     lastid: string | null;
     location?: string;
     area?: string;
+    jobtype: any,
+    daysweek: any,
+    timeperiod: any,
 }
 
 interface JobData {
@@ -17,19 +20,34 @@ interface JobData {
 
 const pagination_size = 2; // Set your pagination size
 
-const getData = async ({ page, count, lastVisible, lastid, location, area }: GetDataParams): Promise<JobData[] | any> => {
+const getData = async ({ page, count, lastVisible, lastid, location, area, jobtype, daysweek, timeperiod }: GetDataParams): Promise<JobData[] | any> => {
     try {
 
-
+        console.log("eeeeeeeeeeeeeeeeeeeeeee");
+        console.log(jobtype);
+        console.log("eeeeeeeeeeeeeeeeeeeeeee");
         const queryConstraints: QueryConstraint[] = [];
 
         if (location) {
             queryConstraints.push(where('location', '==', location));
+
         }
         if (area) {
             queryConstraints.push(where('area', '==', area));
         }
+        if (jobtype && jobtype.length >= 1) {
+            queryConstraints.push(where('tag_store', 'array-contains-any', jobtype));
+        }
+        // if (daysweek && daysweek.length >= 1) {
+        //     queryConstraints.push(where('tag_store', 'array-contains-any', daysweek));
+        // }
+        queryConstraints.push(where('status', '!=', 0));
 
+        // if (timeperiod.length >= 1) {
+        //     queryConstraints.push(where('tag_store', 'array-contains', timeperiod));
+        // }
+        queryConstraints.push(orderBy('status', 'asc'));
+        // queryConstraints.push(orderBy('publish_time', 'asc'));
         if (page >= 2 && (!count || !lastVisible)) {
             if (lastid) {
                 queryConstraints.push(startAfter(lastid));

@@ -630,14 +630,20 @@ const Jobdetailspage = async ({ params }: any) => {
                     ))}
                   </div>
 
-                  <div className="btn">
-                    <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/job/${params.slug}`}>
-                      <button>Apply Now</button>
-                    </Link>
-                  </div>
 
 
-
+                  {jobData.status == 1 && (
+                    <div className="btn">
+                      <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/job/${params.slug}`}>
+                        <button>Apply Now</button>
+                      </Link>
+                    </div>
+                  )}
+                  {jobData.status == 2 && (
+                    <div className="closed">
+                      Closed
+                    </div>
+                  )}
                 </div>
               </div>
 
