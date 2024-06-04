@@ -319,7 +319,7 @@ export default function DashboardLayout({ children }: any) {
     }
 
     const queryString = queryParams.toString();
-    router.push(`/jobs?${queryString}`);
+    router.push(`/jobs_new1?${queryString}`);
   };
   const [selectedHomeCityOption, setSelectedHomeCityOption] = useState(null);
   const loadHomeCityOptions = async (inputValue: any, callback: (arg0: any[]) => void) => {
