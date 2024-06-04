@@ -87,21 +87,22 @@ export default function DashboardLayout({ children }: any) {
     }
     if (params.jobs_type) {
       const getjobtypes = params.jobs_type.split(',');
-      jobtype1.push(getjobtypes);
+      jobtype1 = getjobtypes;
       setSelectedJobs(getjobtypes);
     }
     if (params.jobs_days) {
       const getjobs_days = params.jobs_days.split(',');
-      jobtype1.push(getjobs_days);
+      days_week1 = getjobs_days;
       setSelectedDays(getjobs_days);
     }
     if (params.jobs_time_period) {
       const getjobs_time_period = params.jobs_time_period.split(',');
-      jobtype1.push(getjobs_time_period);
       timeperiod1 = getjobs_time_period;
       setSelectedTimePeriods(getjobs_time_period);
     }
     const fetchJobs = async () => {
+      let jobfilter = [...jobtype1, ...days_week1, ...timeperiod1];
+
       try {
         const response = await getData({
           page: parseInt(params.page),
@@ -110,7 +111,7 @@ export default function DashboardLayout({ children }: any) {
           lastid: "",
           location: location1,
           area: area1,
-          jobfilter: jobtype1,
+          jobfilter: jobfilter,
           company: company
         });
         setJobs(response);
@@ -275,7 +276,7 @@ export default function DashboardLayout({ children }: any) {
 
     });
 
-    handleSearch({ page: pageNumber, start: (pageNumber >= 2) ? lastid.id : null });
+    handleSearch({ page: pageNumber, start: (pageNumber >= 2) ? lastid.id : null, jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods });
   };
   const handleSearch = async (data?: any) => {
 
@@ -433,7 +434,7 @@ export default function DashboardLayout({ children }: any) {
 
       });
 
-      handleSearch({ location: city[0].long_name, area: (area && area[0]) ? area[0].long_name : null });
+      handleSearch({ location: city[0].long_name, area: (area && area[0]) ? area[0].long_name : null, jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods });
     }
 
   }
