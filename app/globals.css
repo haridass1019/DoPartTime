@@ -838,3 +838,8 @@ font-size: 0 !important;
   padding: 4px 10px;
   border-radius: 16px;
 }
+.closed {
+  color: red;
+  border: 1px solid;
+  padding: 0px 6px;
+}

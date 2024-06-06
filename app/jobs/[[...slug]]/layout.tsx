@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
+import axios from "axios";
+import getData from "./getData";
 
 
 
@@ -28,54 +30,99 @@ export default function DashboardLayout({ children }: any) {
   const [selectedJobs, setSelectedJobs] = useState<any[]>([]);
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [selectedTimePeriods, setSelectedTimePeriods] = useState<string[]>([]);
-
+  const [selectedallJobsfilter, setallJobsfilter] = useState<any[]>([]);
   //  filter  side menu end
   // console.log("url",parames)
   const searchParams = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
   const pathname = usePathname();
   const slug_value = pathname.split('/');
+  const [jobs, setJobs] = useState<[]>([]);
+  const [page, setpage] = useState(Number);
+  const [lastid, setlastid] = useState("");
+  let location1 = "";
+  let area1 = "";
+  let company = "";
+  let jobtype1: any = [];
+  let days_week1: any = [];
+  let timeperiod1: any = [];
   useEffect(() => {
 
+
+    setpage((params.page) ? parseInt(params.page) : 1);
     if (slug_value.length >= 2 && slug_value[2] != 'tag' && slug_value[2] != 'company') {
+      location1 = slug_value[2];
       setSelectedLocation(slug_value[2]);
     }
     if (slug_value.length >= 3 && slug_value[2] != 'tag' && slug_value[2] != 'company') {
+      area1 = slug_value[3];
       setselectedArea(slug_value[3]);
     }
     if (slug_value.length >= 3 && slug_value[2] == 'company') {
       setselectedCompany(slug_value[3]);
+      company = slug_value[3];
     }
     if (slug_value.length >= 3 && slug_value[2] == 'tag') {
       setselectedtag(slug_value[3]);
+      jobtype1.push(slug_value[3]);
     }
     if (params.title) {
       setSearchQuery(params.title);
     }
     if (params.location) {
+      location1 = params.location;
       setSelectedLocation(params.location);
     }
     if (params.area) {
+      area1 = params.area;
       setselectedArea(params.area);
     }
     if (params.company) {
       setselectedCompany(params.company);
+      company = params.company;
     }
     if (params.tag) {
       setselectedtag(params.tag);
+      jobtype1.push(params.tag);
     }
     if (params.jobs_type) {
       const getjobtypes = params.jobs_type.split(',');
+      jobtype1 = getjobtypes;
       setSelectedJobs(getjobtypes);
     }
     if (params.jobs_days) {
       const getjobs_days = params.jobs_days.split(',');
+      days_week1 = getjobs_days;
       setSelectedDays(getjobs_days);
     }
     if (params.jobs_time_period) {
       const getjobs_time_period = params.jobs_time_period.split(',');
+      timeperiod1 = getjobs_time_period;
       setSelectedTimePeriods(getjobs_time_period);
     }
+    const fetchJobs = async () => {
+      let jobfilter = [...jobtype1, ...days_week1, ...timeperiod1];
+
+      try {
+        const response = await getData({
+          page: parseInt(params.page),
+          count: true,
+          lastVisible: false,
+          lastid: "",
+          location: location1,
+          area: area1,
+          jobfilter: jobfilter,
+          company: company
+        });
+        setJobs(response);
+
+      } catch (err) {
+
+
+      }
+    };
+
+    fetchJobs();
   }, []);
 
   console.log(selectedLocation);
@@ -214,7 +261,23 @@ export default function DashboardLayout({ children }: any) {
 
     console.log("haritype", Selectedjob)
   };
+  const handlePageChange = async (pageNumber: number) => {
 
+    const mergedArray = [...selectedJobs, ...selectedDays, ...selectedTimePeriods];
+    let lastid = await getData({
+      page: pageNumber,
+      count: false,
+      lastVisible: true,
+      lastid: "",
+      location: selectedLocation,
+      area: selectedArea,
+      jobfilter: mergedArray,
+      company: selectedCompany
+
+    });
+
+    handleSearch({ page: pageNumber, start: (pageNumber >= 2) ? lastid.id : null, jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods });
+  };
   const handleSearch = async (data?: any) => {
 
     const queryParams = new URLSearchParams();
@@ -223,6 +286,12 @@ export default function DashboardLayout({ children }: any) {
     }
     if (selectedLocation) {
       queryParams.set("location", selectedLocation);
+    }
+    if (data?.location) {
+      queryParams.set("location", data?.location);
+    }
+    if (data?.area) {
+      queryParams.set("area", data?.area);
     }
     if (selectedArea) {
       queryParams.set("area", selectedArea);
@@ -233,6 +302,12 @@ export default function DashboardLayout({ children }: any) {
     if (selectedtag) {
       queryParams.set("tag", selectedtag);
     }
+    if (data?.page) {
+      queryParams.set("page", data?.page);
+    }
+    if (data?.start) {
+      queryParams.set("start", data?.start);
+    }
     if (data?.jobtype) {
       queryParams.set("jobs_type", data?.jobtype);
     }
@@ -242,6 +317,7 @@ export default function DashboardLayout({ children }: any) {
     if (data?.jobs_time_period) {
       queryParams.set("jobs_time_period", data.jobs_time_period);
     }
+
     const queryString = queryParams.toString();
     router.push(`/jobs?${queryString}`);
   };
@@ -255,7 +331,7 @@ export default function DashboardLayout({ children }: any) {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
         }
-        const response = await fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inputValue}&types=(cities)&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
+        const response = await fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inputValue}&types=%28cities%29&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
 
         );
 
@@ -280,19 +356,12 @@ export default function DashboardLayout({ children }: any) {
   const [loading, setLoading] = useState(false);
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path) => path);
-  const pathItems = [];
-  for (let i = 0; i < pathNames.length; i++) {
-    const path = pathNames[i];
-    if (path !== "company" && path !== "tag") {
-      const newPathItem = {
-        // Optionally you can capitalize the first letter here
-        name: path,
-        path: pathNames.slice(0, i + 1).join('/'),
-      };
-      pathItems.push(newPathItem);
-    }
-
-  }
+  const pathItems = pathNames
+    .map((path, i) => ({
+      // Optionally you can capitalize the first letter here
+      name: path,
+      path: pathNames.slice(0, i + 1).join('/'),
+    }));
   if (params.location) {
     pathItems.push({
       // Optionally you can capitalize the first letter here
@@ -318,7 +387,7 @@ export default function DashboardLayout({ children }: any) {
 
     try {
       const response = await fetch(
-        `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=(cities)&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc`
+        `https://warm-caverns-48629-92fab798385f.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=AIzaSyCzaKDgqmElSIIbKahhFT9vuaqhi_l9icc&types=locality|sublocality&components=country:IN`
       );
 
       const data = await response.json();
@@ -353,16 +422,21 @@ export default function DashboardLayout({ children }: any) {
         if (item.types.includes("locality")) {
           console.log(item);
           setSelectedLocation(item.long_name);
+          return item.long_name;
         }
       });
       const area = data.result.address_components.filter((item: any) => {
-        if (item.types.includes("sublocality_level_1") || item.types.includes("administrative_area_level_4")) {
+        if (item.types.includes("sublocality_level_1")) {
           console.log(item);
           setselectedArea(item.long_name);
+          return item.long_name;
         }
 
       });
+
+      handleSearch({ location: city[0].long_name, area: (area && area[0]) ? area[0].long_name : null, jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods });
     }
+
   }
   const defalut = { jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods };
   return (
@@ -370,12 +444,12 @@ export default function DashboardLayout({ children }: any) {
       <div className="h-full">
         <div className="Fillter">
           <div className="header wrapper">
-            <input
+            {/* <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search"
-            />
+            /> */}
 
             <Autocomplete
               className="max-w-xs"
@@ -395,7 +469,7 @@ export default function DashboardLayout({ children }: any) {
             </Autocomplete>
 
 
-            <button onClick={() => handleSearch(defalut)}>Search</button>
+            {/* <button onClick={() => handleSearch(defalut)}>Search</button> */}
           </div>
           <div className="Fillter-wrapper">
             <div className="Fillter-left">
@@ -542,6 +616,21 @@ export default function DashboardLayout({ children }: any) {
                 ))}
               </Breadcrumbs></div>
               <div className="body">{children}</div>
+              {Array.from({ length: Math.ceil(jobs.length / 2) }, (_, index) => (
+
+                (jobs.length) > 2 && (
+                  <button
+                    key={index}
+                    onClick={() => handlePageChange(index + 1)}
+                    disabled={parseInt(params.page) === index + 1}
+                    className={(parseInt(params.page) === index + 1 || (!params.page && index == 0)) ? 'selected' : 'pagination'}
+                  >
+                    {index + 1}
+                  </button>
+                )
+
+
+              ))}
               {/* <div ><h1>bottom</h1></div> */}
             </div>
 

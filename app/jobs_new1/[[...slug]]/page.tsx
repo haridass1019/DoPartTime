@@ -1,56 +1,52 @@
 import { db } from "../../firbaseconfig";
-import { collection, endAt, getDoc, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
+import { collection, doc, endAt, getDoc, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
-let pagination_size = 2;
-const getData = async (page: any, count: boolean, lastVisible: boolean, lastid: any, title: any, location: any, area: any) => {
-  try {
-    const queryConstraints = [];
-    if (location) {
-      queryConstraints.push(where('location', '==', location));
+import getData from "./getData";
+import Head from "next/head";
+import { Metadata } from 'next';
+import { useSearchParams } from "next/navigation";
 
-    }
-    if (area) {
-      queryConstraints.push(where('area', '==', area));
-    }
-    queryConstraints.push(where('title', '>=', title));
-    queryConstraints.push(where('title', '<=', title + '\uf8ff'));
+export async function generateMetadata(params: any): Promise<Metadata> {
 
-    if (page >= 2 && (!count || !lastVisible)) {
-      if (lastid != "") {
-        queryConstraints.push(startAfter(lastid));
-      }
-    }
-    if (!count) {
-      queryConstraints.push(limit((page >= 2) ? pagination_size * (page - 1) : pagination_size));
-    }
-
-    const postsRef = query(collection(db, "jobs"), ...queryConstraints);
-    const querySnapshot = await getDocs(postsRef);
-    if (lastVisible == true) {
-      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-      console.log("-------------");
-      console.log(querySnapshot.docs.length);
-      console.log("-------------");
-
-      return lastVisible;
-    }
-
-    const promises = querySnapshot.docs.map(async (doc) => {
-      let data: any;
-      data = { id: doc.id, ...doc.data(), };
-      return data
-    });
-
-    const dataArray = await Promise.all(promises);
-    const data = dataArray.filter(Boolean); // Remove any undefined elements
-
-    console.log(data);
-    return data;
-  } catch (error: any) {
-    throw new Error("Failed to fetch data from Firestore: " + error.message);
+  let location = 'India';
+  let area = '';
+  let urlis = "jobs/";
+  if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
+    location = params.params.slug[0];
+    urlis = urlis + "/" + location;
   }
-};
+  if (params.params.slug && params.params.slug[1] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
+    area = params.params.slug[1] + ',';
+    urlis = urlis + "/" + area;
+  }
+  if (params.params.slug && params.params.slug[0] && params.params.slug[0] == "tag" && params.params.slug[0] != "company") {
+    if (params.params.slug && params.params.slug[2]) {
+      location = params.params.slug[2];
+      urlis = urlis + "/" + location;
+    }
+    if (params.params.slug && params.params.slug[3]) {
+      area = params.params.slug[3] + ',';
+      urlis = urlis + "/" + area;
+    }
+  }
+  if (params.searchParams.location) {
+    location = params.searchParams.location;
+    urlis = urlis + "/" + location;
+  }
+  if (params.searchParams.area) {
+    area = params.searchParams.area + ',';
+    urlis = urlis + "/" + area;
+  }
+  return {
+    title: `part time jobs in ${area} ${location}`,
+    description: `Part time jobs in ${area} ${location} . Search and apply for part time, weekend, evening, temporary jobs for consultants, freshers, college students, women housewives, professionals, retired.`,
+    keywords: `part time jobs in ${area} ${location}`,
+    alternates: {
+      canonical: `https://do-part-time.vercel.app/${urlis}`,
+    },
+  };
+}
 
 
 function formatTimeRange(start_time: any, end_time: any) {
@@ -88,7 +84,34 @@ type Props = {
     slug: string[];
   };
 };
+const getDatalastid: any = async (value: any) => {
+  try {
+    const documentRef = doc(db, "jobs", value); // Replace "jobs" with the name of your collection
+    const documentSnapshot = await getDoc(documentRef);
+    return documentSnapshot;
+  } catch (e) {
 
+  }
+
+
+};
+const gettagids: any = async (value: any) => {
+
+  try {
+    // const documentRef = doc(db, "master_tag", value);
+    // const documentSnapshot = await getDoc(documentRef);
+    const masterTagRef = doc(db, 'master_tag', value);
+    const masterTagDoc = await getDoc(masterTagRef);
+
+    // const documentRef = doc(db, "master_tag", value);
+    // const tagRef =collection('master_tag').doc('employer-location');
+    return masterTagDoc.ref.id;
+  } catch (e) {
+
+  }
+
+
+};
 const dashboard: any = async (params: any) => {
   try {
     // console.log("params", params.searchParams);
@@ -104,6 +127,8 @@ const dashboard: any = async (params: any) => {
     let page = 1;
 
     const job_type = [];
+    const days_week = [];
+    const time_period = [];
     // console.log((params.params.slug[0] != "tag"));
     if (params.params.slug && params.params.slug[0] && params.params.slug[0] != "tag" && params.params.slug[0] != "company") {
       location = params.params.slug[0];
@@ -119,6 +144,7 @@ const dashboard: any = async (params: any) => {
         area = params.params.slug[3];
       }
       tagvalue = params.params.slug[1];
+      job_type.push(tagvalue);
     }
     if (params.params.slug && params.params.slug[0] == "company") {
       company = params.params.slug[1];
@@ -134,6 +160,7 @@ const dashboard: any = async (params: any) => {
     }
     if (params.params.slug && params.params.slug[0] && params.params.slug[0] == "tag") {
       tagvalue = params.params.slug[1];
+      job_type.push(tagvalue);
     }
     if (params.searchParams.tag) {
 
@@ -142,7 +169,8 @@ const dashboard: any = async (params: any) => {
     if (params.searchParams.jobs_type) {
       let values1 = params.searchParams.jobs_type.split(',');
       for (let index = 0; index < values1.length; index++) {
-        job_type.push(values1[index]);
+        var letvalue = await gettagids(values1[index]);
+        job_type.push(letvalue);
       }
 
     }
@@ -152,28 +180,54 @@ const dashboard: any = async (params: any) => {
     if (params.searchParams.jobs_days) {
       let values2 = params.searchParams.jobs_days.split(',');
       for (let index = 0; index < values2.length; index++) {
-        job_type.push(values2[index]);
+        var letvalue = await gettagids(values2[index]);
+        job_type.push(letvalue);
       }
 
     }
     if (params.searchParams.jobs_time_period) {
       let values3 = params.searchParams.jobs_time_period.split(',');
       for (let index = 0; index < values3.length; index++) {
-        job_type.push(values3[index]);
+        var letvalue = await gettagids(values3[index]);
+        job_type.push(letvalue);
       }
 
     }
-    if (params.searchParams.tiltle) {
-      tiltle = params.searchParams.tiltle;
-    }
+
     // if (params.searchParams.end) {
     //   end = params.searchParams.end;
     // }
-    let lastid = await getData(page, false, true, "", "", "", "");
-    let apiData: any = await getData(page, false, false, lastid, tiltle, location, area);
-    let apiDatacount: any = await getData(page, true, false, "", tiltle, location, area);
+
+    let lastid: any;
+    if (params.searchParams.start) {
+      console.log('000000000000000000000d');
+      lastid = await getDatalastid(params.searchParams.start);
+    }
+
+
+    let apiData: any = await getData({
+      page: page,
+      count: false,
+      lastVisible: false,
+      lastid: (lastid) ? lastid : "",
+      location: location,
+      area: area,
+      jobfilter: job_type,
+      company: company
+    });
+    let apiDatacount: any = await getData({
+      page: page,
+      count: true,
+      lastVisible: false,
+      lastid: "",
+      location: location,
+      area: area,
+      jobfilter: job_type,
+      company: company
+    });
     return (
       <>
+
         <div className="h-full">
           <div className="Fillter">
             <div className="header wrapper">
@@ -208,6 +262,11 @@ const dashboard: any = async (params: any) => {
                           <div>
                             <p>{message.title}</p>
                             <span>{message.title}</span>
+                            {message.status == 2 && (
+                              <div className="closed">
+                                Closed
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="job-body">
@@ -269,25 +328,7 @@ const dashboard: any = async (params: any) => {
                     >
                       Previous
                     </Link> */}
-                    {Array.from({ length: Math.ceil(apiDatacount.length / pagination_size) }, (_, index) => (
 
-                      (apiDatacount.length) > pagination_size && (
-                        <Link key={index} className="pagination"
-                          href={{
-                            pathname: '/jobs_new1',
-                            query: {
-                              ...params.searchParams,
-                              page: index + 1,
-
-                            }
-                          }}
-                        >
-                          {index + 1}
-                        </Link>
-                      )
-
-
-                    ))}
                   </div>
                   {/* <Link className="pagination"
                     href={{
