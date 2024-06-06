@@ -374,7 +374,7 @@
 
 
 
-
+'use client'
 
 
 import { db } from './firbaseconfig';
@@ -382,8 +382,16 @@ import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {Button} from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
+import {Tabs, Tab} from "@nextui-org/react";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
 const getData = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "jobs"));
@@ -426,6 +434,23 @@ function formatPostedTime(publish_time: any) {
     return `Posted ${daysDifference} days ago`;
   }
 }
+const Categories = [
+  { categoriestitle: 'Delivery Jobs', categoriesvalue: '1000+ Job openings' },
+  { categoriestitle: 'Construction worker', categoriesvalue: '1500+ Job openings' },
+  { categoriestitle: 'Content writer', categoriesvalue: '2000+ Job openings' },
+  { categoriestitle: 'Tailoring or Handicrafts', categoriesvalue: '1000 Job openings' },
+  { categoriestitle: 'Tailoring or Handicrafts', categoriesvalue: '1000 Job openings' },
+  { categoriestitle: 'Tailoring or Handicrafts', categoriesvalue: '1000 Job openings' },
+]
+const trendingJob = [
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
+]
+
 const dashboard: any = async () => {
   try {
     const apiData = await getData();
@@ -437,21 +462,21 @@ const dashboard: any = async () => {
               <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
               <div className="text-center"><span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color:"#fff", fontWeight:500, fontSize:"14px", textDecorationLine:"underline"}} href="#">Change</Link></div>
             </div>
-            <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
+            {/* <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
             
             <div className="w-full md:w-[370px]">
               
               <form className="max-w-md mx-auto" action="/search/">   
                   <div className="relative">                      
                       <input type="search" id="default-search" className="global-search-bar block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" style={{ fontSize:"12px" }} placeholder="Search by locality, job type, company" required />
-                      {/* <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
+                      <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                       <div className="absolute inset-y-0 end-0 flex items-center pe-2  pointer-events-none">
                        <Image src="/icon/ion_search.svg" width={24} height={24} alt="Search" />
                       </div>
                   </div>
               </form>
 
-              {/* <form action="/search/">
+              <form action="/search/">
                 <input
                   type="text"
                   name='search'
@@ -459,35 +484,137 @@ const dashboard: any = async () => {
                 />
                 <button type='submit'>Search</button>
 
-               </form> */}
+               </form>
             </div>
+          </div> */}
           </div>
+          <div className="trending-jobs-wrapper">
+            <h2 className="trending-jobs-title">Trending jobs near you</h2>
+            <div className="trending-jobs-row">
+            <Swiper 
+              slidesPerView={4.5}
+              spaceBetween={8}
+              // centeredSlides={true}
+              navigation
+              
+              
+          // pagination={{ type: 'fraction' }}
+          modules={[Navigation, Pagination]}
+          onSwiper={swiper => console.log(swiper)}
+          className=''
+          breakpoints={{
+            // when window width is >= 320px
+            320: {
+              slidesPerView: 2,
+              spaceBetween: 8,
+            },
+            // when window width is >= 480px
+            480: {
+              slidesPerView: 3,
+              spaceBetween: 8
+              ,
+            },
+            // when window width is >= 640px
+            640: {
+              slidesPerView: 3.5,
+              spaceBetween: 8,
+            },
+          }}        
+              > 
+                {trendingJob.map((value, index) => (
+                  <SwiperSlide key={index} >
+                      <div className="trending-jobs-column flex">
+                        <div className="avathar mr-2">
+                          <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />                
+                        </div>
+                        <div className="card-body">
+                        <h2 className="card-title truncate text-ellipsis">{ value.trendingJobtitle }</h2>
+                        <div className="card-sub-title">{ value.trendingJobcompanyName}</div>
+                        <div className="posted-dates">{ value.trendingJobpostedDate}</div>
+                        </div>
+                      </div>
+                  </SwiperSlide>
+                ))}
+
+              </Swiper>
+            </div>
           </div>
         </div>
+
         <div className="job-categories my-4">
-          <h2 className="categories-title">Categories</h2>
+          <div className="flex justify-between">
+            <h2 className="categories-title">Categories</h2>
+            <Link className="job-list-wrpper-sub-title" href="#">View all categories</Link>
+          </div>
           <div className="flex justify-between categories-card-row">
-            <div className="categories-card">
-               <div className="categories-card__title">Delivery Jobs</div>
-               <div className="categories-card__value">1000+ Job openings</div>
+            <Swiper 
+              slidesPerView={4.5}
+              spaceBetween={8}
+              // centeredSlides={true}
+              navigation
+              
+              
+          // pagination={{ type: 'fraction' }}
+          modules={[Navigation, Pagination]}
+          onSwiper={swiper => console.log(swiper)}
+          className=''
+          breakpoints={{
+            // when window width is >= 320px
+            320: {
+              slidesPerView: 2,
+              spaceBetween: 8,
+            },
+            // when window width is >= 480px
+            480: {
+              slidesPerView: 3,
+              spaceBetween: 8
+              ,
+            },
+            // when window width is >= 640px
+            640: {
+              slidesPerView: 4.5,
+              spaceBetween: 8,
+            },
+          }}
+          
+        >
+          {Categories.map((value, index) => (
+            <SwiperSlide key={index}>
+               <div className="categories-card">
+               <div className="categories-card__title">{value.categoriestitle}</div>
+               <div className="categories-card__value">{value.categoriesvalue}</div>
             </div>
-            <div className="categories-card">
-               <div className="categories-card__title">Construction worker</div>
-               <div className="categories-card__value">1500+ Job openings</div>
-            </div>
-            <div className="categories-card">
-               <div className="categories-card__title">Content writer</div>
-               <div className="categories-card__value">2000+ Job openings</div>
-            </div>
-            <div className="categories-card">
-               <div className="categories-card__title">Tailoring or Handicrafts</div>
-               <div className="categories-card__value">1000 Job openings</div>
-            </div>
+            </SwiperSlide>
+          ))}
+            </Swiper>
           </div>
         </div>
         <div className='my-5'>         
           <div className="job-list-wrpper">
-            <h1 className='job-list-wrpper-title'>Explore jobs</h1>
+            <div className="flex justify-between items-center mb-4">
+              <h1 className='job-list-wrpper-title'>Explore jobs</h1>
+              <span className='job-list-wrpper-sub-title'>Total 55 Jobs </span>
+            </div>
+            <div className="job-list-filter-row  flex justify-between mb-4">
+              <div className="filter-group-btn">
+                <div className="flex flex-wrap gap-4">
+                    <Tabs variant="light" color='primary' aria-label="Tabs variants">
+                      <Tab key="All jobs" title="All jobs"/>
+                      <Tab key="Online Jobs" title="Online Jobs"/>
+                      <Tab key="Typing jobs" title="Typing jobs"/>
+                      <Tab key="Delivery jobs" title="Delivery jobs"/>
+                    </Tabs>
+                </div>
+              </div>
+              <div className="filter-group-btn-icon">
+                <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
+                Sort by
+                </Button>
+                <Button color="primary" variant="bordered"  endContent={<Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
+                Filter
+                </Button>
+              </div>
+            </div>
             {apiData.map((item: any, index: any) => (
               <div key={index}>
                 <div className="" key={item.id}>
