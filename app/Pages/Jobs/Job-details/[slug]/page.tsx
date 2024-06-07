@@ -352,7 +352,7 @@ const Jobdetailspage = async ({ params }: any) => {
         console.log("job data", jobData);
 
         // fetching tag
-        const taglist = await getdocgettagid(docSnap.data().tag);;
+        const taglist = docSnap.data().tag_store;
 
         // Fetching company details
         const companyId = jobData.company.id;
@@ -411,7 +411,7 @@ const Jobdetailspage = async ({ params }: any) => {
         console.error(`Error fetching document: ${docRef.id}`, error);
       }
     }
-
+    console.log(`Document for reference: ${documentValues}`);
     return documentValues;
   }
   try {

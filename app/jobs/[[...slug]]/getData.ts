@@ -47,7 +47,7 @@ const getData = async ({ page, count, lastVisible, lastid, location, area, jobfi
         //     queryConstraints.push(where('tag_store', 'array-contains', timeperiod));
         // }
         queryConstraints.push(orderBy('status', 'asc'));
-        // queryConstraints.push(orderBy('publish_time', 'asc'));
+        queryConstraints.push(orderBy('publish_time', 'desc'));
         if (page >= 2 && (!count || !lastVisible)) {
             if (lastid) {
                 queryConstraints.push(startAfter(lastid));
