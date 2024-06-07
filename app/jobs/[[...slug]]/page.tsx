@@ -228,19 +228,19 @@ const dashboard: any = async (params: any) => {
     return (
       <>
 
-        <div className="h-full">
+        {/* <div className="h-full">
           <div className="Fillter">
             <div className="header wrapper">
             </div>
             <span>{apiDatacount.length} job matches found </span>
             <div className="Fillter-wrapper">
 
-              <div className="Fillter-right">
+              <div className="Fillter-right"> */}
 
-                <div className="body">
+                <div className="">
                   {apiData.map((message: any, index: any) => (
 
-                    <div className="job-wrpper" key={index.id}>
+                    <div className="job-list-card" key={index.id}>
 
                       <Link href={`/Pages/Jobs/Job-details/${message.id}`}>
                         <div className="job-header">
@@ -269,45 +269,26 @@ const dashboard: any = async (params: any) => {
                             )}
                           </div>
                         </div>
-                        <div className="job-body">
-                          <Image
-                            src="/icon/map-pin.svg"
-                            width={16}
-                            height={16}
-                            alt="Logo"
-                          />
-                          <span> {message.location}</span>
-                        </div>
-                        <div className="job-body">
-                          <Image
-                            src="/icon/clock.svg"
-                            width={16}
-                            height={16}
-                            alt="Logo"
-                          />
-                          <span>
-                            {formatTimeRange(
-                              message.start_time,
-                              message.end_time
-                            )}{" "}
-                            {message.working_days}
-                          </span>
-                        </div>
-                        <div className="job-body">
-                          <Image
-                            src="/icon/wallet.svg"
-                            width={16}
-                            height={16}
-                            alt="Logo"
-                          />
-                          <span>
-                            ₹ {message.start_salary} - {message.end_salary} per
-                            month
-                          </span>
+                        <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
+                        <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
+                          <div className="hidden md:block w-10"></div>
+                          <div className="job-body">
+                            <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
+                            <span> {message.location}</span>
+                          </div>  
+                          <div className="job-body">
+                            <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
+                            <span>{formatTimeRange(message.start_time, message.end_time)}  {message.working_days}</span>
+                          </div>
+                          <div className="job-body">
+                            <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
+                            <span>₹ {message.start_salary} - {message.end_salary} per month</span>
+                        </div>                          
                         </div>
                         <div className="postby">
                           <span>{formatPostedTime(message.publish_time)}</span>
                         </div>
+                      </div> 
                       </Link>
                     </div>
                   ))}
@@ -345,11 +326,11 @@ const dashboard: any = async (params: any) => {
                   </Link> */}
                 </div>
 
-              </div>
+              {/* </div>
 
             </div>
           </div>
-        </div>
+        </div> */}
       </>
     );
   } catch (error: any) {

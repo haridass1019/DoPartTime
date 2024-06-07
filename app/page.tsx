@@ -595,26 +595,6 @@ const dashboard: any = async () => {
               <h1 className='job-list-wrpper-title'>Explore jobs</h1>
               <span className='job-list-wrpper-sub-title'>Total 55 Jobs </span>
             </div>
-            <div className="job-list-filter-row  flex justify-between mb-4">
-              <div className="filter-group-btn">
-                <div className="flex flex-wrap gap-4">
-                    <Tabs variant="light" color='primary' aria-label="Tabs variants">
-                      <Tab key="All jobs" title="All jobs"/>
-                      <Tab key="Online Jobs" title="Online Jobs"/>
-                      <Tab key="Typing jobs" title="Typing jobs"/>
-                      <Tab key="Delivery jobs" title="Delivery jobs"/>
-                    </Tabs>
-                </div>
-              </div>
-              <div className="filter-group-btn-icon">
-                <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
-                Sort by
-                </Button>
-                <Button color="primary" variant="bordered"  endContent={<Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
-                Filter
-                </Button>
-              </div>
-            </div>
             {apiData.map((item: any, index: any) => (
               <div key={index}>
                 <div className="" key={item.id}>
