@@ -378,23 +378,37 @@
 
 
 import { db } from './firbaseconfig';
-import { collection, getDocs } from 'firebase/firestore';
+import { QueryConstraint, collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {Button} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules'
-import {Tabs, Tab} from "@nextui-org/react";
+import { Tabs, Tab } from "@nextui-org/react";
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import getDatatrending from './get_data_trending';
+import getDatatrendingcate from './getcatelist';
+const getDatatrendingdata = async () => {
+  try {
+    const data = await getDatatrending();
 
+    return data;
+  } catch (error: any) {
+    throw new Error("Failed to fetch data from Firestore: " + error.message);
+  }
+}
 const getData = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, "jobs"));
+    const queryConstraints: QueryConstraint[] = [];
+    queryConstraints.push(where('status', '!=', 0));
+
+    const postsRef = query(collection(db, "jobs"), ...queryConstraints);
+    const querySnapshot = await getDocs(postsRef);
     const data: any = [];
     querySnapshot.forEach((doc) => {
       data.push({ id: doc.id, ...doc.data() });
@@ -443,24 +457,26 @@ const Categories = [
   { categoriestitle: 'Tailoring or Handicrafts', categoriesvalue: '1000 Job openings' },
 ]
 const trendingJob = [
-  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
-  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
-  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
-  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
-  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
-  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate:'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate: 'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate: 'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate: 'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate: 'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate: 'Posted 2 days ago' },
+  { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate: 'Posted 2 days ago' },
 ]
 
 const dashboard: any = async () => {
   try {
     const apiData = await getData();
+    const newdata = await getDatatrendingdata();
+    const datacate = await getDatatrendingcate();
     return (
-      <>  
+      <>
         <div className="jobsearch-wrapper">
           <div className="jobsearch-bg-widget">
             <div className="job-heading-card">
               <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
-              <div className="text-center"><span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color:"#fff", fontWeight:500, fontSize:"14px", textDecorationLine:"underline"}} href="#">Change</Link></div>
+              <div className="text-center"><span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline" }} href="#">Change</Link></div>
             </div>
             {/* <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
             
@@ -491,49 +507,54 @@ const dashboard: any = async () => {
           <div className="trending-jobs-wrapper">
             <h2 className="trending-jobs-title">Trending jobs near you</h2>
             <div className="trending-jobs-row">
-            <Swiper 
-              slidesPerView={4.5}
-              spaceBetween={8}
-              // centeredSlides={true}
-              navigation
-              
-              
-          // pagination={{ type: 'fraction' }}
-          modules={[Navigation, Pagination]}
-          onSwiper={swiper => console.log(swiper)}
-          className=''
-          breakpoints={{
-            // when window width is >= 320px
-            320: {
-              slidesPerView: 2,
-              spaceBetween: 8,
-            },
-            // when window width is >= 480px
-            480: {
-              slidesPerView: 3,
-              spaceBetween: 8
-              ,
-            },
-            // when window width is >= 640px
-            640: {
-              slidesPerView: 3.5,
-              spaceBetween: 8,
-            },
-          }}        
-              > 
-                {trendingJob.map((value, index) => (
+              <Swiper
+                slidesPerView={4.5}
+                spaceBetween={8}
+                // centeredSlides={true}
+                navigation
+
+
+                // pagination={{ type: 'fraction' }}
+                modules={[Navigation, Pagination]}
+                onSwiper={swiper => console.log(swiper)}
+                className=''
+                breakpoints={{
+                  // when window width is >= 320px
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 8,
+                  },
+                  // when window width is >= 480px
+                  480: {
+                    slidesPerView: 3,
+                    spaceBetween: 8
+                    ,
+                  },
+                  // when window width is >= 640px
+                  640: {
+                    slidesPerView: 3.5,
+                    spaceBetween: 8,
+                  },
+                }}
+              >
+
+                {newdata.map((item: any, index: any) => (
+
                   <SwiperSlide key={index} >
+                    <Link href={`Pages/Jobs/Job-details/${item.id}`}>
                       <div className="trending-jobs-column flex">
                         <div className="avathar mr-2">
-                          <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />                
+                          <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
                         </div>
                         <div className="card-body">
-                        <h2 className="card-title truncate text-ellipsis">{ value.trendingJobtitle }</h2>
-                        <div className="card-sub-title">{ value.trendingJobcompanyName}</div>
-                        <div className="posted-dates">{ value.trendingJobpostedDate}</div>
+                          <h2 className="card-title truncate text-ellipsis">{item.title}</h2>
+                          <div className="card-sub-title">{item.companyname.name}</div>
+                          <div className="posted-dates">{formatPostedTime(item.publish_time)}</div>
                         </div>
                       </div>
+                    </Link>
                   </SwiperSlide>
+
                 ))}
 
               </Swiper>
@@ -544,76 +565,78 @@ const dashboard: any = async () => {
         <div className="job-categories my-4">
           <div className="flex justify-between">
             <h2 className="categories-title">Categories</h2>
-            <Link className="job-list-wrpper-sub-title" href="#">View all categories</Link>
+            {/* <Link className="job-list-wrpper-sub-title" href="#">View all categories</Link> */}
           </div>
           <div className="flex justify-between categories-card-row">
-            <Swiper 
+            <Swiper
               slidesPerView={4.5}
               spaceBetween={8}
               // centeredSlides={true}
               navigation
-              
-              
-          // pagination={{ type: 'fraction' }}
-          modules={[Navigation, Pagination]}
-          onSwiper={swiper => console.log(swiper)}
-          className=''
-          breakpoints={{
-            // when window width is >= 320px
-            320: {
-              slidesPerView: 2,
-              spaceBetween: 8,
-            },
-            // when window width is >= 480px
-            480: {
-              slidesPerView: 3,
-              spaceBetween: 8
-              ,
-            },
-            // when window width is >= 640px
-            640: {
-              slidesPerView: 4.5,
-              spaceBetween: 8,
-            },
-          }}
-          
-        >
-          {Categories.map((value, index) => (
-            <SwiperSlide key={index}>
-               <div className="categories-card">
-               <div className="categories-card__title">{value.categoriestitle}</div>
-               <div className="categories-card__value">{value.categoriesvalue}</div>
-            </div>
-            </SwiperSlide>
-          ))}
+
+
+              // pagination={{ type: 'fraction' }}
+              modules={[Navigation, Pagination]}
+              onSwiper={swiper => console.log(swiper)}
+              className=''
+              breakpoints={{
+                // when window width is >= 320px
+                320: {
+                  slidesPerView: 2,
+                  spaceBetween: 8,
+                },
+                // when window width is >= 480px
+                480: {
+                  slidesPerView: 3,
+                  spaceBetween: 8
+                  ,
+                },
+                // when window width is >= 640px
+                640: {
+                  slidesPerView: 4.5,
+                  spaceBetween: 8,
+                },
+              }}
+
+            >
+              {datacate.map((item: any, index: any) => (
+                <SwiperSlide key={index}>
+                  <Link href={`jobs/tag/${item.id}`}>
+                    <div className="categories-card">
+                      <div className="categories-card__title">{item.name}</div>
+                      <div className="categories-card__value">{item.jobCount} Job openings</div>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
         </div>
-        <div className='my-5'>         
+        <div className='my-5'>
           <div className="job-list-wrpper">
             <div className="flex justify-between items-center mb-4">
               <h1 className='job-list-wrpper-title'>Explore jobs</h1>
-              <span className='job-list-wrpper-sub-title'>Total 55 Jobs </span>
+              <span className='job-list-wrpper-sub-title'>Total {apiData.length} Jobs </span>
             </div>
             <div className="job-list-filter-row  flex justify-between mb-4">
               <div className="filter-group-btn">
                 <div className="flex flex-wrap gap-4">
-                    <Tabs variant="light" color='primary' aria-label="Tabs variants">
-                      <Tab key="All jobs" title="All jobs"/>
-                      <Tab key="Online Jobs" title="Online Jobs"/>
-                      <Tab key="Typing jobs" title="Typing jobs"/>
-                      <Tab key="Delivery jobs" title="Delivery jobs"/>
-                    </Tabs>
+                  <Tabs variant="light" color='primary' aria-label="Tabs variants">
+                    <Tab key="All jobs" title="All jobs" />
+                    <Tab key="Online Jobs" title="Online Jobs" />
+                    <Tab key="Typing jobs" title="Typing jobs" />
+                    <Tab key="Delivery jobs" title="Delivery jobs" />
+                  </Tabs>
                 </div>
               </div>
-              <div className="filter-group-btn-icon">
+              {/* <div className="filter-group-btn-icon">
                 <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
-                Sort by
+                  Sort by
                 </Button>
-                <Button color="primary" variant="bordered"  endContent={<Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
-                Filter
+                <Button color="primary" variant="bordered" endContent={<Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
+                  Filter
                 </Button>
-              </div>
+              </div> */}
             </div>
             {apiData.map((item: any, index: any) => (
               <div key={index}>
@@ -637,7 +660,7 @@ const dashboard: any = async () => {
                           <div className="job-body">
                             <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
                             <span> {item.location}</span>
-                          </div>  
+                          </div>
                           <div className="job-body">
                             <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
                             <span>{formatTimeRange(item.start_time, item.end_time)}  {item.working_days}</span>
@@ -645,12 +668,12 @@ const dashboard: any = async () => {
                           <div className="job-body">
                             <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
                             <span>₹ {item.start_salary} - {item.end_salary} per month</span>
-                        </div>                          
+                          </div>
                         </div>
                         <div className="postby">
                           <span>{formatPostedTime(item.publish_time)}</span>
                         </div>
-                      </div>                    
+                      </div>
                     </Link>
                   </div>
                 </div>
@@ -662,7 +685,7 @@ const dashboard: any = async () => {
           <div className="text-sm">
             <span className='font-semibold'>Want to talk to someone?</span><span> Our customer support is here to help you. Monday to Friday 10:00am to 6:00pm</span>
           </div>
-          <Link href="#" className='flex items-center' style={{ backgroundColor:"#DEE0FF", padding:"6px 20px", borderRadius:"08px", fontSize:"16px", fontWeight:500 }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
+          <Link href="#" className='flex items-center' style={{ backgroundColor: "#DEE0FF", padding: "6px 20px", borderRadius: "08px", fontSize: "16px", fontWeight: 500 }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
         </div>
       </>
     );
