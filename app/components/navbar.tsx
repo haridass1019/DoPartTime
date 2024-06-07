@@ -11,7 +11,7 @@ export default function Navbar() {
     const menuItems = [
       { href: "/", label: "Jobs" },
       {href:"/candidates", label: "Candidates"},  
-      {href:"/companies", label: "Companies"},  
+      {href:"/Pages/Company/digisenz", label: "Companies"},  
     ];    
     return (
         <>

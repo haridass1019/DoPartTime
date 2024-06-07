@@ -190,12 +190,16 @@ const company = async ({ params }: any) => {
     
     return (
       <>
-        <h2  className="text-center p-10">Company</h2>
+        {/* <h2 className="text-center p-10">Company</h2> */}
+        <div className="back-btn-row flex justify-between items-center">
+          <Link href="#" className='flex back-btn m-0'  style={{margin:"0 !important"}}> <Image src="/icon/ep_back.svg" className='mr-1' width={24} height={24} alt="Back" />Back</Link>
+          <Link href="#" className=''> <Image src="/icon/share.svg" className='' width={24} height={24} alt="Back" /></Link>
+          
+        </div>
         <div>
           <div  key={apiData.id}>
-            <div className="flex min-h-screen flex-col items-center justify-between">
 
-     <div className="wrapper">
+     <div className="">
 
      <div className="body">
       {/* <h1>{apiData.id}</h1> */}
@@ -313,7 +317,6 @@ const company = async ({ params }: any) => {
 
  
 
-     </div>
           </div>
 
 
