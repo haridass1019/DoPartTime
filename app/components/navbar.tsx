@@ -9,7 +9,8 @@ export default function Navbar() {
 
     // Define menu items with hrefs and label names
     const menuItems = [
-      { href: "/", label: "Jobs" },
+      // { href: "/", label: "Home" },
+      { href: "/jobs", label: "Jobs" },
       {href:"/candidates", label: "Candidates"},  
       {href:"/Pages/Company/digisenz", label: "Companies"},  
     ];    

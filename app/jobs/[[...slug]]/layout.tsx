@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, Tab, Tabs } from "@nextui-org/react";
 import axios from "axios";
 import getData from "./getData";
 
@@ -438,9 +438,238 @@ export default function DashboardLayout({ children }: any) {
     }
 
   }
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
+  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
+
+  const toggleDropdown = () => {
+      setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = () => {
+      setIsOpen(false);
+  };
+  const toggleDropdown2 = () => {
+      setIsOpen2(!isOpen2);
+  };
+
+  const closeDropdown2 = () => {
+      setIsOpen2(false);
+  };
+  const toggleDropdown3 = () => {
+     setIsOpen3(!isOpen3);
+  };
+
+  const closeDropdown3 = () => {
+      setIsOpen3(false);
+  };
+
   const defalut = { jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods };
   return (
     <section>
+      <div className="jobsearch-wrapper">
+        <div className="jobsearch-bg-widget flex flex-col">
+          <div className="job-heading-card">
+            <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
+            <div className="text-center">
+              <span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline" }} href="#">Change</Link></div>
+            </div>
+            <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
+            
+            <div className="w-full">
+              
+              <form className="max-w-md mx-auto" action="/search/">   
+                <div className="relative">  
+                  
+            <Autocomplete
+              className="max-w-xs"
+              defaultInputValue={(selectedLocation) ? selectedLocation : (params.area) ? params.area + "," + params.location : params.location}
+
+              items={suggestions}
+              placeholder="Type to search location..."
+              onInputChange={(value) => fetchSuggestions(value)}
+              onSelectionChange={(key) => getareaandcity(key)}
+              onReset={() => { setselectedArea(""); setSelectedLocation(""); }}
+            >
+              {(suggestions: any) => (
+                <AutocompleteItem key={suggestions.value} className="capitalize">
+                  {suggestions.label}
+                </AutocompleteItem>
+              )}
+            </Autocomplete>
+                      {/* <input type="search" id="default-search" className="global-search-bar block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" style={{ fontSize:"12px" }} placeholder="Search by locality, job type, company" required />
+                      <div className="absolute inset-y-0 end-0 flex items-center pe-2  pointer-events-none">
+                       <Image src="/icon/ion_search.svg" width={24} height={24} alt="Search" />
+                      </div> */}
+                  </div>
+              </form>
+            </div>
+          </div>  
+          </div>
+        
+      </div>
+      <div className="my-5">
+        <div className="job-list-wrpper">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="job-list-wrpper-title">Explore jobs</h1><span className="job-list-wrpper-sub-title">Total 55 Jobs </span>
+          </div>
+          <div className="job-list-filter-body">
+            <div className="job-list-filter-row  flex justify-between mb-4">
+              <div className="filter-group-btn">
+                <div className="flex flex-wrap gap-4">
+                    <Tabs variant="light" color='primary' aria-label="Tabs variants">
+                      <Tab key="All jobs" title="All jobs"/>
+                      <Tab key="Online Jobs" title="Online Jobs"/>
+                      <Tab key="Typing jobs" title="Typing jobs"/>
+                      <Tab key="Delivery jobs" title="Delivery jobs"/>
+                    </Tabs>
+                </div>
+              </div>
+              <div className="filter-group-btn-icon">
+                <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
+                Sort by
+                </Button>
+                <Button className={isExpanded ? "filter-active-btn" : ''} onClick={toggleExpansion} color="primary" variant="bordered"  endContent={isExpanded ?
+                  <Image src="/icon/white-filter-line.svg" width={16} height={16} alt="Filter" /> : <Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
+                Filter
+                </Button>
+              </div>
+            </div>
+            {isExpanded && (
+              <div className="filter-collapse-card collapsible-content flex">
+                <div className='w-[160px] job-filter_dropdown'>
+                 <div className="relative">
+                    <button
+                        type="button"
+                        className="filter_dropdown-btn"
+                        onClick={toggleDropdown}
+                    >
+                        Job Model <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+
+                    {isOpen && (
+                        <div className="origin-top-right absolute left-0 right-0 bg-white">
+                          <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+
+                            {jobTypes.map((jobType, index) => (
+                              <li key={index} className="w-full">
+                                <div className="flex items-center mb-2">
+                                  <input onClick={closeDropdown}
+                                    id={`jobType-${index}`}
+                                    type="checkbox"
+                                    value={jobType.value}
+                                    checked={jobType.value === "" ? selectedJobs.length === jobTypes.length : selectedJobs.includes(jobType.value)}
+                                    onChange={() => handleJobTypeChange(jobType.value)}
+                                    className="w-4 h-4"
+                                  />
+                                  <label  htmlFor={`jobType-${index}`} className="w-full">
+                                    {jobType.label}
+                                  </label>
+                                </div>
+                              </li>
+                            ))}
+                            </ul>
+                        </div>
+                     )}
+                  </div>
+                </div>
+                <div className='w-[160px] job-filter_dropdown'>
+                 <div className="relative">
+                    <button
+                        type="button"
+                        className="filter_dropdown-btn"
+                        onClick={toggleDropdown2}
+                    >
+                        Day <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+
+                    {isOpen2 && (
+                        <div className="origin-top-right absolute left-0 right-0 bg-white">
+                          <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            {daysOfWeek.map((day, index) => (
+                              <li key={index} className="w-full">
+                                <div className="flex items-center mb-2">
+                                  <input onClick={closeDropdown2}
+                                    id={`day-${index}`}
+                                    type="checkbox"
+                                    value={day.value}
+                                    checked={day.value === "" ? selectedDays.length === daysOfWeek.length : selectedDays.includes(day.value)}
+                                    onChange={() => handleDayChange(day.value)}
+                                    className="w-4 h-4"
+                                  />
+                                  <label htmlFor={`day-${index}`} className="w-full">
+                                    {day.label}
+                                  </label>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                     )}
+                  </div>
+                </div>
+                <div className='w-[160px] job-filter_dropdown'>
+                 <div className="relative">
+                    <button
+                        type="button"
+                        className="filter_dropdown-btn"
+                        onClick={toggleDropdown3}
+                    >
+                        Timing <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+
+                    {isOpen3 && (
+                        <div className="origin-top-right absolute left-0 right-0 bg-white">
+                          <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                {timePeriods.map((timePeriod, index) => (
+                            <li key={index} className="w-full">
+                              <div className="flex items-center mb-2">
+                                <input onClick={closeDropdown3}
+                                  id={`timePeriod-${index}`}
+                                  type="checkbox"
+                                  value={timePeriod.value}
+                                  checked={timePeriod.value === "" ? selectedTimePeriods.length === timePeriods.length : selectedTimePeriods.includes(timePeriod.value)}
+                                  onChange={() => handleTimePeriodChange(timePeriod.value)}
+                                  className="w-4 h-4"
+                                />
+                                <label htmlFor={`timePeriod-${index}`} className="w-full">
+                                  {timePeriod.label}
+                                </label>
+                              </div>
+                            </li>
+                          ))}
+                          </ul>
+                        </div>
+                     )}
+                  </div>
+                </div>
+              </div>
+              )}
+          </div>
+          <div className="">{children}</div>
+        </div>
+      </div> 
+      <div className="breadcrumbs-row">
+        <Breadcrumbs>
+            <BreadcrumbItem key={1} href="/" className="breadcrumbs-text">Home</BreadcrumbItem>
+            {pathItems.map((item) => (
+              <BreadcrumbItem className="breadcrumbs-text-active" key={item.path} href={`/${item.path}`}>
+                {item.name}
+              </BreadcrumbItem>
+            ))}
+        </Breadcrumbs>
+      </div>
       <div className="h-full">
         <div className="Fillter">
           <div className="header wrapper">
@@ -615,6 +844,21 @@ export default function DashboardLayout({ children }: any) {
                   </BreadcrumbItem>
                 ))}
               </Breadcrumbs></div>
+              {Array.from({ length: Math.ceil(jobs.length / 2) }, (_, index) => (
+
+                  (jobs.length) > 2 && (
+                    <button
+                      key={index}
+                      onClick={() => handlePageChange(index + 1)}
+                      disabled={parseInt(params.page) === index + 1}
+                      className={(parseInt(params.page) === index + 1 || (!params.page && index == 0)) ? 'selected' : 'pagination'}
+                    >
+                      {index + 1}
+                    </button>
+                  )
+
+
+              ))}
               <div className="body">{children}</div>
               {Array.from({ length: Math.ceil(jobs.length / 2) }, (_, index) => (
 

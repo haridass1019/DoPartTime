@@ -629,14 +629,14 @@ const dashboard: any = async () => {
                   </Tabs>
                 </div>
               </div>
-              {/* <div className="filter-group-btn-icon">
+              <div className="filter-group-btn-icon">
                 <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
                   Sort by
                 </Button>
                 <Button color="primary" variant="bordered" endContent={<Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
                   Filter
                 </Button>
-              </div> */}
+              </div>
             </div>
             {apiData.map((item: any, index: any) => (
               <div key={index}>

@@ -478,6 +478,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 8px;
 }
 
 /* Media query for laptop screens (1024px and up) */
@@ -915,4 +916,59 @@ body {
   color: red;
   border: 1px solid;
   padding: 0px 6px;
+}
+.filter-active-btn{
+  color: #fff !important;
+  background-color: #2523CA !important;
+}
+.job-list-filter-body{
+position: relative;
+}
+.filter-collapse-card{
+  border: 1px solid #E2E4FE;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.filter-collapse-card .job-filter_dropdown{
+  margin-right: 8px;
+}
+.filter-collapse-card .filter_dropdown-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #DEE0FF;
+  padding: 10px;
+  font-size: 14px;
+  color: #828282;
+}
+.filter-collapse-card .filter_dropdown-item{
+  border: 1px solid #DEE0FF;
+  margin-top: 4px;
+  border-radius: 10px;
+  padding: 10px;
+}
+.filter-collapse-card .filter_dropdown-item li{
+  margin-bottom: 10px;
+}
+.filter-collapse-card .filter_dropdown-item li label{
+  padding: 0;
+  font-size: 13px;
+  margin: 0 0 0 8px;
+  color: #828282;
+}
+.breadcrumbs-row{
+  margin: 16px 0;
+}
+.breadcrumbs-row .breadcrumbs-text a{
+  font-size: 12px;
+  font-weight: 500;
+  color: #43474E;
+}
+.breadcrumbs-row .breadcrumbs-text-active span{
+  font-size: 12px;
+  font-weight: 500;
+  color: #2523CA;
 }
