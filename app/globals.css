@@ -983,3 +983,88 @@ position: relative;
   font-weight: 600;
   margin-right: 10px;
 }
+.company-wrapper{
+  background-color: #fff;
+  border-radius: 8px;
+  min-height:600px;
+}
+.company-detail_header .company-title-row{
+  /* display: flex; */
+}
+.company-wrapper .company-detail_header{
+  background: linear-gradient(180deg, #2523CA 27.23%, #0B097B 122.25%);
+  box-shadow: 0px 2px 16px 0px #2523CA26;
+  padding: 26px;
+  height: 228px;
+  border-radius: 8px;
+}
+.company-wrapper .company-rating_value{
+  color: #EEEEEE;
+  font-size: 24px;
+}
+.company-wrapper .company-rating_total{
+  color: #EEEEEE;
+  font-size: 14px;
+}
+.company-title-row .company-title{
+  color: #FAFAFA;
+  font-size: 24px;
+  font-weight: 500;
+}
+.company-title-row .company-loc{
+  color: #9FA8DA;
+  font-size: 11px;
+  font-weight: 500;
+}
+.company-title-row .company-since{
+  color: #D8D8D8;
+  font-size: 12px;
+  font-weight: 400;
+}
+.light-btn-lg{
+  color: #2523CA;
+  background-color: #fff;
+  padding: 8px 52px 8px 52px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+.company-detail_card{
+  margin: 20px;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
+  padding: 12px;
+}
+.company-detail_card .company-detail_card-title{
+  color: #808080;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.company-detail_card .company-detail_card-desc{
+  color: #757575;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  line-height: 14px;
+  margin: 0;
+}
+.company-detail_card .cmp-field-row .label{
+  color: #808080;
+  font-size: 14px;
+  font-weight: 400;
+  width: 64px;
+}
+.company-detail_card .cmp-field-row .value{
+  font-weight: 500;
+  font-size: 14px;
+  color: #212121;
+}
+.company-detail_card .cmp-field-row .value.text-active{
+  color: #2523CA;
+}
+.tag-card-title{
+  font-size: 16px;
+  color: #212121;
+  font-weight: 500;
+}
