@@ -660,6 +660,23 @@ export default function DashboardLayout({ children }: any) {
           <div className="">{children}</div>
         </div>
       </div> 
+      <div className="pagination-row flex justify-center">
+          {Array.from({ length: Math.ceil(jobs.length / 2) }, (_, index) => (
+
+            (jobs.length) > 2 && (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                disabled={parseInt(params.page) === index + 1}
+                className={(parseInt(params.page) === index + 1 || (!params.page && index == 0)) ? 'selected' : 'pagination'}
+              >
+                {index + 1}
+              </button>
+            )
+
+
+            ))}
+      </div>
       <div className="breadcrumbs-row">
         <Breadcrumbs>
             <BreadcrumbItem key={1} href="/" className="breadcrumbs-text">Home</BreadcrumbItem>

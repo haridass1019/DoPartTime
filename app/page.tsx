@@ -629,14 +629,6 @@ const dashboard: any = async () => {
                   </Tabs>
                 </div>
               </div>
-              <div className="filter-group-btn-icon">
-                <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
-                  Sort by
-                </Button>
-                <Button color="primary" variant="bordered" endContent={<Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
-                  Filter
-                </Button>
-              </div>
             </div>
             {apiData.map((item: any, index: any) => (
               <div key={index}>
@@ -680,6 +672,12 @@ const dashboard: any = async () => {
               </div>
             ))}
           </div>
+        </div>
+        <div className="my-5 ps-2 pe-2 py-6 flex justify-center items-center bg-white rounded-lg">
+          <div className="text-sm">
+            <span className='font-semibold'>Explore all available options at a glance by clicking here.</span>
+          </div>
+          <Link href="/jobs" className='flex ms-2' style={{ borderRadius: "08px", fontSize: "16px", fontWeight: 600, color:"#2523CA" }}> View all jobs <Image className='ms-2' src="/icon/right-arrow-ic.svg" width={6} height={12} alt="View all jobs" /> </Link>
         </div>
         <div className="my-5 ps-2 pe-2 py-2 flex justify-between items-center bg-white rounded-lg">
           <div className="text-sm">
