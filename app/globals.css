@@ -1068,3 +1068,20 @@ position: relative;
   color: #212121;
   font-weight: 500;
 }
+.filter-selected_row{
+  display: flex;
+}
+.filter-selected_row .filter-selected-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 3px;
+  padding: 2px 10px;
+  background-color: #F5F5F5;
+  color: #505050;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.filter-selected_row .filter-selected-item img{
+  margin-left: 3px;
+}
