@@ -47,6 +47,7 @@ export default function DashboardLayout({ children }: any) {
   let days_week1: any = [];
   let timeperiod1: any = [];
   const [show_location, setshow_location] = useState(false);
+
   useEffect(() => {
 
 
@@ -478,13 +479,12 @@ export default function DashboardLayout({ children }: any) {
           <div className="job-heading-card">
             <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
             <div className="text-center">
-              <span className="job-location-heading">Egmore, Chennai</span> <Link style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline" }} href="#">Change</Link></div>
+              <span className="job-location-heading">{(!selectedArea && !selectedLocation) ? "All" : (!selectedArea && selectedLocation) ? selectedLocation : selectedArea + ',' + selectedLocation}</span> <div style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline" }} onClick={() => setshow_location(true)}>Change</div></div>
           </div>
           <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
 
             <div className="w-full">
-
-              <form className="max-w-md mx-auto" action="/search/">
+              {show_location && (
                 <div className="relative">
 
                   <Autocomplete
@@ -503,12 +503,13 @@ export default function DashboardLayout({ children }: any) {
                       </AutocompleteItem>
                     )}
                   </Autocomplete>
+
                   {/* <input type="search" id="default-search" className="global-search-bar block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" style={{ fontSize:"12px" }} placeholder="Search by locality, job type, company" required />
                       <div className="absolute inset-y-0 end-0 flex items-center pe-2  pointer-events-none">
                        <Image src="/icon/ion_search.svg" width={24} height={24} alt="Search" />
                       </div> */}
                 </div>
-              </form>
+              )}
             </div>
           </div>
         </div>
@@ -535,7 +536,7 @@ export default function DashboardLayout({ children }: any) {
                 <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
                   Sort by
                 </Button>
-                <Button className={isExpanded ? "filter-active-btn" : ''} onClick={toggleExpansion} color="primary" variant="bordered" endContent={isExpanded ?
+                <Button className={`${isExpanded ? "filter-active-btn" : ''} ${(selectedJobs.length >= 1 || selectedDays.length >= 1 || selectedTimePeriods.length >= 1) ? "filter-active-btn-icon" : ''}`} onClick={toggleExpansion} color="primary" variant="bordered" endContent={isExpanded ?
                   <Image src="/icon/white-filter-line.svg" width={16} height={16} alt="Filter" /> : <Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
                   Filter
                 </Button>
@@ -552,23 +553,23 @@ export default function DashboardLayout({ children }: any) {
                         onClick={toggleDropdown}
                       >
                         Job Model <svg className="w-2.5 h-3.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        {isOpen ? (
-                          <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M1 1l8 8M1 9L9 1"
-                          />
+                          {isOpen ? (
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M1 1l8 8M1 9L9 1"
+                            />
                           ) : (
-                          <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="m1 1 4 4 4-4"
-                          />
-                        )}
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 4 4 4-4"
+                            />
+                          )}
                         </svg>
                       </button>
 
@@ -606,23 +607,23 @@ export default function DashboardLayout({ children }: any) {
                         onClick={toggleDropdown2}
                       >
                         Day <svg className="w-2.5 h-3.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        {isOpen2 ? (
-                          <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M1 1l8 8M1 9L9 1"
-                          />
+                          {isOpen2 ? (
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M1 1l8 8M1 9L9 1"
+                            />
                           ) : (
-                          <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="m1 1 4 4 4-4"
-                          />
-                        )}  
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 4 4 4-4"
+                            />
+                          )}
                         </svg>
                       </button>
 
@@ -659,23 +660,23 @@ export default function DashboardLayout({ children }: any) {
                         onClick={toggleDropdown3}
                       >
                         Timing <svg className="w-2.5 h-3.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        {isOpen3 ? (
-                          <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M1 1l8 8M1 9L9 1"
-                          />
+                          {isOpen3 ? (
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M1 1l8 8M1 9L9 1"
+                            />
                           ) : (
-                          <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="m1 1 4 4 4-4"
-                          />
-                        )}
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 4 4 4-4"
+                            />
+                          )}
                         </svg>
                       </button>
 
@@ -706,15 +707,50 @@ export default function DashboardLayout({ children }: any) {
                   </div>
                 </div>
                 <div className="filter-selected_row mt-2">
-                  <Link className="filter-selected-item" href="#">Work from home
-                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />         
-                  </Link>
-                  <Link className="filter-selected-item" href="#">Weekday
-                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />         
+                  {selectedJobs.map((jobtypefilter: any) => (
+                    <div key={key}>
+                      <div className="filter-selected-item" >{jobtypefilter}
+                        <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" onClick={() => {
+
+                          let data = { jobtype: selectedJobs.filter(selectedJobs => selectedJobs !== jobtypefilter), jobdays: selectedDays, jobs_time_period: selectedTimePeriods }
+
+                          handleSearch(data);
+                        }} />
+                      </div>
+                    </div>
+                  ))}
+                  {selectedDays.map((daysfilter: any) => (
+                    <div key={key}>
+                      <div className="filter-selected-item">{daysfilter}
+                        <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" onClick={() => {
+
+                          let data = { jobtype: selectedJobs, jobdays: selectedDays.filter(selectedDays => selectedDays !== daysfilter), jobs_time_period: selectedTimePeriods }
+
+                          handleSearch(data);
+                        }} />
+                      </div>
+                    </div>
+                  ))}
+                  {selectedTimePeriods.map((timefilter: any) => (
+                    <div key={key}>
+                      <div className="filter-selected-item" >{timefilter}
+                        <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" onClick={() => {
+
+                          let data = { jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods.filter(selectedTimePeriods => selectedTimePeriods !== timefilter) }
+
+                          handleSearch(data);
+                        }} />
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* <Link className="filter-selected-item" href="#">Weekday
+                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />
                   </Link>
                   <Link className="filter-selected-item" href="#">Evening
-                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />         
-                  </Link>
+                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />
+                  </Link> */}
+
                 </div>
               </div>
             )}
