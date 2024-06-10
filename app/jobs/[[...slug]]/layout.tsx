@@ -541,118 +541,179 @@ export default function DashboardLayout({ children }: any) {
               </div>
             </div>
             {isExpanded && (
-              <div className="filter-collapse-card collapsible-content flex">
-                <div className='w-[160px] job-filter_dropdown'>
-                  <div className="relative">
-                    <button
-                      type="button"
-                      className="filter_dropdown-btn"
-                      onClick={toggleDropdown}
-                    >
-                      Job Model <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                      </svg>
-                    </button>
+              <div className="filter-collapse-card collapsible-content">
+                <div className="flex">
+                  <div className='w-[160px] job-filter_dropdown'>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        className="filter_dropdown-btn"
+                        onClick={toggleDropdown}
+                      >
+                        Job Model <svg className="w-2.5 h-3.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        {isOpen ? (
+                          <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M1 1l8 8M1 9L9 1"
+                          />
+                          ) : (
+                          <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m1 1 4 4 4-4"
+                          />
+                        )}
+                        </svg>
+                      </button>
 
-                    {isOpen && (
-                      <div className="origin-top-right absolute left-0 right-0 bg-white">
-                        <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                      {isOpen && (
+                        <div className="origin-top-right absolute left-0 right-0 bg-white">
+                          <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 
-                          {jobTypes.map((jobType, index) => (
-                            <li key={index} className="w-full">
-                              <div className="flex items-center mb-2">
-                                <input onClick={closeDropdown}
-                                  id={`jobType-${index}`}
-                                  type="checkbox"
-                                  value={jobType.value}
-                                  checked={jobType.value === "" ? selectedJobs.length === jobTypes.length : selectedJobs.includes(jobType.value)}
-                                  onChange={() => handleJobTypeChange(jobType.value)}
-                                  className="w-4 h-4"
-                                />
-                                <label htmlFor={`jobType-${index}`} className="w-full">
-                                  {jobType.label}
-                                </label>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                            {jobTypes.map((jobType, index) => (
+                              <li key={index} className="w-full">
+                                <div className="flex items-center mb-2">
+                                  <input onClick={closeDropdown}
+                                    id={`jobType-${index}`}
+                                    type="checkbox"
+                                    value={jobType.value}
+                                    checked={jobType.value === "" ? selectedJobs.length === jobTypes.length : selectedJobs.includes(jobType.value)}
+                                    onChange={() => handleJobTypeChange(jobType.value)}
+                                    className="w-4 h-4"
+                                  />
+                                  <label htmlFor={`jobType-${index}`} className="w-full">
+                                    {jobType.label}
+                                  </label>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className='w-[160px] job-filter_dropdown'>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        className="filter_dropdown-btn"
+                        onClick={toggleDropdown2}
+                      >
+                        Day <svg className="w-2.5 h-3.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        {isOpen2 ? (
+                          <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M1 1l8 8M1 9L9 1"
+                          />
+                          ) : (
+                          <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m1 1 4 4 4-4"
+                          />
+                        )}  
+                        </svg>
+                      </button>
+
+                      {isOpen2 && (
+                        <div className="origin-top-right absolute left-0 right-0 bg-white">
+                          <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            {daysOfWeek.map((day, index) => (
+                              <li key={index} className="w-full">
+                                <div className="flex items-center mb-2">
+                                  <input onClick={closeDropdown2}
+                                    id={`day-${index}`}
+                                    type="checkbox"
+                                    value={day.value}
+                                    checked={day.value === "" ? selectedDays.length === daysOfWeek.length : selectedDays.includes(day.value)}
+                                    onChange={() => handleDayChange(day.value)}
+                                    className="w-4 h-4"
+                                  />
+                                  <label htmlFor={`day-${index}`} className="w-full">
+                                    {day.label}
+                                  </label>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className='w-[160px] job-filter_dropdown'>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        className="filter_dropdown-btn"
+                        onClick={toggleDropdown3}
+                      >
+                        Timing <svg className="w-2.5 h-3.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        {isOpen3 ? (
+                          <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M1 1l8 8M1 9L9 1"
+                          />
+                          ) : (
+                          <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m1 1 4 4 4-4"
+                          />
+                        )}
+                        </svg>
+                      </button>
+
+                      {isOpen3 && (
+                        <div className="origin-top-right absolute left-0 right-0 bg-white">
+                          <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                            {timePeriods.map((timePeriod, index) => (
+                              <li key={index} className="w-full">
+                                <div className="flex items-center mb-2">
+                                  <input onClick={closeDropdown3}
+                                    id={`timePeriod-${index}`}
+                                    type="checkbox"
+                                    value={timePeriod.value}
+                                    checked={timePeriod.value === "" ? selectedTimePeriods.length === timePeriods.length : selectedTimePeriods.includes(timePeriod.value)}
+                                    onChange={() => handleTimePeriodChange(timePeriod.value)}
+                                    className="w-4 h-4"
+                                  />
+                                  <label htmlFor={`timePeriod-${index}`} className="w-full">
+                                    {timePeriod.label}
+                                  </label>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className='w-[160px] job-filter_dropdown'>
-                  <div className="relative">
-                    <button
-                      type="button"
-                      className="filter_dropdown-btn"
-                      onClick={toggleDropdown2}
-                    >
-                      Day <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                      </svg>
-                    </button>
-
-                    {isOpen2 && (
-                      <div className="origin-top-right absolute left-0 right-0 bg-white">
-                        <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                          {daysOfWeek.map((day, index) => (
-                            <li key={index} className="w-full">
-                              <div className="flex items-center mb-2">
-                                <input onClick={closeDropdown2}
-                                  id={`day-${index}`}
-                                  type="checkbox"
-                                  value={day.value}
-                                  checked={day.value === "" ? selectedDays.length === daysOfWeek.length : selectedDays.includes(day.value)}
-                                  onChange={() => handleDayChange(day.value)}
-                                  className="w-4 h-4"
-                                />
-                                <label htmlFor={`day-${index}`} className="w-full">
-                                  {day.label}
-                                </label>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className='w-[160px] job-filter_dropdown'>
-                  <div className="relative">
-                    <button
-                      type="button"
-                      className="filter_dropdown-btn"
-                      onClick={toggleDropdown3}
-                    >
-                      Timing <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                      </svg>
-                    </button>
-
-                    {isOpen3 && (
-                      <div className="origin-top-right absolute left-0 right-0 bg-white">
-                        <ul className="filter_dropdown-item" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                          {timePeriods.map((timePeriod, index) => (
-                            <li key={index} className="w-full">
-                              <div className="flex items-center mb-2">
-                                <input onClick={closeDropdown3}
-                                  id={`timePeriod-${index}`}
-                                  type="checkbox"
-                                  value={timePeriod.value}
-                                  checked={timePeriod.value === "" ? selectedTimePeriods.length === timePeriods.length : selectedTimePeriods.includes(timePeriod.value)}
-                                  onChange={() => handleTimePeriodChange(timePeriod.value)}
-                                  className="w-4 h-4"
-                                />
-                                <label htmlFor={`timePeriod-${index}`} className="w-full">
-                                  {timePeriod.label}
-                                </label>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
+                <div className="filter-selected_row mt-2">
+                  <Link className="filter-selected-item" href="#">Work from home
+                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />         
+                  </Link>
+                  <Link className="filter-selected-item" href="#">Weekday
+                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />         
+                  </Link>
+                  <Link className="filter-selected-item" href="#">Evening
+                    <Image className="img" src="/icon/close-ic.svg" width={16} height={16} alt="Close icon" />         
+                  </Link>
                 </div>
               </div>
             )}
