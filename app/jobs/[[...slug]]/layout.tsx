@@ -46,6 +46,7 @@ export default function DashboardLayout({ children }: any) {
   let jobtype1: any = [];
   let days_week1: any = [];
   let timeperiod1: any = [];
+  const [show_location, setshow_location] = useState(false);
   useEffect(() => {
 
 
@@ -259,7 +260,6 @@ export default function DashboardLayout({ children }: any) {
     let data = { jobtype: jobtype }
     handleSearch(data);
 
-    console.log("haritype", Selectedjob)
   };
   const handlePageChange = async (pageNumber: number) => {
 
@@ -287,15 +287,16 @@ export default function DashboardLayout({ children }: any) {
     if (selectedLocation) {
       queryParams.set("location", selectedLocation);
     }
+    if (selectedArea && data?.area != "") {
+      queryParams.set("area", selectedArea);
+    }
     if (data?.location) {
       queryParams.set("location", data?.location);
     }
     if (data?.area) {
       queryParams.set("area", data?.area);
     }
-    if (selectedArea) {
-      queryParams.set("area", selectedArea);
-    }
+
     if (selectedCompany) {
       queryParams.set("company", selectedCompany);
     }
@@ -434,7 +435,7 @@ export default function DashboardLayout({ children }: any) {
 
       });
 
-      handleSearch({ location: city[0].long_name, area: (area && area[0]) ? area[0].long_name : null, jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods });
+      handleSearch({ location: city[0].long_name, area: (area && area[0]) ? area[0].long_name : "", jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods });
     }
 
   }
