@@ -488,8 +488,8 @@ export default function DashboardLayout({ children }: any) {
         <div className="jobsearch-bg-widget flex flex-col">
           <div className="job-heading-card">
             <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
-            <div className="text-center">
-              <span className="job-location-heading">{(!selectedArea && !selectedLocation) ? "All" : (!selectedArea && selectedLocation) ? selectedLocation : selectedArea + ',' + selectedLocation}</span> <div style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline" }} onClick={() => setshow_location(true)}>Change</div></div>
+            <div className="text-center flex justify-center items-center">
+              <span className="job-location-heading">{(!selectedArea && !selectedLocation) ? "All" : (!selectedArea && selectedLocation) ? selectedLocation : selectedArea + ',' + selectedLocation}</span> <div style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline", cursor:"pointer" }} onClick={() => setshow_location(true)}>Change</div></div>
           </div>
           <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
 

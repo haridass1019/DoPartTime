@@ -1118,3 +1118,140 @@ body {
 .filter-selected_row .filter-selected-item img {
   margin-left: 3px;
 }
+.filter-side-bar{
+  min-height: 565px;
+  border-radius: 8px;
+  padding: 0 20px;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px 0px #00000026;
+}
+.filter-side-bar .filter-side-bar_item-title{
+  color: #212121;
+  font-size: 14px;
+  font-weight: 600;
+}
+.filter-side-bar .filter-side-bar_item-search-field{
+  border: 1px solid #AAAAAA;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 6px;
+}
+.filter-side-bar .filter-side-bar_item-row{
+margin-top: 6px;
+}
+.filter-side-bar .filter-side-bar_item-row li input[type="checkbox"]{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #2523CA;
+  border-color: #2523CA;
+}
+.filter-side-bar .filter-side-bar_item-row li label{
+  font-size: 12px;
+  color: #212121;
+  font-weight: 400;
+  user-select: none;
+  cursor: pointer;
+}
+.cmp-list-card{
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+.com-list-card-row {
+  border: 1px solid #EFF1EF;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.com-list-card-row .company-title{
+  color: #191C1B;
+  font-size: 16px;
+  font-weight: 600;
+}
+.com-list-card-row .company-loc{
+  color: #4A58A9;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 5px; 
+}
+.com-list-card-row .cmp-since-lbl{
+  color: #808080;
+  font-size: 12px;
+  font-weight: 400;
+}
+.candidate-list-card-row .candidate-sub-title{
+  font-size: 14px;
+  color: #191C1B;
+}
+.candidate-detail-wrapper{
+  background-color: #fff;
+  border-radius: 8px;
+  min-height: 600px;
+  padding: 20px;
+}
+.candidate-detail-wrapper .cnd-card-row{
+  background-color: #fff;
+  border-radius: 8px;
+  border:1px solid #EFF1EF;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+.candidate-detail-wrapper .cnd-header-sec .cnd-title{
+  color: #191C1B;
+  font-size: 16px;
+  font-weight: 600;
+}
+.candidate-detail-wrapper .cnd-header-sec .cnd-loc, .candidate-sub-title{
+  color: #808080;
+  font-size: 14px;
+  font-weight: 400;
+}
+.candidate-detail-wrapper .cnd-header-sec .cnd-since-lbl{
+  color: #808080;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: end;
+}
+.candidate-detail-wrapper .cnd-header-sec .primary-btn-lg{
+  font-weight: 500;
+}
+.candidate-detail-wrapper .cnd-card-row .cnd-card_title{
+  color: #424242;
+  font-size: 16px;
+  font-weight: 600;
+}
+.candidate-detail-wrapper .cnd-card-row .cnd-card_desc{
+  color: #212121;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+}
+.cnd-card-row .cnd-rqr-field-row .label{
+  color: #757575;
+  font-size: 14px;
+  font-weight: 400;
+  width: 100px;
+}
+.cnd-card-row .cnd-rqr-field-row .value{
+  color: #212121;
+  font-size: 14px;
+  font-weight: 500;
+}
+.cnd-card-row .cnd-rqr-field-row .value .badge-light{
+  color: #757575;
+  font-size: 12px;
+  border-radius: 10px;
+  background-color: #F5F5F5;
+  padding: 5px 10px;
+}
+.cnd-card-row .badge-row .badge-light{
+  color: #757575;
+  font-size: 12px;
+  border-radius: 10px;
+  background-color: #F5F5F5;
+  padding: 5px 10px;
+  margin-right: 4px;
+}
