@@ -454,69 +454,69 @@ const Jobdetailspage = async ({ params }: any) => {
         />
         {/* <h2 className="text-center p-10">Job details</h2> */}
         <div className="back-btn-row">
-            <Link href="#" className='flex back-btn'> <Image src="/icon/ep_back.svg" className='mr-1' width={24} height={24} alt="Back" />Back</Link>
+          <Link href="#" className='flex back-btn'> <Image src="/icon/ep_back.svg" className='mr-1' width={24} height={24} alt="Back" />Back</Link>
         </div>
         <div>
           <div key={jobData.id}>
             <div className="job-detail-hero-section flex">
-                <div className="job-cmp-img mr-3">
-                    {jobData.image ? (
-                      <Image src={jobData.image} width={105} height={105} alt="Company" />
-                    ) : (
-                      <Image src="https://flowbite.com/docs/images/logo.svg" width={105} height={105} alt="Default Company Logo" />
-                    )}
-                </div>
-                <div className="job-hero-field w-full">
-                    <div className=" flex justify-between mb-2 w-full">
-                      <h2 className='job-detail-title'>{jobData.title}</h2>
-                      <div className="flex">
-                         <Link href="#" className=''> <Image src="/icon/share.svg" className='mr-4' width={24} height={24} alt="Back" /></Link>
-                         <Link href="#" className=''> <Image src="/icon/bookmark.svg" className='mr-1' width={24} height={24} alt="Back" /></Link>
-
-                      </div>           
-                    </div>
-                    <div className="">
-                      <Link className="job-detail-company-title" href={`/Pages/Company/${jobData.company.id}`}>{companyData.name}</Link>
-                      <span className='job-posted-date'>Posted 2 days ago</span>
-                    </div>
-                    <div className="flex justify-between items-end">
-                      <div className="job-hero-field-card">
-                        <div className="singleline flex">
-                            <div className="job-body mr-10">
-                            <Image src="/icon/wallet.svg" width={16} height={16} alt="Company" />
-                              <span>₹ {jobData.start_salary} - {jobData.end_salary}</span>
-                            </div>
-                            <div className="job-body">
-                              <Image src="/icon/ph_user-bold.svg" width={16} height={16} alt="Openings" />
-                              <span>4 Openings</span>
-                            </div>
-                        </div>
-                        <div className="singleline flex">
-                            <div className="job-body">
-                              <Image src="/icon/clock.svg" width={16} height={16} alt="Time" />
-                              {/* <span> {jobData.working_days}</span> */}
-                              <span>4pm - 7pm - Mon to Fri</span>
-                            </div>
-                            <div className="job-body">
-                              <Image src="/icon/map-pin.svg" width={16} height={16} alt="Location" />
-                              <span> {companyData.location}</span>
-                            </div>
-                        </div>
-                      </div>
-                      {/* <div className="btn"> */}
-                        <Link className='primary-btn-lg' href={`https://a-i-gen-project-60pl4r.flutterflow.app/job/${params.slug}`}>
-                          Apply Now
-                        </Link>
-                      {/* </div>               */}
-                    </div>              
-                
-                </div>
+              <div className="job-cmp-img mr-3">
+                {jobData.image ? (
+                  <Image src={jobData.image} width={105} height={105} alt="Company" />
+                ) : (
+                  <Image src="https://flowbite.com/docs/images/logo.svg" width={105} height={105} alt="Default Company Logo" />
+                )}
               </div>
+              <div className="job-hero-field w-full">
+                <div className=" flex justify-between mb-2 w-full">
+                  <h2 className='job-detail-title'>{jobData.title}</h2>
+                  <div className="flex">
+                    <Link href="#" className=''> <Image src="/icon/share.svg" className='mr-4' width={24} height={24} alt="Back" /></Link>
+                    <Link href="#" className=''> <Image src="/icon/bookmark.svg" className='mr-1' width={24} height={24} alt="Back" /></Link>
+
+                  </div>
+                </div>
+                <div className="">
+                  <Link className="job-detail-company-title" href={`/Pages/Company/${jobData.company.id}`}>{companyData.name}</Link>
+                  <span className='job-posted-date'>Posted 2 days ago</span>
+                </div>
+                <div className="flex justify-between items-end">
+                  <div className="job-hero-field-card">
+                    <div className="singleline flex">
+                      <div className="job-body mr-10">
+                        <Image src="/icon/wallet.svg" width={16} height={16} alt="Company" />
+                        <span>₹ {jobData.start_salary} - {jobData.end_salary}</span>
+                      </div>
+                      <div className="job-body">
+                        <Image src="/icon/ph_user-bold.svg" width={16} height={16} alt="Openings" />
+                        <span>4 Openings</span>
+                      </div>
+                    </div>
+                    <div className="singleline flex">
+                      <div className="job-body">
+                        <Image src="/icon/clock.svg" width={16} height={16} alt="Time" />
+                        {/* <span> {jobData.working_days}</span> */}
+                        <span>4pm - 7pm - Mon to Fri</span>
+                      </div>
+                      <div className="job-body">
+                        <Image src="/icon/map-pin.svg" width={16} height={16} alt="Location" />
+                        <span> {companyData.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <div className="btn"> */}
+                  <Link className='primary-btn-lg' href={`https://a-i-gen-project-60pl4r.flutterflow.app/job/${params.slug}`}>
+                    Apply Now
+                  </Link>
+                  {/* </div>               */}
+                </div>
+
+              </div>
+            </div>
 
 
-             
-                {/* <div className="job-wrpper details" > */}
-                    {/* <div className="job-header">
+
+            {/* <div className="job-wrpper details" > */}
+            {/* <div className="job-header">
                       {jobData.image ? (
                         <Image src={jobData.image} width={32} height={32} alt="Company" />
                       ) : (
@@ -534,7 +534,7 @@ const Jobdetailspage = async ({ params }: any) => {
 
                       </div>
                     </div> */}
-  {/* 
+            {/* 
                     <div className="singleline">
                       <div className="job-body">
                         <Image src="/icon/building-2.svg" width={16} height={16} alt="map" />
@@ -546,8 +546,8 @@ const Jobdetailspage = async ({ params }: any) => {
                       </div>
                     </div> */}
 
-                {/* </div> */}
-                {/* <div className="job-card">
+            {/* </div> */}
+            {/* <div className="job-card">
                   <div className="job-wrppernew" >
                     <div className="job-header">
                       <Image src="/icon/briefcase-business-gray.svg" width={16} height={16} alt="Logo" />
@@ -594,15 +594,15 @@ const Jobdetailspage = async ({ params }: any) => {
                   <h2 className='rqr-card-title mb-2'>Job Requirements</h2>
                   <div className="flex  job-rqr-field-row">
                     <div className="label">Gender</div>
-                    <div className="value">: Male</div>
+                    <div className="value">: {jobData.gender}</div>
                   </div>
                   <div className="flex job-rqr-field-row">
-                    <div className="label">Language</div>
-                    <div className="value">: English, Tamil</div>
+                    <div className="label">Eligibility</div>
+                    <div className="value">: {jobData.eligibility}</div>
                   </div>
                   <div className="flex job-rqr-field-row">
-                    <div className="label">Skills</div>
-                    <div className="value">: Computer skills, Microsoft Excel, Spoken English, 12th pass</div>
+                    <div className="label">Benefits</div>
+                    <div className="value">: {jobData.benefits}</div>
                   </div>
                   <hr />
                   <div className="job-body">
@@ -615,11 +615,11 @@ const Jobdetailspage = async ({ params }: any) => {
                   </div>
                   <h2 className='rqr-card-title mb-1'>Job Description</h2>
                   <div className="rqr-card-desc">
-                      {jobData.description}
+                    {jobData.description}
                   </div>
                 </div>
                 <div className="job-wrpper  requirements-card">
-                  <h2 className='rqr-card-title mb-1'>About the Company</h2>   
+                  <h2 className='rqr-card-title mb-1'>About the Company</h2>
                   <div className="requirements-card_profile">
                     {jobData.image ? (
                       <Image className='mr-2' src={jobData.image} width={40} height={40} alt="Company" />
@@ -638,36 +638,36 @@ const Jobdetailspage = async ({ params }: any) => {
                     <Link href={`/Pages/Company/${jobData.company.id}`} className='flex rqr-card-redirect-link-text justify-end'>View Company Profile <Image src="/icon/chevron-left.svg" className='' width={24} height={24} alt="Back" /></Link>
                   </div>
                 </div>
-                
+
                 <div className="job-wrpper  requirements-card">
-                  <h2 className='rqr-card-title mb-1'>Job Tags</h2>   
+                  <h2 className='rqr-card-title mb-1'>Job Tags</h2>
                   <div className="tag-card-row">
-                  {taglist.map((list: any) => (
-                    <div className="" key={list}>
+                    {taglist.map((list: any) => (
+                      <div className="" key={list}>
 
-                      <Link className='tag-card' href={{
-                        pathname: '../../../jobs/tag/' + list,
+                        <Link className='tag-card' href={{
+                          pathname: '../../../jobs/tag/' + list,
 
-                      }}>
-                        {list}
-                      </Link>
-                    </div>
-                  ))}
+                        }}>
+                          {list}
+                        </Link>
+                      </div>
+                    ))}
                   </div>
 
                 </div>
                 <div className="tag-list">
 
-                  
+
                 </div>
-{/* 
+                {/* 
                 <div className="btn">
                   <Link href={`https://a-i-gen-project-60pl4r.flutterflow.app/job/${params.slug}`}>
                     <button>Apply Now</button>
                   </Link>
                 </div> */}
               </div>
-              <div className="job-add-section"  style={{ width:"300px" }}>
+              <div className="job-add-section" style={{ width: "300px" }}>
                 <div className="company-card bg-white p-4 rounded-lg">
                   <h2 className='company-card_title mb-1'>Redditch Accessories</h2>
                   <div className='company-card_loc mb-1'>Egmore, Chennai</div>
@@ -678,22 +678,22 @@ const Jobdetailspage = async ({ params }: any) => {
                   <Link className="primary-btn-lg max-w-full text-center block" href="#">View active jobs</Link>
                 </div>
                 <div className="mt-4">
-                    <Image src="/banner/job-apply-banner.svg" width={300} height={140}alt='Banner image' />
+                  <Image src="/banner/job-apply-banner.svg" width={300} height={140} alt='Banner image' />
                 </div>
                 <div className="mt-4 app-install-card  bg-white rounded-lg">
                   <h2 className="card-title">Apply anytime, anywhere.</h2>
                   <div className="card-desc">Discover part-time job opportunities on our app</div>
                   <div className="flex justify-between mt-2">
                     <div className="w-full mr-2">
-                      <Image src="/banner/app-mockup.png" className='w-full'  width={117} height={118}  alt='Banner image'/>
+                      <Image src="/banner/app-mockup.png" className='w-full' width={117} height={118} alt='Banner image' />
                     </div>
                     <div className="flex flex-col justify-evenly items-center">
                       <div className="card-desc-light">20,000+ Part time jobs are there !</div>
                       <Link href="#">
-                      <Image src="/icon/Andriod.png"  width={120} height={36}  alt='Andriod'/>                        
+                        <Image src="/icon/Andriod.png" width={120} height={36} alt='Andriod' />
                       </Link>
                       <Link href="#">
-                      <Image src="/icon/IOS.png"  width={120} height={36}  alt='iOS'/>
+                        <Image src="/icon/IOS.png" width={120} height={36} alt='iOS' />
                       </Link>
                     </div>
                   </div>
