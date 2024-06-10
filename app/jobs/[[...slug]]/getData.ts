@@ -17,7 +17,7 @@ interface JobData {
     [key: string]: any; // Adjust the structure according to your actual job data
 }
 
-const pagination_size = 2; // Set your pagination size
+const pagination_size = 10; // Set your pagination size
 
 const getData = async ({ page, count, lastVisible, lastid, location, area, jobfilter, company }: GetDataParams): Promise<JobData[] | any> => {
 

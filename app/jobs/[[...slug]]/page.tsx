@@ -215,16 +215,7 @@ const dashboard: any = async (params: any) => {
       jobfilter: job_type,
       company: company
     });
-    let apiDatacount: any = await getData({
-      page: page,
-      count: true,
-      lastVisible: false,
-      lastid: "",
-      location: location,
-      area: area,
-      jobfilter: job_type,
-      company: company
-    });
+
     return (
       <>
 
@@ -237,63 +228,63 @@ const dashboard: any = async (params: any) => {
 
               <div className="Fillter-right"> */}
 
-                <div className="">
-                  {apiData.map((message: any, index: any) => (
+        <div className="">
+          {apiData.map((message: any, index: any) => (
 
-                    <div className="job-list-card" key={index.id}>
+            <div className="job-list-card" key={index.id}>
 
-                      <Link href={`/Pages/Jobs/Job-details/${message.id}`}>
-                        <div className="job-header">
-                          {message.image ? (
-                            <Image
-                              src={message.image}
-                              width={32}
-                              height={32}
-                              alt="Company"
-                            />
-                          ) : (
-                            <Image
-                              src="https://flowbite.com/docs/images/logo.svg"
-                              width={32}
-                              height={32}
-                              alt="Default Company Logo"
-                            />
-                          )}
-                          <div>
-                            <p>{message.title}</p>
-                            <span>{message.title}</span>
-                            {message.status == 2 && (
-                              <div className="closed">
-                                Closed
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
-                        <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
-                          <div className="hidden md:block w-10"></div>
-                          <div className="job-body">
-                            <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
-                            <span> {message.location}</span>
-                          </div>  
-                          <div className="job-body">
-                            <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
-                            <span>{formatTimeRange(message.start_time, message.end_time)}  {message.working_days}</span>
-                          </div>
-                          <div className="job-body">
-                            <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
-                            <span>₹ {message.start_salary} - {message.end_salary} per month</span>
-                        </div>                          
-                        </div>
-                        <div className="postby">
-                          <span>{formatPostedTime(message.publish_time)}</span>
-                        </div>
-                      </div> 
-                      </Link>
+              <Link href={`/Pages/Jobs/Job-details/${message.id}`}>
+                <div className="job-header">
+                  {message.image ? (
+                    <Image
+                      src={message.image}
+                      width={32}
+                      height={32}
+                      alt="Company"
+                    />
+                  ) : (
+                    <Image
+                      src="https://flowbite.com/docs/images/logo.svg"
+                      width={32}
+                      height={32}
+                      alt="Default Company Logo"
+                    />
+                  )}
+                  <div>
+                    <p>{message.title}</p>
+                    <span>{message.title}</span>
+                    {message.status == 2 && (
+                      <div className="closed">
+                        Closed
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
+                  <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
+                    <div className="hidden md:block w-10"></div>
+                    <div className="job-body">
+                      <Image src="/icon/map-pin.svg" width={16} height={16} alt="Logo" />
+                      <span> {message.location}</span>
                     </div>
-                  ))}
-                  <div className="paggination-head">
-                    {/* <Link className="pagination"
+                    <div className="job-body">
+                      <Image src="/icon/clock.svg" width={16} height={16} alt="Logo" />
+                      <span>{formatTimeRange(message.start_time, message.end_time)}  {message.working_days}</span>
+                    </div>
+                    <div className="job-body">
+                      <Image src="/icon/wallet.svg" width={16} height={16} alt="Logo" />
+                      <span>₹ {message.start_salary} - {message.end_salary} per month</span>
+                    </div>
+                  </div>
+                  <div className="postby">
+                    <span>{formatPostedTime(message.publish_time)}</span>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+          <div className="paggination-head">
+            {/* <Link className="pagination"
                       style={{
                         pointerEvents: (start == 0) ? "none" : "auto",
                       }}
@@ -310,8 +301,8 @@ const dashboard: any = async (params: any) => {
                       Previous
                     </Link> */}
 
-                  </div>
-                  {/* <Link className="pagination"
+          </div>
+          {/* <Link className="pagination"
                     href={{
                       pathname: '/jobs',
                       query: {
@@ -324,9 +315,9 @@ const dashboard: any = async (params: any) => {
                   >
                     Next
                   </Link> */}
-                </div>
+        </div>
 
-              {/* </div>
+        {/* </div>
 
             </div>
           </div>
