@@ -902,7 +902,7 @@ body {
   position: relative;
 }
 
-.filter-active-btn::after {
+.filter-active-btn-icon-active::after {
   position: absolute;
   top: 2px;
   right: 6px;

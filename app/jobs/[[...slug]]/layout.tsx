@@ -546,7 +546,7 @@ export default function DashboardLayout({ children }: any) {
                 <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
                   Sort by
                 </Button>
-                <Button className={`${isExpanded ? "filter-active-btn" : ''} ${(selectedJobs.length >= 1 || selectedDays.length >= 1 || selectedTimePeriods.length >= 1) ? "filter-active-btn-icon" : ''}`} onClick={toggleExpansion} color="primary" variant="bordered" endContent={isExpanded ?
+                <Button className={`${isExpanded ? "filter-active-btn" : ''} ${(selectedJobs.length >= 1 || selectedDays.length >= 1 || selectedTimePeriods.length >= 1) ? "filter-active-btn-icon-active" : ''}`} onClick={toggleExpansion} color="primary" variant="bordered" endContent={isExpanded ?
                   <Image src="/icon/white-filter-line.svg" width={16} height={16} alt="Filter" /> : <Image src="/icon/mingcute_filter-line-ic.svg" width={16} height={16} alt="Filter" />}>
                   Filter
                 </Button>
@@ -590,7 +590,7 @@ export default function DashboardLayout({ children }: any) {
                             {jobTypes.map((jobType, index) => (
                               <li key={index} className="w-full">
                                 <div className="flex items-center mb-2">
-                                  <input onClick={closeDropdown}
+                                  <input 
                                     id={`jobType-${index}`}
                                     type="checkbox"
                                     value={jobType.value}
@@ -643,7 +643,7 @@ export default function DashboardLayout({ children }: any) {
                             {daysOfWeek.map((day, index) => (
                               <li key={index} className="w-full">
                                 <div className="flex items-center mb-2">
-                                  <input onClick={closeDropdown2}
+                                  <input 
                                     id={`day-${index}`}
                                     type="checkbox"
                                     value={day.value}
@@ -696,7 +696,7 @@ export default function DashboardLayout({ children }: any) {
                             {timePeriods.map((timePeriod, index) => (
                               <li key={index} className="w-full">
                                 <div className="flex items-center mb-2">
-                                  <input onClick={closeDropdown3}
+                                  <input 
                                     id={`timePeriod-${index}`}
                                     type="checkbox"
                                     value={timePeriod.value}
