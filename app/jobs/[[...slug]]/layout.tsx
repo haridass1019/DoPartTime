@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, Tab, Tabs } from "@nextui-org/react";
 import axios from "axios";
 import getData from "./getData";
+import Cookies from 'js-cookie';
 let pagination_size = 10;
 
 
@@ -55,10 +56,12 @@ export default function DashboardLayout({ children }: any) {
     if (slug_value.length >= 2 && slug_value[2] != 'tag' && slug_value[2] != 'company') {
       location1 = slug_value[2];
       setSelectedLocation(slug_value[2]);
+      Cookies.set('location', slug_value[2]);
     }
     if (slug_value.length >= 3 && slug_value[2] != 'tag' && slug_value[2] != 'company') {
       area1 = slug_value[3];
       setselectedArea(slug_value[3]);
+      Cookies.set('area', area1);
     }
     if (slug_value.length >= 3 && slug_value[2] == 'company') {
       setselectedCompany(slug_value[3]);
@@ -74,10 +77,12 @@ export default function DashboardLayout({ children }: any) {
     if (params.location) {
       location1 = params.location;
       setSelectedLocation(params.location);
+      Cookies.set('location', location1);
     }
     if (params.area) {
       area1 = params.area;
       setselectedArea(params.area);
+      Cookies.set('area', area1);
     }
     if (params.company) {
       setselectedCompany(params.company);
@@ -291,6 +296,9 @@ export default function DashboardLayout({ children }: any) {
     if (selectedArea && data?.area != "") {
       queryParams.set("area", selectedArea);
     }
+    else {
+      Cookies.remove('area');
+    }
     if (data?.location) {
       queryParams.set("location", data?.location);
     }
@@ -424,6 +432,7 @@ export default function DashboardLayout({ children }: any) {
         if (item.types.includes("locality")) {
           console.log(item);
           setSelectedLocation(item.long_name);
+          Cookies.set('location', item.long_name);
           return item.long_name;
         }
       });
@@ -431,6 +440,7 @@ export default function DashboardLayout({ children }: any) {
         if (item.types.includes("sublocality_level_1")) {
           console.log(item);
           setselectedArea(item.long_name);
+          Cookies.set('area', item.long_name);
           return item.long_name;
         }
 
