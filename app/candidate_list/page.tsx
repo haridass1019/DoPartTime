@@ -5,7 +5,7 @@ export default function candidateList() {
   return (
       <>
       <div className="com-list-card-row candidate-list-card-row">
-        <Link href={`/Pages/Jobs/Job-details/part-time-fresher`}>
+        <Link href={`/candidate_detail`}>
           <div className="company-title-row flex items-start">
                 <Image src="https://flowbite.com/docs/images/logo.svg" width={66} height={66} alt="Default Company Logo" />                
                 <div className="ms-2 w-full flex-1 text-white">
@@ -22,7 +22,7 @@ export default function candidateList() {
         </Link>
       </div>
       <div className="com-list-card-row candidate-list-card-row">
-        <Link href={`/Pages/Jobs/Job-details/part-time-fresher`}>
+        <Link href={`/candidate_detail`}>
           <div className="company-title-row flex items-start">
                 <Image src="https://flowbite.com/docs/images/logo.svg" width={66} height={66} alt="Default Company Logo" />                
                 <div className="ms-2 w-full flex-1 text-white">
@@ -39,7 +39,7 @@ export default function candidateList() {
         </Link>
       </div>
       <div className="com-list-card-row candidate-list-card-row">
-        <Link href={`/Pages/Jobs/Job-details/part-time-fresher`}>
+        <Link href={`/candidate_detail`}>
           <div className="company-title-row flex items-start">
                 <Image src="https://flowbite.com/docs/images/logo.svg" width={66} height={66} alt="Default Company Logo" />                
                 <div className="ms-2 w-full flex-1 text-white">
@@ -56,7 +56,7 @@ export default function candidateList() {
         </Link>
       </div>
       <div className="com-list-card-row candidate-list-card-row">
-        <Link href={`/Pages/Jobs/Job-details/part-time-fresher`}>
+        <Link href={`/candidate_detail`}>
           <div className="company-title-row flex items-start">
                 <Image src="https://flowbite.com/docs/images/logo.svg" width={66} height={66} alt="Default Company Logo" />                
                 <div className="ms-2 w-full flex-1 text-white">
@@ -73,7 +73,7 @@ export default function candidateList() {
         </Link>
       </div>
       <div className="com-list-card-row candidate-list-card-row">
-        <Link href={`/Pages/Jobs/Job-details/part-time-fresher`}>
+        <Link href={`/candidate_detail`}>
           <div className="company-title-row flex items-start">
                 <Image src="https://flowbite.com/docs/images/logo.svg" width={66} height={66} alt="Default Company Logo" />                
                 <div className="ms-2 w-full flex-1 text-white">
