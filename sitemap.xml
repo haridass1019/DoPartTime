@@ -1,15 +1,14 @@
-<sitemapindex>
-<sitemap>
-
-<loc>hhttps://do-part-time.vercel.app/sitemap_jobs.xml</loc>
-<lastmod>2024-06-03T19:16:49.074Z</lastmod>
-</sitemap>
-<sitemap>
-<loc>hhttps://do-part-time.vercel.app/sitemap_jobs_location.xml</loc>
-<lastmod>2024-06-03T19:16:49.075Z</lastmod>
-</sitemap>
-<sitemap>
-<loc>hhttps://do-part-time.vercel.app/sitemap_jobs_area.xml</loc>
-<lastmod>2024-06-03T19:16:49.075Z</lastmod>
-</sitemap>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://do-part-time.vercel.app/sitemap_jobs.xml</loc>
+    <lastmod>2024-06-03T19:16:49.074Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://do-part-time.vercel.app/sitemap_jobs_location.xml</loc>
+    <lastmod>2024-06-03T19:16:49.075Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://do-part-time.vercel.app/sitemap_jobs_area.xml</loc>
+    <lastmod>2024-06-03T19:16:49.075Z</lastmod>
+  </sitemap>
 </sitemapindex>

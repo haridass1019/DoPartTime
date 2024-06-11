@@ -112,7 +112,7 @@ const sitemap_job = async () => {
     let value_of = await getData();
     // Example XML data
     const xmlData: string = `<urlset>
-${(value_of).map(entry => generateSitemapEntry('https://do-part-time.vercel.app/Pages/Jobs/Job-details/' + entry.id, 0.900)).join('\n')}
+${(value_of).map(entry => generateSitemapEntry('https://do-part-time.vercel.app/Job_details/' + entry.id, 0.900)).join('\n')}
     </urlset>
     `;
 

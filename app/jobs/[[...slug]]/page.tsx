@@ -233,7 +233,7 @@ const dashboard: any = async (params: any) => {
 
             <div className="job-list-card" key={index.id}>
 
-              <Link href={`/Pages/Jobs/Job-details/${message.id}`}>
+              <Link href={`/Job_details/${message.id}`}>
                 <div className="job-header">
                   {message.image ? (
                     <Image
