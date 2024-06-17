@@ -67,7 +67,7 @@ const candidateDetail = async ({ params }: any) => {
                             <div className="label">Experience</div>
                             <div className="">
                                 {(apiData.userData.experience) && apiData.userData.experience.map((data_ex: any, index: any) => (
-                                    <div className="value mb-2">: {data_ex}</div>
+                                    <div key={index} className="value mb-2">: {data_ex}</div>
 
                                 ))}
                             </div>
@@ -77,7 +77,7 @@ const candidateDetail = async ({ params }: any) => {
                         <h2 className="cnd-card_title">Skills</h2>
                         <div className="badge-row">
                             {(apiData.userData.skill) && apiData.userData.skill.map((data_skill: any, index: any) => (
-                                <span className="badge-light">{data_skill}</span>
+                                <span key={index} className="badge-light">{data_skill}</span>
 
                             ))}
 
@@ -87,7 +87,7 @@ const candidateDetail = async ({ params }: any) => {
                         <h2 className="cnd-card_title">Interests</h2>
                         <div className="badge-row">
                             {(apiData.userData.interest) && apiData.userData.interest.map((data_interest: any, index: any) => (
-                                <span className="badge-light">{data_interest}</span>
+                                <span key={index} className="badge-light">{data_interest}</span>
 
                             ))}
 

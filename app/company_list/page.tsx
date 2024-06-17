@@ -7,7 +7,7 @@ export default async function companyList() {
   return (
     <>
       {apiData.map((data: any, index: any) => (
-        <div className="com-list-card-row">
+        <div key={index} className="com-list-card-row">
           <Link href={`/company_detail/${data.id}`}>
             <div className="company-title-row flex items-start">
 
