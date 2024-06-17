@@ -8,7 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, Tab, Tabs } from "@nextui-org/react";
 import axios from "axios";
 import getData from "./getData";
-
+import Cookies from 'js-cookie';
 let pagination_size = 10;
 
 
