@@ -235,9 +235,9 @@ const dashboard: any = async (params: any) => {
 
               <Link href={`/Job_details/${message.id}`}>
                 <div className="job-header">
-                  {message.image ? (
+                  {message.company.image ? (
                     <Image
-                      src={message.image}
+                      src={message.company.image}
                       width={32}
                       height={32}
                       alt="Company"
@@ -252,7 +252,7 @@ const dashboard: any = async (params: any) => {
                   )}
                   <div>
                     <p>{message.title}</p>
-                    <span>{message.title}</span>
+                    <span>{message.company.name}</span>
                     {message.status == 2 && (
                       <div className="closed">
                         Closed

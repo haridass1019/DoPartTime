@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {         
-        domains: ['lh3.googleusercontent.com'], 
-        domains: ['static.vecteezy.com'],
-        domains: ['static.vecteezy.com'],
-        domains: ['lh3.googleusercontent.com'],
-      },
+  images: {
+
+    domains: ['firebasestorage.googleapis.com', 'lh3.googleusercontent.com', 'static.vecteezy.com'],
+
+  },
 };
 
 export default nextConfig;

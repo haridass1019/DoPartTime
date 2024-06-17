@@ -1,4 +1,4 @@
-import { collection, getDocs, limit, orderBy, query, QueryConstraint, startAfter, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, QueryConstraint, startAfter, where } from "firebase/firestore";
 import { db } from "../../firbaseconfig"; // Adjust the path to your Firebase config
 
 interface GetDataParams {
@@ -19,6 +19,19 @@ interface JobData {
 
 const pagination_size = 10; // Set your pagination size
 
+const company_data = async (slug: any) => {
+    try {
+        const docRef = doc(db, 'company', slug);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return { id: docSnap.id, ...docSnap.data() };
+        } else {
+            throw new Error('User not found');
+        }
+    } catch (error: any) {
+        throw new Error("Failed to fetch data from Firestore: " + error.message);
+    }
+};
 const getData = async ({ page, count, lastVisible, lastid, location, area, jobfilter, company }: GetDataParams): Promise<JobData[] | any> => {
 
     try {
@@ -66,7 +79,8 @@ const getData = async ({ page, count, lastVisible, lastid, location, area, jobfi
         }
 
         const promises = querySnapshot.docs.map(async (doc) => {
-            const data: JobData = { id: doc.id, ...doc.data() };
+            let company_details = await company_data(doc.data().company.id);
+            const data: JobData = { id: doc.id, ...doc.data(), company: company_details };
             return data;
         });
 

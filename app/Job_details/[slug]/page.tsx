@@ -9,6 +9,21 @@ import Head from 'next/head';
 import Script from 'next/script'
 
 
+
+function formatTimeRange(start_time: any, end_time: any) {
+  if (!start_time || !start_time.seconds || !end_time || !end_time.seconds) {
+    return "Time not mentioned";
+  }
+  const options: any = { hour: 'numeric', minute: 'numeric', hour12: true };
+  const startDate = new Date(start_time.seconds * 1000);
+  const endDate = new Date(end_time.seconds * 1000);
+
+  const formattedStartTime = startDate.toLocaleTimeString('en-US', options);
+  const formattedEndTime = endDate.toLocaleTimeString('en-US', options);
+
+  return `${formattedStartTime} - ${formattedEndTime}`;
+}
+
 function formatPostedTime(publish_time: any) {
   const timestamp = publish_time;
   const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
@@ -25,7 +40,6 @@ function formatPostedTime(publish_time: any) {
     return `Posted ${daysDifference} days ago`;
   }
 }
-
 const Jobdetailspage = async ({ params }: any) => {
 
   const getData = async () => {
@@ -147,8 +161,8 @@ const Jobdetailspage = async ({ params }: any) => {
           <div key={jobData.id}>
             <div className="job-detail-hero-section flex">
               <div className="job-cmp-img mr-3">
-                {jobData.image ? (
-                  <Image src={jobData.image} width={105} height={105} alt="Company" />
+                {companyData.image ? (
+                  <Image src={companyData.image} width={105} height={105} alt="Company" />
                 ) : (
                   <Image src="https://flowbite.com/docs/images/logo.svg" width={105} height={105} alt="Default Company Logo" />
                 )}
@@ -164,7 +178,7 @@ const Jobdetailspage = async ({ params }: any) => {
                 </div>
                 <div className="">
                   <Link className="job-detail-company-title" href={`/company_detail/${jobData.company.id}`}>{companyData.name}</Link>
-                  <span className='job-posted-date'>Posted 2 days ago</span>
+                  <span className='job-posted-date'>{formatPostedTime(jobData.publish_time)}</span>
                 </div>
                 <div className="flex justify-between items-end">
                   <div className="job-hero-field-card">
@@ -175,14 +189,14 @@ const Jobdetailspage = async ({ params }: any) => {
                       </div>
                       <div className="job-body">
                         <Image src="/icon/ph_user-bold.svg" width={16} height={16} alt="Openings" />
-                        <span>4 Openings</span>
+                        <span>{jobData.opening_count} Openings</span>
                       </div>
                     </div>
                     <div className="singleline flex">
                       <div className="job-body">
                         <Image src="/icon/clock.svg" width={16} height={16} alt="Time" />
                         {/* <span> {jobData.working_days}</span> */}
-                        <span>4pm - 7pm - Mon to Fri</span>
+                        <span>{formatTimeRange(jobData.start_time, jobData.end_time)}</span>
                       </div>
                       <div className="job-body">
                         <Image src="/icon/map-pin.svg" width={16} height={16} alt="Location" />
@@ -235,8 +249,8 @@ const Jobdetailspage = async ({ params }: any) => {
                 <div className="job-wrpper  requirements-card">
                   <h2 className='rqr-card-title mb-1'>About the Company</h2>
                   <div className="requirements-card_profile">
-                    {jobData.image ? (
-                      <Image className='mr-2' src={jobData.image} width={40} height={40} alt="Company" />
+                    {companyData.image ? (
+                      <Image className='mr-2' src={companyData.image} width={40} height={40} alt="Company" />
                     ) : (
                       <Image className='mr-2' src="https://flowbite.com/docs/images/logo.svg" width={40} height={40} alt="Default Company Logo" />
                     )}

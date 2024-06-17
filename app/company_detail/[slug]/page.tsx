@@ -113,8 +113,8 @@ const company = async ({ params }: any) => {
                 <div className="company-rating_total">273 Reviews</div>
               </div>
               <div className="company-title-row mt-8 flex items-center">
-                {apiData.logo ? (
-                  <Image src={apiData.logo} width={82} height={82} alt="Company" />
+                {apiData.image ? (
+                  <Image src={apiData.image} width={82} height={82} alt="Company" />
                 ) : (
                   <Image src="https://flowbite.com/docs/images/logo.svg" width={82} height={82} alt="Default Company Logo" />
                 )}
@@ -192,7 +192,7 @@ const company = async ({ params }: any) => {
                       <Link href={`/Job_details/${job.id}`}>
                         <div className="trending-jobs-column flex">
                           <div className="avathar mr-2">
-                            <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+                            <Image src={apiData.image} width={32} height={32} alt="Default Company Logo" />
                           </div>
                           <div className="card-body">
                             <h2 className="card-title truncate text-ellipsis">{job.title}</h2>

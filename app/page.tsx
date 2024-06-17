@@ -1,7 +1,7 @@
 'use client'
 
 import { db } from './firbaseconfig';
-import { QueryConstraint, collection, getDocs, query, where } from 'firebase/firestore';
+import { QueryConstraint, collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -26,6 +26,19 @@ const getDatatrendingdata = async () => {
     throw new Error("Failed to fetch data from Firestore: " + error.message);
   }
 }
+const company = async (slug: any) => {
+  try {
+    const docRef = doc(db, 'company', slug);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (error: any) {
+    throw new Error("Failed to fetch data from Firestore: " + error.message);
+  }
+};
 const getData = async () => {
   try {
     const queryConstraints: QueryConstraint[] = [];
@@ -34,8 +47,9 @@ const getData = async () => {
     const postsRef = query(collection(db, "jobs"), ...queryConstraints);
     const querySnapshot = await getDocs(postsRef);
     const data: any = [];
-    querySnapshot.forEach((doc) => {
-      data.push({ id: doc.id, ...doc.data() });
+    querySnapshot.forEach(async (doc) => {
+      let company_details = await company(doc.data().company.id);
+      data.push({ id: doc.id, ...doc.data(), company: company_details });
     });
     return data;
   } catch (error: any) {
@@ -168,7 +182,12 @@ const dashboard: any = async () => {
                     <Link href={`Job_details/${item.id}`}>
                       <div className="trending-jobs-column flex">
                         <div className="avathar mr-2">
-                          <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+                          {item.companyname.image ? (
+                            <Image src={item.companyname.image} width={32} height={32} alt="Company" />
+                          ) : (
+                            <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+                          )}
+
                         </div>
                         <div className="card-body">
                           <h2 className="card-title truncate text-ellipsis">{item.title}</h2>
@@ -260,14 +279,14 @@ const dashboard: any = async () => {
                   <div className="job-list-card" key={item.id}>
                     <Link href={`Job_details/${item.id}`}>
                       <div className="job-header">
-                        {item.image ? (
-                          <Image src={item.image} width={32} height={32} alt="Company" />
+                        {item.company.image ? (
+                          <Image src={item.company.image} width={32} height={32} alt="Company" />
                         ) : (
                           <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
                         )}
                         <div>
                           <p>{item.title}</p>
-                          <span>{item.title}</span>
+                          <span>{item.company.name}</span>
                         </div>
                       </div>
                       <div className="flex flex-col flex-1 md:flex-row ms:flex-col">
