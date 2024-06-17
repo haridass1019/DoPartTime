@@ -8,7 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Autocomplete, AutocompleteItem, BreadcrumbItem, Breadcrumbs, Button, Tab, Tabs } from "@nextui-org/react";
 import axios from "axios";
 import getData from "./getData";
-import Cookies from 'js-cookie';
+
 let pagination_size = 10;
 
 
@@ -489,7 +489,7 @@ export default function DashboardLayout({ children }: any) {
           <div className="job-heading-card">
             <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
             <div className="text-center flex justify-center items-center">
-              <span className="job-location-heading">{(!selectedArea && !selectedLocation) ? "All" : (!selectedArea && selectedLocation) ? selectedLocation : selectedArea + ',' + selectedLocation}</span> <div style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline", cursor:"pointer" }} onClick={() => setshow_location(true)}>Change</div></div>
+              <span className="job-location-heading">{(!selectedArea && !selectedLocation) ? "All" : (!selectedArea && selectedLocation) ? selectedLocation : selectedArea + ',' + selectedLocation}</span> <div style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline", cursor: "pointer" }} onClick={() => setshow_location(true)}>Change</div></div>
           </div>
           <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
 
@@ -590,7 +590,7 @@ export default function DashboardLayout({ children }: any) {
                             {jobTypes.map((jobType, index) => (
                               <li key={index} className="w-full">
                                 <div className="flex items-center mb-2">
-                                  <input 
+                                  <input
                                     id={`jobType-${index}`}
                                     type="checkbox"
                                     value={jobType.value}
@@ -643,7 +643,7 @@ export default function DashboardLayout({ children }: any) {
                             {daysOfWeek.map((day, index) => (
                               <li key={index} className="w-full">
                                 <div className="flex items-center mb-2">
-                                  <input 
+                                  <input
                                     id={`day-${index}`}
                                     type="checkbox"
                                     value={day.value}
@@ -696,7 +696,7 @@ export default function DashboardLayout({ children }: any) {
                             {timePeriods.map((timePeriod, index) => (
                               <li key={index} className="w-full">
                                 <div className="flex items-center mb-2">
-                                  <input 
+                                  <input
                                     id={`timePeriod-${index}`}
                                     type="checkbox"
                                     value={timePeriod.value}
