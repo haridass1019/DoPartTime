@@ -484,49 +484,142 @@ export default function DashboardLayout({ children }: any) {
   const defalut = { jobtype: selectedJobs, jobdays: selectedDays, jobs_time_period: selectedTimePeriods };
   return (
     <section>
-      <div className="jobsearch-wrapper">
-        <div className="jobsearch-bg-widget flex flex-col">
-          <div className="job-heading-card">
-            <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
-            <div className="text-center flex justify-center items-center">
-              <span className="job-location-heading">{(!selectedArea && !selectedLocation) ? "All" : (!selectedArea && selectedLocation) ? selectedLocation : selectedArea + ',' + selectedLocation}</span> <div style={{ color: "#fff", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline", cursor: "pointer" }} onClick={() => setshow_location(true)}>Change</div></div>
-          </div>
-          <div className="flex flex-col flex-1 justify-center md:flex-row ms:flex-col mt-6">
+      <div className="jobsearch-wrapper-row text-black flex justify-between">
+        <div className="job-heading-card">
+              <h2 className="job-count-heading">Over 2,000+ part-time jobs available in</h2>
+              <div className="text-center flex justify-start items-center">
+                <span className="job-location-heading">{(!selectedArea && !selectedLocation) ? "All" : (!selectedArea && selectedLocation) ? selectedLocation : selectedArea + ',' + selectedLocation}</span> <div style={{ color: "#2523CA", fontWeight: 500, fontSize: "14px", textDecorationLine: "underline", cursor: "pointer" }} onClick={() => setshow_location(!show_location)}>Change</div></div>
+                {show_location && (
+                  <div className="relative">
 
-            <div className="w-full">
-              {show_location && (
-                <div className="relative">
+                    <Autocomplete
+                      className="max-w-xs"
+                      defaultInputValue={(selectedLocation) ? selectedLocation : (params.area) ? params.area + "," + params.location : params.location}
 
-                  <Autocomplete
-                    className="max-w-xs"
-                    defaultInputValue={(selectedLocation) ? selectedLocation : (params.area) ? params.area + "," + params.location : params.location}
+                      items={suggestions}
+                      placeholder="Type to search location..."
+                      onInputChange={(value) => fetchSuggestions(value)}
+                      onSelectionChange={(key) => getareaandcity(key)}
+                      onReset={() => { setselectedArea(""); setSelectedLocation(""); }}
+                    >
+                      {(suggestions: any) => (
+                        <AutocompleteItem key={suggestions.value} className="capitalize">
+                          {suggestions.label}
+                        </AutocompleteItem>
+                      )}
+                    </Autocomplete>
 
-                    items={suggestions}
-                    placeholder="Type to search location..."
-                    onInputChange={(value) => fetchSuggestions(value)}
-                    onSelectionChange={(key) => getareaandcity(key)}
-                    onReset={() => { setselectedArea(""); setSelectedLocation(""); }}
-                  >
-                    {(suggestions: any) => (
-                      <AutocompleteItem key={suggestions.value} className="capitalize">
-                        {suggestions.label}
-                      </AutocompleteItem>
-                    )}
-                  </Autocomplete>
-
-                  {/* <input type="search" id="default-search" className="global-search-bar block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" style={{ fontSize:"12px" }} placeholder="Search by locality, job type, company" required />
-                      <div className="absolute inset-y-0 end-0 flex items-center pe-2  pointer-events-none">
-                       <Image src="/icon/ion_search.svg" width={24} height={24} alt="Search" />
-                      </div> */}
-                </div>
-              )}
-            </div>
-          </div>
+                    {/* <input type="search" id="default-search" className="global-search-bar block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-50 dark:border-gray-400 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" style={{ fontSize:"12px" }} placeholder="Search by locality, job type, company" required />
+                        <div className="absolute inset-y-0 end-0 flex items-center pe-2  pointer-events-none">
+                        <Image src="/icon/ion_search.svg" width={24} height={24} alt="Search" />
+                        </div> */}
+                  </div>
+                )} 
         </div>
-
+        <div className="filter-group-btn-icon">
+            <Button className='mr-2' color="primary" variant="bordered" endContent={<Image src="/icon/filter-sort-ic.svg" width={16} height={16} alt="Filter" />}>
+              Sort by
+            </Button>
+        </div>
       </div>
-      <div className="my-5">
-        <div className="job-list-wrpper">
+      <div className="my-5 flex">
+        <div className="filter-side-bar me-4 w-[224px]">
+          <div className="mt-4">
+              <h2 className="filter-side-bar_item-title">Salary</h2>
+              <ul className="filter-side-bar_item-row" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="4" type="checkbox" className="" />
+                          <label htmlFor="4" className="w-full">2000 to 4000rs</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="5" type="checkbox" className="" />
+                          <label htmlFor="5" className="w-full">4000 to 6000rs</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="6" type="checkbox" className="" />
+                          <label htmlFor="6" className="w-full">6000 to 8000rs</label>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+          <div className="mt-4">
+              <h2 className="filter-side-bar_item-title">Job Model</h2>
+              <ul className="filter-side-bar_item-row" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="7" type="checkbox" className="" />
+                          <label htmlFor="7" className="w-full">Employer location</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="5" type="checkbox" className="" />
+                          <label htmlFor="5" className="w-full">Work from home</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="6" type="checkbox" className="" />
+                          <label htmlFor="6" className="w-full">Field Work</label>
+                      </div>
+                  </li>
+
+              </ul>
+          </div>
+          <div className="mt-4">
+              <h2 className="filter-side-bar_item-title">Day</h2>
+              <ul className="filter-side-bar_item-row" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="7" type="checkbox" className="" />
+                          <label htmlFor="7" className="w-full">Weekday</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="8" type="checkbox" className="" />
+                          <label htmlFor="8" className="w-full">Weekend</label>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+          <div className="mt-4">
+              <h2 className="filter-side-bar_item-title">Timing</h2>
+              <ul className="filter-side-bar_item-row" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="7" type="checkbox" className="" />
+                          <label htmlFor="7" className="w-full">Morning</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="8" type="checkbox" className="" />
+                          <label htmlFor="8" className="w-full">Afternoon</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="9" type="checkbox" className="" />
+                          <label htmlFor="9" className="w-full">Evening</label>
+                      </div>
+                  </li>
+                  <li className="w-full">
+                      <div className="flex items-center mb-2">
+                          <input id="10" type="checkbox" className="" />
+                          <label htmlFor="10" className="w-full">Night</label>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+
+        </div>
+        <div className="job-list-wrpper flex-1">
           <div className="flex justify-between items-center mb-4">
             <h1 className="job-list-wrpper-title">Explore jobs</h1><span className="job-list-wrpper-sub-title">Total {jobs.length} Jobs </span>
           </div>

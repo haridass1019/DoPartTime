@@ -1255,3 +1255,190 @@ margin-top: 6px;
   padding: 5px 10px;
   margin-right: 4px;
 }
+.navbar-wrapper .nav-login-btn__card{
+  background-color: #2523CA;
+  border-radius: 8px;
+  padding: 8px 16px;
+  
+}
+.navbar-wrapper .nav-login-btn__card .btn-text{
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+.navbar-wrapper .nav-search__input .nav-search__input-field{
+  font-size: 14px;
+  color: #969696;
+  border-radius: 24px;
+  outline: 0;
+  padding: 0 5px;
+}
+.navbar-wrapper .nav-search-btn, .nav-submit-btn{
+  background-color: #dee0ff;
+  margin-left: 4px;
+  border-radius: 50px;
+  min-width: 30px !important;
+  padding: 0px 0px !important;
+  height: 34px;
+}
+.navbar-wrapper .nav-submit-btn{
+  min-width: 36px !important;
+  flex: 0;
+}
+
+.nav-menu-card {
+  position: relative;
+}
+.nav-search__input{
+  position: absolute;
+  right: 42px;
+  left: 0px;
+  background-color: #fff;
+  padding: 3px 0px 0px 6px;
+  border-radius: 24px;
+  display: flex;
+  top: 0px;
+  height: 38px;
+  justify-content: space-between;
+}
+.top-cmp-wrapper{
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.top-cmp-wrapper .top-com-column{
+  padding: 15px;
+  border: 1px solid #EFF1EF;
+  border-radius: 8px;
+}
+.top-cmp-wrapper .top-com-column .top-com-title{
+  font-size: 14px;
+  font-weight: 600;
+  color: #212121;
+  margin: 14px 0;
+}
+.top-cmp-wrapper .top-com-column .rating-row .rating-value{
+  font-size: 13px;
+  font-weight: 400;
+  color: #212121;
+  margin-right: 6px;
+}
+.top-cmp-wrapper .top-com-column .rating-row .rating-count{
+  font-size: 12px;
+  font-weight: 400;
+  color: #757575;
+}
+.app-install-card{
+
+}
+.testimonials-card{
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+.testimonials-card .testimonials-row{
+  display: flex;
+  display: flex;
+  border-bottom: 1px solid #0000001A;
+  padding-bottom: 30px;
+}
+.testimonials-card .testimonials-row .testimonials-column{
+  width: 50%;
+  background-image: url(../public/icon/message-circle.svg);
+  background-repeat: no-repeat;
+  background-size: 115px;
+  background-position: 0% 0%;
+}
+.testimonials-card .testimonials-row .testimonials-column .testimonials-desc{
+  color: #212121;
+  line-height: 20px;
+  font-weight: 400;
+  font-size: 12px;
+  margin: 0 48px;
+}
+.testimonials-card .testimonials-row .testimonials-column .testimonials-avathar__row{
+  margin: 10px 48px 0;
+}
+.testimonials-card .testimonials-row .testimonials-column .testimonials-user-title{
+  color: #212121CC;
+  font-size: 12px;
+  font-weight: 600;
+}
+.testimonials-card .testimonials-row .testimonials-column .testimonials-sub-title{
+  color: #212121CC;
+  font-size: 12px;
+  font-weight: 600;
+}
+.testimonials-card .testimonials-row .testimonials-column .testimonials-user-com-name{
+  color: #2523CA;
+  font-size: 12px;
+  font-weight: 600;
+}
+.testimonials-card .testimonials-article-row{
+  display: flex;
+  border-bottom: 1px solid #0000001A;
+  padding-bottom: 30px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.testimonials-card .testimonials-article-row .testimonials-article-column{
+  width: 30%;
+}
+.testimonials-card .testimonials-article-row .testimonials-article-column .testimonials-article-title{
+  color: #212121;
+  font-size: 14px;
+  font-weight: 600;
+}
+.testimonials-card .testimonials-article-row .testimonials-article-column .testimonials-article-desc{
+  color: #212121;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-top: 5px;
+}
+.testimonials-card .testimonials-article-row .testimonials-article-column .testimonials-article-date{
+  color: #7B7B7B;
+  font-size: 10px;
+  font-weight: 400;
+  margin-top: 10px;
+}
+.testimonials-card .app-promotion-row{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 22px;
+}
+.testimonials-card .app-promotion-row .app-promotio-column{
+  width: 50%;
+}
+.testimonials-card .app-promotion-row .app-promotion-column_1 .app-promotion-desc{
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+  text-align: center;
+}
+.testimonials-card .app-promotion-row .app-promotion-column_2 .app-promotion-tile{
+  font-size: 16px;
+  font-weight: 600;
+  color: #212121;
+  text-align: center;
+}
+.testimonials-card .app-promotion-row .app-promotion-column_2 .app-promotion-desc{
+  font-size: 14px;
+  font-weight: 400;
+  color: #2523CA99;
+  line-height: 16px;
+  text-align: center;
+}
+.jobsearch-wrapper-row .job-count-heading{
+  color: #000070;
+}
+.jobsearch-wrapper-row .job-location-heading{
+  color: #000070;
+}
+.filter-group-btn-icon button{
+  background-color: #fff;
+}
+.candidate-img,
+.company-list-img{
+  border-radius: 50px;
+}

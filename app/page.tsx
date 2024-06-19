@@ -103,6 +103,14 @@ const trendingJob = [
   { trendingJobtitle: 'Stock checking-Part time job', trendingJobcompanyName: 'Redditch Accessories', trendingJobpostedDate: 'Posted 2 days ago' },
 ]
 
+const cmpReviews = [
+  { comTitle: 'Flipkart', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
+  { comTitle: 'Swiggy', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
+  { comTitle: 'Zomato', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
+  { comTitle: 'Amazon', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
+  { comTitle: 'matrixx India', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
+  { comTitle: 'Fast Track', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
+]
 const dashboard: any = async () => {
   try {
     const apiData = await getData();
@@ -255,6 +263,58 @@ const dashboard: any = async () => {
             </Swiper>
           </div>
         </div>
+        <div className="top-cmp-wrapper trending-jobs-wrapper">
+            <h2 className="trending-jobs-title">Top companies</h2>
+            <div className="trending-jobs-row">
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={8}
+                // centeredSlides={true}
+                navigation
+
+
+                // pagination={{ type: 'fraction' }}
+                modules={[Navigation, Pagination]}
+                onSwiper={swiper => console.log(swiper)}
+                className=''
+                breakpoints={{
+                  // when window width is >= 320px
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 8,
+                  },
+                  // when window width is >= 480px
+                  480: {
+                    slidesPerView: 3,
+                    spaceBetween: 8
+                    ,
+                  },
+                  // when window width is >= 640px
+                  640: {
+                    slidesPerView: 5,
+                    spaceBetween: 8,
+                  },
+                }}
+              >
+                {cmpReviews.map((value, index) => (
+                  <SwiperSlide key={index} >
+                    <div className="trending-jobs-column top-com-column">
+                      <div className="flex justify-center items-center">
+                        <div className="flex items-center flex-col ">
+                          <Image className='' src="https://flowbite.com/docs/images/logo.svg" width={60} height={60} alt="Default Company Logo" />
+                          <h2 className='top-com-title'> {value.comTitle}</h2>
+                        </div>
+                      </div>
+                      <div className="rating-row flex justify-center items-center">
+                          <Image src="/icon/star.svg" width={14} height={14} alt="rating" /><span className='rating-value'>4.5</span><span className='rating-count'>(300+)</span>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+
+              </Swiper>
+            </div>
+          </div>
         <div className='my-5'>
           <div className="job-list-wrpper">
             <div className="flex justify-between items-center mb-4">
@@ -322,12 +382,66 @@ const dashboard: any = async () => {
           </div>
           <Link href="/jobs" className='flex ms-2' style={{ borderRadius: "08px", fontSize: "16px", fontWeight: 600, color: "#2523CA" }}> View all jobs <Image className='ms-2' src="/icon/right-arrow-ic.svg" width={6} height={12} alt="View all jobs" /> </Link>
         </div>
-        <div className="my-5 ps-2 pe-2 py-2 flex justify-between items-center bg-white rounded-lg">
-          <div className="text-sm">
-            <span className='font-semibold'>Want to talk to someone?</span><span> Our customer support is here to help you. Monday to Friday 10:00am to 6:00pm</span>
+
+        <div className="testimonials-card">
+          <div className="testimonials-row">
+            <div className="testimonials-column">
+              <p className='testimonials-desc'>The need is not always full time, there are phases during which we need additional resources to pump in those extra products into the catalogue within a week. That’s where DoPartTime’s service was a blessing. They were able to help us hire about 15 part time job seekers who helped us launch more than 2000 products to our catalogue. Brilliant service and wonderful results. </p>
+              <div className="testimonials-avathar__row flex">
+                <Image src="https://flowbite.com/docs/images/logo.svg" className='mr-2' width={44} height={44} alt="Default" />
+                <div className="">
+                  <h2 className='testimonials-user-title'>Karthik</h2>
+                  <div className="testimonials-sub-title">Co-Founder at <span className='testimonials-user-com-name'> Kobzo.com</span></div>
+                </div>
+              </div>
+            </div>
+            <div className="testimonials-column">
+              <p className='testimonials-desc'>The need is not always full time, there are phases during which we need additional resources to pump in those extra products into the catalogue within a week. That’s where DoPartTime’s service was a blessing. They were able to help us hire about 15 part time job seekers who helped us launch more than 2000 products to our catalogue. Brilliant service and wonderful results. </p>
+              <div className="testimonials-avathar__row flex">
+                <Image src="https://flowbite.com/docs/images/logo.svg" className='mr-2' width={44} height={44} alt="Default" />
+                <div className="">
+                  <h2 className='testimonials-user-title'>Karthik</h2>
+                  <div className="testimonials-sub-title">Co-Founder at <span className='testimonials-user-com-name'> Kobzo.com</span></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <Link href="#" className='flex items-center' style={{ backgroundColor: "#DEE0FF", padding: "6px 20px", borderRadius: "08px", fontSize: "16px", fontWeight: 500 }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
+          <div className="testimonials-article-row">
+            <div className="testimonials-article-column">
+              <h2 className='testimonials-article-title'>The Rise of Part-Time Jobs: </h2>
+              <p className='testimonials-article-desc'>In today's fast-evolving job market, part-time employment has become a prominent and appealing option for many individuals.</p>
+              <div className="testimonials-article-date">January 11, 2023</div>
+            </div>
+            <div className="testimonials-article-column">
+              <h2 className='testimonials-article-title'>The Rise of Part-Time Jobs: </h2>
+              <p className='testimonials-article-desc'>In today's fast-evolving job market, part-time employment has become a prominent and appealing option for many individuals.</p>
+              <div className="testimonials-article-date">January 11, 2023</div>
+            </div>
+            <div className="testimonials-article-column">
+              <h2 className='testimonials-article-title'>The Rise of Part-Time Jobs: </h2>
+              <p className='testimonials-article-desc'>In today's fast-evolving job market, part-time employment has become a prominent and appealing option for many individuals.</p>
+              <div className="testimonials-article-date">January 11, 2023</div>
+            </div>
+          </div>
+          <div className="app-promotion-row">
+            <div className="app-promotion-column flex flex-col items-center app-promotion-column_1">
+              <p className="app-promotion-desc"><span className='font-semibold'>Want to talk to someone?</span> <br />
+                  Our customer support is here to help you. <br />
+                  Monday to Friday 10:00am to 6:00pm</p>
+              <Link href="#" className='flex items-center' style={{ backgroundColor: "#DEE0FF", padding: "6px 20px", borderRadius: "08px", fontSize: "16px", fontWeight: 600, width:"214px", marginTop:"10px" }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
+            </div>
+            <div className="app-promotion-column app-promotion-column_2">
+              <h2 className='app-promotion-tile'>Apply anytime, anywhere.</h2>
+              <p className='app-promotion-desc mt-2'>Discover part-time job opportunities on our app</p>
+              <div className="flex justify-center mt-4">
+                <Image src="/icon/Andriod.png" width={127} height={37} alt="Googlr Play" />
+                <Image src="/icon/IOS.png" width={127} height={37} alt="App Store" />
+              </div>
+              </div>
+            </div>
         </div>
+            
+
       </>
     );
   } catch (error: any) {

@@ -11,7 +11,7 @@ export default async function companyList() {
           <Link href={`/company_detail/${data.id}`}>
             <div className="company-title-row flex items-start">
 
-              <Image src={data.image} width={66} height={66} alt="Default Company Logo" />
+              <Image src={data.image} width={66} height={66} alt="Default Company Logo" className="company-list-img" />
 
               <div className="ms-2 w-full flex-1 text-white">
                 <h2 className='company-title'>{data.name}</h2>
