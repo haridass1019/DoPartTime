@@ -111,6 +111,16 @@ const cmpReviews = [
   { comTitle: 'matrixx India', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
   { comTitle: 'Fast Track', cmpReviewsDes: 'Lorem ipsum dolor sit amet consectetur. Ullamcorper est et accumsan fusce vestibulum ut amet massa. Ut eget sem pharetra at lectus sit etiam nunc.', cmpReviewsDate: '18 April' },
 ]
+const testiMonials = [
+  { userName: 'Karthik', desc: 'The need is not always full time, there are phases during which we need additional resources to pump in those extra products into the catalogue within a week. where DoPartTimes service was a blessing.', cmpName: 'Kobzo.com' },
+  { userName: 'Karthik', desc: 'If need is not always full time, there are phases during which we need additional resources to pump in those extra products into the catalogue within a week. where DoPartTimes service was a blessing.', cmpName: 'Kobzo.com' },
+  // { userName: 'Karthik', desc: 'We need is not always full time, there are phases during which we need additional resources to pump in those extra products into the catalogue within a week. where DoPartTimes service was a blessing.', cmpName: 'Kobzo.com' },
+]
+const testiMonialsArticle = [
+  { artcleTitle: 'The Rise of Part-Time Jobs: ', articleDesc: 'In todays fast-evolving job market part-time employment has become a prominent and appealing option for many individuals.', articleDate: 'January 11, 2023' },
+  { artcleTitle: 'The Rise of Part-Time Jobs: ', articleDesc: 'In todays fast-evolving job market part-time employment has become a prominent and appealing option for many individuals.', articleDate: 'January 11, 2023' },
+  { artcleTitle: 'The Rise of Part-Time Jobs: ', articleDesc: 'In todays fast-evolving job market part-time employment has become a prominent and appealing option for many individuals.', articleDate: 'January 11, 2023' },
+]
 const dashboard: any = async () => {
   try {
     const apiData = await getData();
@@ -167,17 +177,21 @@ const dashboard: any = async () => {
                 breakpoints={{
                   // when window width is >= 320px
                   320: {
-                    slidesPerView: 2,
+                    slidesPerView: 1.2,
                     spaceBetween: 8,
                   },
                   // when window width is >= 480px
                   480: {
-                    slidesPerView: 3,
+                    slidesPerView: 2,
                     spaceBetween: 8
                     ,
                   },
                   // when window width is >= 640px
                   640: {
+                    slidesPerView: 2,
+                    spaceBetween: 8,
+                  },
+                  900: {
                     slidesPerView: 3.5,
                     spaceBetween: 8,
                   },
@@ -191,9 +205,9 @@ const dashboard: any = async () => {
                       <div className="trending-jobs-column flex">
                         <div className="avathar mr-2">
                           {item.companyname.image ? (
-                            <Image src={item.companyname.image} width={32} height={32} alt="Company" />
+                            <Image className='trd-job-img' src={item.companyname.image} width={32} height={32} alt="Company" />
                           ) : (
-                            <Image src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
+                            <Image className='trd-job-img' src="https://flowbite.com/docs/images/logo.svg" width={32} height={32} alt="Default Company Logo" />
                           )}
 
                         </div>
@@ -233,7 +247,7 @@ const dashboard: any = async () => {
               breakpoints={{
                 // when window width is >= 320px
                 320: {
-                  slidesPerView: 2,
+                  slidesPerView: 2.2,
                   spaceBetween: 8,
                 },
                 // when window width is >= 480px
@@ -280,18 +294,18 @@ const dashboard: any = async () => {
                 breakpoints={{
                   // when window width is >= 320px
                   320: {
-                    slidesPerView: 2,
+                    slidesPerView: 3.3,
                     spaceBetween: 8,
                   },
                   // when window width is >= 480px
                   480: {
-                    slidesPerView: 3,
+                    slidesPerView: 4,
                     spaceBetween: 8
                     ,
                   },
                   // when window width is >= 640px
-                  640: {
-                    slidesPerView: 5,
+                  900: {
+                    slidesPerView: 2,
                     spaceBetween: 8,
                   },
                 }}
@@ -301,12 +315,12 @@ const dashboard: any = async () => {
                     <div className="trending-jobs-column top-com-column">
                       <div className="flex justify-center items-center">
                         <div className="flex items-center flex-col ">
-                          <Image className='' src="https://flowbite.com/docs/images/logo.svg" width={60} height={60} alt="Default Company Logo" />
+                          <Image className='company-img' src="https://flowbite.com/docs/images/logo.svg" width={60} height={60} alt="Default Company Logo" />
                           <h2 className='top-com-title'> {value.comTitle}</h2>
                         </div>
                       </div>
                       <div className="rating-row flex justify-center items-center">
-                          <Image src="/icon/star.svg" width={14} height={14} alt="rating" /><span className='rating-value'>4.5</span><span className='rating-count'>(300+)</span>
+                          <Image className='cmp-rating-ic' src="/icon/star.svg" width={14} height={14} alt="rating" /><span className='rating-value'>4.5</span><span className='rating-count'>(300+)</span>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -315,8 +329,8 @@ const dashboard: any = async () => {
               </Swiper>
             </div>
           </div>
-        <div className='my-5'>
-          <div className="job-list-wrpper">
+        
+          <div className="job-list-wrpper home-job-list-wrpper">
             <div className="flex justify-between items-center mb-4">
               <h1 className='job-list-wrpper-title'>Explore jobs</h1>
               <span className='job-list-wrpper-sub-title'>Total {apiData.length} Jobs </span>
@@ -328,7 +342,7 @@ const dashboard: any = async () => {
                     <Tab key="All jobs" title="All jobs" />
                     <Tab key="Online Jobs" title="Online Jobs" />
                     <Tab key="Typing jobs" title="Typing jobs" />
-                    <Tab key="Delivery jobs" title="Delivery jobs" />
+                    {/* <Tab key="Delivery jobs" title="Delivery jobs" /> */}
                   </Tabs>
                 </div>
               </div>
@@ -375,60 +389,113 @@ const dashboard: any = async () => {
               </div>
             ))}
           </div>
-        </div>
-        <div className="my-5 ps-2 pe-2 py-6 flex justify-center items-center bg-white rounded-lg">
-          <div className="text-sm">
-            <span className='font-semibold'>Explore all available options at a glance by clicking here.</span>
-          </div>
-          <Link href="/jobs" className='flex ms-2' style={{ borderRadius: "08px", fontSize: "16px", fontWeight: 600, color: "#2523CA" }}> View all jobs <Image className='ms-2' src="/icon/right-arrow-ic.svg" width={6} height={12} alt="View all jobs" /> </Link>
+
+        <div className="explore-card flex justify-center items-center">
+          <h2 className="explore-card__tile">Explore all available options at a glance by clicking here.
+          </h2>
+          <Link href="/jobs" className='flex explore-card__view-all'> View all jobs <Image className='ms-2' src="/icon/right-arrow-ic.svg" width={6} height={12} alt="View all jobs" /> </Link>
         </div>
 
         <div className="testimonials-card">
           <div className="testimonials-row">
-            <div className="testimonials-column">
-              <p className='testimonials-desc'>The need is not always full time, there are phases during which we need additional resources to pump in those extra products into the catalogue within a week. That’s where DoPartTime’s service was a blessing. They were able to help us hire about 15 part time job seekers who helped us launch more than 2000 products to our catalogue. Brilliant service and wonderful results. </p>
-              <div className="testimonials-avathar__row flex">
-                <Image src="https://flowbite.com/docs/images/logo.svg" className='mr-2' width={44} height={44} alt="Default" />
-                <div className="">
-                  <h2 className='testimonials-user-title'>Karthik</h2>
-                  <div className="testimonials-sub-title">Co-Founder at <span className='testimonials-user-com-name'> Kobzo.com</span></div>
-                </div>
-              </div>
-            </div>
-            <div className="testimonials-column">
-              <p className='testimonials-desc'>The need is not always full time, there are phases during which we need additional resources to pump in those extra products into the catalogue within a week. That’s where DoPartTime’s service was a blessing. They were able to help us hire about 15 part time job seekers who helped us launch more than 2000 products to our catalogue. Brilliant service and wonderful results. </p>
-              <div className="testimonials-avathar__row flex">
-                <Image src="https://flowbite.com/docs/images/logo.svg" className='mr-2' width={44} height={44} alt="Default" />
-                <div className="">
-                  <h2 className='testimonials-user-title'>Karthik</h2>
-                  <div className="testimonials-sub-title">Co-Founder at <span className='testimonials-user-com-name'> Kobzo.com</span></div>
-                </div>
-              </div>
-            </div>
+          <Swiper
+                slidesPerView={2}
+                spaceBetween={8}
+                // centeredSlides={true}
+                navigation
+
+
+                // pagination={{ type: 'fraction' }}
+                modules={[Navigation, Pagination]}
+                onSwiper={swiper => console.log(swiper)}
+                className=''
+                breakpoints={{
+                  // when window width is >= 320px
+                  320: {
+                    slidesPerView: 1,
+                    spaceBetween: 8,
+                  },
+                  // when window width is >= 480px
+                  480: {
+                    slidesPerView: 3,
+                    spaceBetween: 8
+                    ,
+                  },
+                  // when window width is >= 640px
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 8,
+                  },
+                }}
+            >
+              {testiMonials.map((value, index) => (
+                  <SwiperSlide key={index} >
+                     <div className="testimonials-column">
+                    <p className='testimonials-desc'>{ value.desc }</p>
+                        <div className="testimonials-avathar__row flex">
+                          <Image src="https://flowbite.com/docs/images/logo.svg" className='mr-2' width={44} height={44} alt="Default" />
+                          <div className="">
+                        <h2 className='testimonials-user-title'>{ value.userName }</h2>
+                        <div className="testimonials-sub-title">Co-Founder at <span className='testimonials-user-com-name'> { value.cmpName}</span></div>
+                          </div>
+                        </div>
+                      </div>
+                  </SwiperSlide>
+              ))}              
+            </Swiper>
           </div>
-          <div className="testimonials-article-row">
-            <div className="testimonials-article-column">
-              <h2 className='testimonials-article-title'>The Rise of Part-Time Jobs: </h2>
-              <p className='testimonials-article-desc'>In today's fast-evolving job market, part-time employment has become a prominent and appealing option for many individuals.</p>
-              <div className="testimonials-article-date">January 11, 2023</div>
-            </div>
-            <div className="testimonials-article-column">
-              <h2 className='testimonials-article-title'>The Rise of Part-Time Jobs: </h2>
-              <p className='testimonials-article-desc'>In today's fast-evolving job market, part-time employment has become a prominent and appealing option for many individuals.</p>
-              <div className="testimonials-article-date">January 11, 2023</div>
-            </div>
-            <div className="testimonials-article-column">
-              <h2 className='testimonials-article-title'>The Rise of Part-Time Jobs: </h2>
-              <p className='testimonials-article-desc'>In today's fast-evolving job market, part-time employment has become a prominent and appealing option for many individuals.</p>
-              <div className="testimonials-article-date">January 11, 2023</div>
-            </div>
+          <div className="testimonials-article-row testimonials-row">
+          <Swiper
+                slidesPerView={2}
+                spaceBetween={8}
+                // centeredSlides={true}
+                navigation
+
+
+                // pagination={{ type: 'fraction' }}
+                modules={[Navigation, Pagination]}
+                onSwiper={swiper => console.log(swiper)}
+                className=''
+                breakpoints={{
+                  // when window width is >= 320px
+                  320: {
+                    slidesPerView: 1,
+                    spaceBetween: 8,
+                  },
+                  // when window width is >= 480px
+                  480: {
+                    slidesPerView: 2,
+                    spaceBetween: 8
+                    ,
+                  },
+                  // when window width is >= 640px
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 8,
+                  },
+                  900: {
+                    slidesPerView: 3,
+                    spaceBetween: 8,
+                  },
+                }}
+            >
+              {testiMonialsArticle.map((value, index) => (
+                  <SwiperSlide key={index} >
+                     <div className="testimonials-article-column">
+                      <h2 className='testimonials-article-title'>{ value.artcleTitle } </h2>
+                      <p className='testimonials-article-desc'>{ value.articleDesc }</p>
+                      <div className="testimonials-article-date">{ value.articleDate }</div>
+                    </div>
+                  </SwiperSlide>
+              ))}              
+            </Swiper>
           </div>
           <div className="app-promotion-row">
             <div className="app-promotion-column flex flex-col items-center app-promotion-column_1">
               <p className="app-promotion-desc"><span className='font-semibold'>Want to talk to someone?</span> <br />
                   Our customer support is here to help you. <br />
                   Monday to Friday 10:00am to 6:00pm</p>
-              <Link href="#" className='flex items-center' style={{ backgroundColor: "#DEE0FF", padding: "6px 20px", borderRadius: "08px", fontSize: "16px", fontWeight: 600, width:"214px", marginTop:"10px" }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
+              <Link href="#" className='flex items-center app-promotion-contact' style={{ backgroundColor: "#DEE0FF", padding: "6px 20px", borderRadius: "08px", fontSize: "16px", fontWeight: 600, width:"214px", marginTop:"10px" }}> <Image src="/icon/whatsapp-ic.svg" width={27} height={27} alt="Whatsapp" /> +91 987655 43321</Link>
             </div>
             <div className="app-promotion-column app-promotion-column_2">
               <h2 className='app-promotion-tile'>Apply anytime, anywhere.</h2>

@@ -631,7 +631,7 @@ export default function DashboardLayout({ children }: any) {
                     <Tab key="All jobs" title="All jobs" />
                     <Tab key="Online Jobs" title="Online Jobs" />
                     <Tab key="Typing jobs" title="Typing jobs" />
-                    <Tab key="Delivery jobs" title="Delivery jobs" />
+                    {/* <Tab key="Delivery jobs" title="Delivery jobs" /> */}
                   </Tabs>
                 </div>
               </div>

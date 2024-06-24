@@ -5,9 +5,9 @@ import Link from "next/link";
 export default function Footer() {
     return (
         <>
-        <footer>
+        <footer className="footer-card">
                 <div className="container my-4 homepage-wrapper">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between footer-card-row">
                         <div className="basis-1/4">
                             <h4 className="mb-2 text-sm footer-title">DoPartTime.com</h4>    
                             <p className="text-xs" style={{lineHeight:"20px", color:"#808080"}}>DoPartTime.com is an online marketplace that connects employers with individuals seeking part-time, temporary, contract, micro, or one-time job opportunities. Users can list and find various types of openings tailored to flexible work arrangements.</p>

@@ -15,8 +15,6 @@ export default function DashboardLayout({ children }: any) {
             </div>
             <div className="my-5 flex">
                 <div className="filter-side-bar me-4 w-[224px]">
-
-
                     <div className="mt-4">
                         <h2 className="filter-side-bar_item-title">Preferred Location </h2>
                         <ul className="filter-side-bar_item-row" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">

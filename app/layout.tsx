@@ -23,7 +23,7 @@ export default function RootLayout({
         <div className="navbar">
           <Navbar />
         </div>
-        <main className="flex-1 overflow-y-auto" style={{ backgroundColor: '#F2F2F4' }}>
+        <main className="flex-1 overflow-y-auto main-wrapper">
           <div className="homepage-wrapper">
             {children}
           </div>
