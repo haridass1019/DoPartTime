@@ -172,7 +172,7 @@ const dashboard: any = async () => {
 
                 // pagination={{ type: 'fraction' }}
                 modules={[Navigation, Pagination]}
-                onSwiper={swiper => console.log(swiper)}
+                onSwiper={(swiper:any) => console.log(swiper)}
                 className=''
                 breakpoints={{
                   // when window width is >= 320px
@@ -242,7 +242,7 @@ const dashboard: any = async () => {
 
               // pagination={{ type: 'fraction' }}
               modules={[Navigation, Pagination]}
-              onSwiper={swiper => console.log(swiper)}
+              onSwiper={(swiper:any) => console.log(swiper)}
               className=''
               breakpoints={{
                 // when window width is >= 320px
@@ -289,7 +289,7 @@ const dashboard: any = async () => {
 
                 // pagination={{ type: 'fraction' }}
                 modules={[Navigation, Pagination]}
-                onSwiper={swiper => console.log(swiper)}
+                onSwiper={(swiper:any) => console.log(swiper)}
                 className=''
                 breakpoints={{
                   // when window width is >= 320px
@@ -407,7 +407,7 @@ const dashboard: any = async () => {
 
                 // pagination={{ type: 'fraction' }}
                 modules={[Navigation, Pagination]}
-                onSwiper={swiper => console.log(swiper)}
+                onSwiper={(swiper:any) => console.log(swiper)}
                 className=''
                 breakpoints={{
                   // when window width is >= 320px
@@ -454,7 +454,7 @@ const dashboard: any = async () => {
 
                 // pagination={{ type: 'fraction' }}
                 modules={[Navigation, Pagination]}
-                onSwiper={swiper => console.log(swiper)}
+                onSwiper={(swiper:any) => console.log(swiper)}
                 className=''
                 breakpoints={{
                   // when window width is >= 320px
